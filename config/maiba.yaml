@@ -13,8 +13,12 @@ resolvers:
   order: [openalex, crossref]
   openalex:
     base_url: https://api.openalex.org
+    search_rows: 20    # was hard-coded 5 — wider window catches short-titled papers
+    year_window: 1     # publication_year filter spans PY ± year_window
   crossref:
     base_url: https://api.crossref.org
+    search_rows: 20
+    year_window: 1
 
 gaps:
   required_fields: [TI, AU, PY]

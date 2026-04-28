@@ -8,7 +8,7 @@ from urllib.parse import quote
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
-from maiba.resolvers._scoring import score_candidate
+from maiba.resolvers._scoring import _extract_lastname, score_candidate
 
 _CROSSREF_TYPE_TO_RIS = {
     "journal-article": "JOUR",
@@ -48,11 +48,24 @@ class CrossrefResolver:
         return ResolutionResult(candidate=candidate, confidence=1.0, source="crossref")
 
     def _resolve_by_search(self, item: Item) -> ResolutionResult | None:
-        params: dict[str, str | int] = {"rows": 5}
+        cfg_cr = self._cfg.resolvers.crossref
+        params: dict[str, str | int] = {"rows": cfg_cr.search_rows}
         if item.TI:
             params["query.title"] = item.TI
-        if item.AU:
-            params["query.author"] = item.AU[0]
+
+        forbidden = self._cfg.gaps.forbidden_authors
+        first = next(
+            (a for a in (item.AU or []) if a not in forbidden and "et al" not in a.lower()),
+            None,
+        )
+        if first:
+            params["query.author"] = _extract_lastname(first)
+
+        if item.PY:
+            window = cfg_cr.year_window
+            params["filter"] = (
+                f"from-pub-date:{item.PY - window}-01-01,until-pub-date:{item.PY + window}-12-31"
+            )
 
         resp = self._client.get(f"{self._base_url}/works", params=params)
         if resp.status_code != 200:
