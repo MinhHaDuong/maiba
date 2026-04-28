@@ -1,0 +1,109 @@
+%erg v1
+Title: Verify .env propagates to resolvers; log auth status at startup
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T14:30Z claude created
+
+--- body ---
+## Context
+
+Symptom: a real run on `tests/fixtures/ArchiveCCS.ris` after tickets
+0012 (auth) + 0013 (scorer fix) merged still produced only 2 of 20
+fixes. Diagnostic REPL showed every OpenAlex call returning
+`ResolverRateLimitedError` (HTTP 429), which is the symptom of an
+unauthenticated request hitting the $0 free-tier limit.
+
+The `.env` file at the repo root contains `OPENALEX_API_KEY=…`
+(gitignored). Ticket 0017 wired `python-dotenv` to load this at CLI
+startup. The resolver reads `os.environ.get("OPENALEX_API_KEY", "")`
+in `__init__`. Both halves look correct in the source, yet the env
+var doesn't seem to reach the resolver in practice — or we have no
+way to see whether it does.
+
+This ticket adds the missing observability and the test that locks
+the load-order contract. It does not necessarily change behaviour
+(if the load is already correct, this ticket just makes it
+demonstrably correct). If the load is broken, the test will catch it
+and the fix lands in the same ticket.
+
+## Actions
+
+1. **Startup log line** in `src/maiba/cli.py` (after `load_dotenv()`,
+   before any resolver instantiation):
+   ```python
+   key = os.environ.get("OPENALEX_API_KEY", "").strip()
+   if key:
+       log.info("OpenAlex auth: detected (key length=%d)", len(key))
+   else:
+       log.warning("OpenAlex auth: OPENALEX_API_KEY not set — using $0 free tier (expect rate limits)")
+   ```
+   Visible at any verbosity (INFO / WARNING level — not DEBUG-only).
+   Never log the key value or any prefix/suffix.
+
+2. **Adherence test** that load-order is correct:
+   ```python
+   @pytest.mark.adherence
+   def test_dotenv_loads_before_resolver_construction(tmp_path, monkeypatch):
+       """Calling the CLI with a .env containing OPENALEX_API_KEY must
+       propagate to the resolver's __init__-time os.environ read."""
+       (tmp_path / ".env").write_text("OPENALEX_API_KEY=test-sentinel-xxx\n")
+       monkeypatch.chdir(tmp_path)
+       monkeypatch.delenv("OPENALEX_API_KEY", raising=False)
+       # invoke maiba CLI's load + resolver instantiation path
+       ...
+       # assert the resolver's headers contain Authorization: Bearer test-sentinel-xxx
+   ```
+   This test failing is the diagnostic; passing is the green light.
+
+3. **If the test fails** (i.e. `.env` propagation IS broken):
+   - Fix ordering in `cli.py` — load_dotenv() must run before any
+     module-level code that reads `os.environ` (some imports may
+     cache the value at import time, depending on how 0012 was wired).
+   - Document the fix in this ticket's log.
+
+4. **README** — add a short "Configuration" section pointing at
+   `.env` for `OPENALEX_API_KEY` (and OPENROUTER_API_KEY when 0015
+   lands).
+
+## Test (TDD red step)
+
+The adherence test above is the primary test. Before fixing anything,
+run the user-facing scenario:
+
+```bash
+# a) verify env is in .env but not in shell
+unset OPENALEX_API_KEY
+grep -q '^OPENALEX_API_KEY=' .env
+
+# b) run scan with verbose logging (ticket 0011)
+uv run maiba scan -i tests/fixtures/ArchiveCCS.ris -o /tmp/test.ris --cache -v 2>&1 | grep -i "openalex auth"
+```
+
+The grep must produce `OpenAlex auth: detected (key length=…)`. If
+it produces `NOT SET`, ticket 0017's load-dotenv is not running
+before the resolver imports; that's the bug to fix.
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- `uv run maiba scan -i … -v` prints exactly one `OpenAlex auth:
+  detected (key length=N)` line at startup when `.env` has the key.
+- `uv run maiba scan -i … -v` prints `OpenAlex auth: NOT SET …` when
+  no key is configured (warning level, doesn't abort).
+- Adherence test catches a regression where `.env` isn't loaded
+  before resolvers.
+- A real scan on `ArchiveCCS.ris` with the user's prepaid balance
+  active produces hits on items that previously 429'd. Manual
+  eyeball, not asserted in tests.
+
+## Out of scope
+
+- Adding observability for Crossref or LLM auth. Same pattern
+  applies, but Crossref doesn't auth and LLM hasn't shipped yet.
+  Worth a one-line copy-paste when 0015 lands.
+- Replacing python-dotenv with a different loader. The existing one
+  works at the right place when called at the right time.

@@ -1,0 +1,160 @@
+%erg v1
+Title: Crossref title-only search returns wrong candidates for short titles
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T14:32Z claude created
+
+--- body ---
+## Context
+
+Direct probe of `https://api.crossref.org/works?query.title=Incentivising+CCS+in+the+EU&rows=5` returned:
+
+```
+cand0: 'EU executive launches CCS support network'
+cand1: 'Kontextualisierende Verortung: CCS in der EU-Klimapolitik'
+cand2: 'Incentivising Angels'
+cand3: ...
+cand4: ...
+```
+
+None of these is the actual paper. The right candidate is either
+buried beyond rank 5 or absent from the top-N. The MAIBA Crossref
+resolver currently passes only `query.title` with `rows=5` — too
+narrow for short, generic titles.
+
+This is not a threshold-tuning issue. The scorer is correctly
+rejecting the noise (returns `None` for each candidate). The fix is
+in query construction, not scoring.
+
+Verified bug, not hypothetical. Affects 6 of 7 JOUR misses on
+`tests/fixtures/ArchiveCCS.ris`: they all have short titles and
+their right candidates do not appear in Crossref's top-5 by
+relevance score alone.
+
+## Actions
+
+1. **Year filter when `item.PY` is present** — Crossref accepts
+   `filter=from-pub-date:YYYY-01-01,until-pub-date:YYYY-12-31`.
+   Use `PY ± 1` as the window to absorb minor cataloging drift
+   (DOI registered 1 year off the publication year, cross-volume
+   articles, etc.):
+   ```python
+   if item.PY:
+       params["filter"] = (
+           f"from-pub-date:{item.PY-1}-01-01,"
+           f"until-pub-date:{item.PY+1}-12-31"
+       )
+   ```
+   This narrows the pool dramatically for short-titled papers.
+
+2. **Increase `rows` to 20** (configurable):
+   ```yaml
+   crossref:
+     search_rows: 20            # was hard-coded 5
+   ```
+   Crossref is free; doubling the candidate window costs nothing.
+   The shared scorer still rejects the bottom of the list.
+
+3. **Add `query.author` when partial AU is present** — even for the
+   AU-missing cases, sometimes a single author lastname is in the
+   record. If `item.AU` has any non-forbidden entry, pass the
+   first author's lastname as `query.author`:
+   ```python
+   first = next((a for a in (item.AU or []) if "et al" not in a.lower()), None)
+   if first:
+       params["query.author"] = _extract_lastname(first)
+   ```
+
+4. **`config/maiba.yaml`** additions:
+   ```yaml
+   crossref:
+     search_rows: 20
+     year_window: 1   # PY ± window for filter
+   ```
+
+5. **Same expansion for OpenAlex** — symmetric problem, symmetric
+   fix. OpenAlex already has `filter=publication_year:YYYY` on exact
+   year; widen to `publication_year:YYYY-1|YYYY|YYYY+1` (OpenAlex
+   accepts pipe-separated). And `per_page` from 5 to 20.
+
+## Test (TDD red step)
+
+```python
+# tests/test_resolve_crossref.py — additions
+import respx
+from httpx import Response
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.crossref import CrossrefResolver
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+@respx.mock
+def test_crossref_passes_year_filter_when_PY_present():
+    captured = {}
+    def callback(request):
+        captured["params"] = dict(request.url.params)
+        return Response(200, json={"message": {"items": []}})
+    respx.get(url__startswith="https://api.crossref.org/works").mock(side_effect=callback)
+
+    resolver = CrossrefResolver(CFG)
+    item = Item(TY="JOUR", TI="Incentivising CCS in the EU", AU=[], PY=2010)
+    resolver.resolve(item)
+
+    f = captured["params"].get("filter", "")
+    assert "from-pub-date:2009-01-01" in f
+    assert "until-pub-date:2011-12-31" in f
+
+
+@respx.mock
+def test_crossref_uses_configured_rows():
+    captured = {}
+    def callback(request):
+        captured["params"] = dict(request.url.params)
+        return Response(200, json={"message": {"items": []}})
+    respx.get(url__startswith="https://api.crossref.org/works").mock(side_effect=callback)
+
+    resolver = CrossrefResolver(CFG)
+    item = Item(TY="JOUR", TI="x", AU=[], PY=2020)
+    resolver.resolve(item)
+    assert int(captured["params"].get("rows", "0")) == CFG.crossref.search_rows
+
+
+@respx.mock
+def test_no_PY_means_no_year_filter():
+    captured = {}
+    def callback(request):
+        captured["params"] = dict(request.url.params)
+        return Response(200, json={"message": {"items": []}})
+    respx.get(url__startswith="https://api.crossref.org/works").mock(side_effect=callback)
+
+    resolver = CrossrefResolver(CFG)
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=None)
+    resolver.resolve(item)
+    assert "filter" not in captured["params"]
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- Smoke run on the 7 JOUR misses (after ticket 0023 lands and OpenAlex
+  is authed): at least 5 of 7 resolve, vs. 1 today (only the
+  DOI-bearing one). Manual eyeball, not asserted.
+- No hardcoded numbers in the resolver — `rows`, year window from
+  config.
+
+## Out of scope
+
+- LLM-generated query rewriting. The current fix is mechanical
+  (year filter + larger window + author hint when present); no LLM
+  involved. If after this ticket recall is still <5/7 on the JOUR
+  set, surface in the next iteration.
+- Different relevance weighting on Crossref's side. Crossref's
+  ranking is opaque to us; we have to live with what they return
+  in the top-20. Any further tuning happens client-side via the
+  scorer.
