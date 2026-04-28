@@ -43,12 +43,37 @@ def _emit_progress(char: str, *, quiet: bool = False) -> None:
     print(char, end="", flush=True, file=sys.stderr)
 
 
-def _announce(total: int, n_doi: int, *, quiet: bool = False) -> None:
+def _preview_counts(items: list[Item], cfg: Config) -> tuple[int, int, int]:
+    """Classify each item by what the pipeline will do with it.
+
+    Returns (n_skip, n_doi_lookup, n_title_search).
+    """
+    n_skip = 0
+    n_doi_lookup = 0
+    n_title_search = 0
+    for it in items:
+        if not detect_gaps(it, cfg):
+            n_skip += 1
+        elif it.DO:
+            n_doi_lookup += 1
+        else:
+            n_title_search += 1
+    return n_skip, n_doi_lookup, n_title_search
+
+
+def _announce(
+    total: int,
+    n_skip: int,
+    n_doi_lookup: int,
+    n_title_search: int,
+    *,
+    quiet: bool = False,
+) -> None:
     if quiet or not sys.stderr.isatty() or total == 0:
         return
-    n_search = total - n_doi
     print(
-        f"Scanning {total} records ({n_doi} DOI lookups, {n_search} title searches)…",
+        f"Scanning {total} records "
+        f"({n_skip} complete, {n_doi_lookup} DOI lookups, {n_title_search} title searches)…",
         file=sys.stderr,
         flush=True,
     )
@@ -93,8 +118,7 @@ def run(
     out_items: list[Item] = []
     emitted = False
 
-    n_doi = sum(1 for it in items if it.DO)
-    _announce(len(items), n_doi, quiet=quiet)
+    _announce(len(items), *_preview_counts(items, cfg), quiet=quiet)
 
     try:
         for item in items:

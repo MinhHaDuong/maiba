@@ -70,7 +70,9 @@ def read_ris(path: Path) -> Iterator[Item]:
 
     for entry in entries:
         _validate_entry(entry, path)
-        yield _entry_to_item(entry)
+        item = _entry_to_item(entry)
+        _ORDER_CACHE[item.id] = list(entry.keys())
+        yield item
 
 
 def _validate_entry(entry: dict, path: Path) -> None:
@@ -122,38 +124,75 @@ _SCALAR_FIELDS: list[tuple[str, str]] = [
     ("CY", "place_published"),
 ]
 
+_DEFAULT_KEY_ORDER: list[str] = [
+    "type_of_reference",
+    "authors",
+    "title",
+    "year",
+    "date",
+    "journal_name",
+    "secondary_title",
+    "volume",
+    "number",
+    "start_page",
+    "end_page",
+    "doi",
+    "language",
+    "abstract",
+    "publisher",
+    "place_published",
+    "urls",
+    "keywords",
+    "file_attachments1",
+    "notes",
+]
+
+_ORDER_CACHE: dict[str, list[str]] = {}
+
+
+def _populate_entry(item: Item) -> dict:
+    populated: dict = {"type_of_reference": item.TY}
+    if item.AU:
+        populated["authors"] = item.AU
+    if item.TI:
+        populated["title"] = item.TI
+    if item.PY is not None:
+        populated["year"] = str(item.PY)
+    for item_field, rispy_key in _SCALAR_FIELDS:
+        val = getattr(item, item_field)
+        if val is not None:
+            populated[rispy_key] = val
+    if item.UR is not None:
+        populated["urls"] = [item.UR]
+    if item.KW:
+        populated["keywords"] = item.KW
+    if item.L1:
+        populated["file_attachments1"] = item.L1
+    if item.N1:
+        populated["notes"] = item.N1
+    return populated
+
 
 def _item_to_entry(item: Item) -> dict:
     """Map an Item to a rispy-style dict.
 
-    Field order matches what ArchiveCCS and most RIS exports emit
-    (TY → AU → TI → PY → DA → JO → … → KW → L1 → N1) so a textual diff
-    of input vs output highlights real fixes instead of reordering noise.
+    Preserves the input key order from `read_ris` (cached by item.id) so
+    that round-tripping a file through `read → write` is textually stable
+    and a diff highlights real fixes instead of reordering noise. New
+    keys (added by the pipeline, e.g. `notes` provenance) are appended in
+    canonical order after the cached ones. Items with no cached order
+    fall back to the canonical order entirely.
     """
-    entry: dict = {"type_of_reference": item.TY}
-
-    if item.AU:
-        entry["authors"] = item.AU
-    if item.TI:
-        entry["title"] = item.TI
-    if item.PY is not None:
-        entry["year"] = str(item.PY)
-
-    for item_field, rispy_key in _SCALAR_FIELDS:
-        val = getattr(item, item_field)
-        if val is not None:
-            entry[rispy_key] = val
-
-    if item.UR is not None:
-        entry["urls"] = [item.UR]
-    if item.KW:
-        entry["keywords"] = item.KW
-    if item.L1:
-        entry["file_attachments1"] = item.L1
-    if item.N1:
-        entry["notes"] = item.N1
-
-    return entry
+    populated = _populate_entry(item)
+    cached_order = _ORDER_CACHE.get(item.id, [])
+    ordered: dict = {}
+    for key in cached_order:
+        if key in populated:
+            ordered[key] = populated[key]
+    for key in _DEFAULT_KEY_ORDER:
+        if key in populated and key not in ordered:
+            ordered[key] = populated[key]
+    return ordered
 
 
 def write_ris(items: Iterable[Item], path: Path) -> None:
