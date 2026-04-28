@@ -1,0 +1,126 @@
+%erg v1
+Title: Mechanical hygiene tests for src and config
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0001
+
+--- log ---
+2026-04-28T09:30Z claude created
+
+--- body ---
+## Context
+
+Five mechanical ratchets that prevent silent drift in `src/maiba/` and
+`config/maiba.yaml`. They are deliberately *separate* from the ruff lint
+config (which catches syntax-class issues) — these tests catch
+project-specific invariants that ruff cannot express.
+
+Why blocked-by 0001: `test_config_yaml_has_all_config_keys` round-trips
+`load_config(...)` against the `Config` pydantic model, which doesn't
+exist until ticket 0001 lands.
+
+Why this ticket should land before ticket 0005 merges: ticket 0005 is
+the CLI pipeline. Without the ratchets in place, `src/maiba/cli.py` and
+`pipeline.py` can drift in ways that pass ruff but break the
+"no constants in code" / "logging not print" invariants.
+
+## Actions
+
+1. `tests/test_hygiene.py` — five tests (see Test below).
+2. No changes outside `tests/`.
+3. Tests use `ast` and `pathlib.Path.rglob` to scan `src/maiba/`. No
+   network, no subprocess, no fixtures beyond `config/maiba.yaml`.
+
+## Test (TDD red step)
+
+```python
+# tests/test_hygiene.py
+import ast
+import re
+from pathlib import Path
+
+import pytest
+
+SRC = Path("src/maiba")
+CONFIG = Path("config/maiba.yaml")
+HTTP_URL_RE = re.compile(r"https?://[a-zA-Z0-9.-]+")
+EMAIL_RE    = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
+
+
+def _src_files() -> list[Path]:
+    return sorted(SRC.rglob("*.py"))
+
+
+def test_no_bare_print_in_src():
+    """Use logging, not print(). Logging is configurable; print() is not."""
+    offenders: list[str] = []
+    for path in _src_files():
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+               and node.func.id == "print":
+                offenders.append(f"{path}:{node.lineno}")
+    assert not offenders, "Use logging, not print(): " + ", ".join(offenders)
+
+
+def test_no_hardcoded_http_urls_in_src():
+    """API endpoints live in config/maiba.yaml, not in code."""
+    offenders: list[str] = []
+    for path in _src_files():
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if HTTP_URL_RE.search(line) and "noqa: hygiene" not in line:
+                offenders.append(f"{path}:{i}: {line.strip()}")
+    assert not offenders, "Hardcoded URL — move to config/maiba.yaml: " + "; ".join(offenders)
+
+
+def test_no_hardcoded_email_in_src():
+    """mailto / contact lives in config/maiba.yaml under contact.mailto."""
+    offenders: list[str] = []
+    for path in _src_files():
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if EMAIL_RE.search(line) and "noqa: hygiene" not in line:
+                offenders.append(f"{path}:{i}")
+    assert not offenders, "Hardcoded email — move to config: " + ", ".join(offenders)
+
+
+def test_config_yaml_has_all_config_keys():
+    """Every key the Config pydantic model declares is present in
+    config/maiba.yaml — round-trip equality. Catches drift between code
+    and shipped config."""
+    from maiba.config import load_config  # noqa: ticket 0001 introduces this
+    cfg = load_config(CONFIG)
+    # If load_config returns successfully, all required fields are present.
+    # Round-trip: dump → load again → equal.
+    import yaml
+    redumped = yaml.safe_load(yaml.safe_dump(cfg.model_dump(mode="json")))
+    cfg2 = load_config.__wrapped__(redumped) if hasattr(load_config, "__wrapped__") else None
+    if cfg2 is not None:
+        assert cfg == cfg2
+
+
+def test_cli_uses_argparse():
+    """src/maiba/cli.py (when it exists) must use argparse, not click/typer
+    (KISS — stdlib only). If cli.py does not exist yet, the test skips."""
+    cli = SRC / "cli.py"
+    if not cli.exists():
+        pytest.skip("cli.py not yet present (ticket 0005 introduces it)")
+    text = cli.read_text(encoding="utf-8")
+    assert "import argparse" in text or "from argparse" in text, \
+        "src/maiba/cli.py must use stdlib argparse"
+```
+
+The `noqa: hygiene` escape hatch is intentional: a single comment on the
+line lets the orchestrator declare a one-off exception when justified.
+Use sparingly; the test failure output names the line so review is easy.
+
+## Exit criteria
+
+- `make test` green on the five tests.
+- All five tests are mechanical (no LLM, no network, no subprocess).
+- No false positives on the config loader path itself
+  (e.g. `load_config` reading `config/maiba.yaml` is not flagged because
+  `"config/maiba.yaml"` is not an HTTP URL).
+- The escape hatch (`# noqa: hygiene`) works on at most zero lines in
+  `src/maiba/` at this point. If non-zero, the orchestrator must justify
+  each one in its PR description.

@@ -1,0 +1,78 @@
+#!/bin/sh
+# MAIBA pre-commit hook — keep the repo clean.
+#
+# Activated by `make setup` (runs `git config core.hooksPath hooks`).
+# Composes the project safety checks with the git-erg ticket validator.
+
+set -e
+
+# 1. No direct commits to main — work on a branch.
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [ "$branch" = "main" ]; then
+    echo "ERROR: Direct commits to main are not allowed. Work on a branch." >&2
+    exit 1
+fi
+
+# 2. CLAUDE.md is locked — edit AGENTS.md instead.
+if git diff --cached --name-only | grep -qx 'CLAUDE.md'; then
+    echo "ERROR: CLAUDE.md is protected. Edit AGENTS.md instead." >&2
+    exit 1
+fi
+
+# 3. No secrets in staged files.
+secrets=$(git diff --cached --name-only \
+    | grep -iE '\.env$|\.env\.|credentials|secret|api.?key|\.pem$|\.key$' \
+    || true)
+if [ -n "$secrets" ]; then
+    echo "ERROR: Possible secrets staged:" >&2
+    echo "$secrets" >&2
+    exit 1
+fi
+
+# 4. No conflict markers.
+conflicts=$(git diff --cached --name-only -z \
+    | xargs -0 grep -l '^<<<<<<<\|^>>>>>>>\|^=======$' 2>/dev/null \
+    || true)
+if [ -n "$conflicts" ]; then
+    echo "ERROR: Unresolved merge conflict markers in:" >&2
+    echo "$conflicts" >&2
+    exit 1
+fi
+
+# 5. No large files (>500KB) — exempting the lockfile and the corpus fixture.
+large=$(git diff --cached --name-only --diff-filter=AM | while IFS= read -r file; do
+    case "$file" in
+        uv.lock) continue ;;
+        tests/fixtures/ArchiveCCS.ris) continue ;;
+        tests/fixtures/responses/*.json) continue ;;
+        tests/fixtures/responses/*/*.json) continue ;;
+    esac
+    size=$(wc -c < "$file" 2>/dev/null || echo 0)
+    if [ "$size" -gt 512000 ]; then
+        printf '  %s (%dKB)\n' "$file" "$(( size / 1024 ))"
+    fi
+done)
+if [ -n "$large" ]; then
+    echo "ERROR: Large files staged (>500KB):" >&2
+    echo "$large" >&2
+    exit 1
+fi
+
+# --- git-erg --- begin
+# Pre-commit hook fragment for git-erg ticket validation.
+# Composes safely with any existing pre-commit hook.
+
+erg_files=$(git diff --cached --name-only | grep '\.erg$' || true)
+if [ -n "$erg_files" ]; then
+    erg_bin="tickets/tools/go/erg"
+    if [ -x "$erg_bin" ]; then
+        if ! "$erg_bin" validate tickets/; then
+            echo "ERROR: Ticket validation failed. Fix errors above." >&2
+            exit 1
+        fi
+    else
+        echo "ERROR: erg binary not found. Run 'make build' first." >&2
+        exit 1
+    fi
+fi
+# --- git-erg --- end
