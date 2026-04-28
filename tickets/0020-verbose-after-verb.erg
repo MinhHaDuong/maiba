@@ -1,0 +1,59 @@
+%erg v1
+Title: Move -v/--verbose to scan subparser so it works after the verb
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T16:30Z claude created
+2026-04-28T16:30Z claude claimed
+2026-04-28T16:40Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+User feedback during smoke test:
+
+```
+$ uv run maiba scan -v -i tests/fixtures/ArchiveCCS.ris -o test4.ris --cache
+maiba: error: unrecognized arguments: -v
+```
+
+`-v` was on the top-level parser only, so it had to come BEFORE
+`scan`. Most modern CLIs put verbosity flags after the verb
+(`git commit -v`, `cargo build --verbose`, `npm install --verbose`),
+which is what the user typed.
+
+## Why not parents= on both top and sub
+
+argparse footgun: when a subparser uses `parents=[parent]` AND the
+top-level parser also defines `-v`, the subparser's default value
+clobbers the top-level value when the subcommand is parsed. So
+`maiba -v scan ...` would silently produce verbosity=0 even when
+the top-level `-v` was given.
+
+Workarounds (parse_known_args, post-merge values) are more code
+than the value adds. Easier: put `-v` only on subparsers.
+
+## Actions
+
+1. **`src/maiba/cli.py`** —
+   - Drop `-v/--verbose` from the top-level parser.
+   - Define a small `verbose_parent` (add_help=False) with `-v`
+     and inherit it via `parents=[verbose_parent]` on each
+     subparser (`scan`, `clear-cache`).
+   - In `main()`, use `getattr(args, "verbose", 0)` because the
+     no-args / help-only path doesn't include the attribute.
+
+## Trade-off
+
+- Lost: `maiba -v scan ...` (now an error).
+- Gained: `maiba scan -v ...` (matches user intuition and modern CLI norm).
+
+## Exit criteria
+
+- `make test` green; existing 74 tests pass.
+- `make lint` green.
+- `uv run maiba scan -v ...` shows INFO logs (manual eyeball).
+- `uv run maiba scan -vv ...` shows DEBUG logs.
+- `uv run maiba` (no args) prints help, no crash.
