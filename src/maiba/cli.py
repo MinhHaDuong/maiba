@@ -16,17 +16,27 @@ from maiba.pipeline import run
 
 
 def _build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="maiba", description="MAIBA — bibliography janitor")
-    parser.add_argument(
+    # `-v` lives on each subparser (post-verb position, like git commit -v).
+    # Defining it on each via a shared parent avoids the argparse footgun
+    # where parents= on both top-level and subparsers makes the subparser's
+    # default clobber the top-level value.
+    verbose_parent = argparse.ArgumentParser(add_help=False)
+    verbose_parent.add_argument(
         "-v",
         "--verbose",
         action="count",
         default=0,
         help="Increase log verbosity (-v INFO, -vv DEBUG; default WARNING)",
     )
+
+    parser = argparse.ArgumentParser(prog="maiba", description="MAIBA — bibliography janitor")
     sub = parser.add_subparsers(dest="cmd", required=False)
 
-    scan = sub.add_parser("scan", help="Scan an RIS file and optionally fix gaps")
+    scan = sub.add_parser(
+        "scan",
+        parents=[verbose_parent],
+        help="Scan an RIS file and optionally fix gaps",
+    )
     scan.add_argument(
         "-i",
         "--input",
@@ -61,6 +71,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     cc = sub.add_parser(
         "clear-cache",
+        parents=[verbose_parent],
         help="Remove the HTTP response cache directory (only relevant if --cache was used)",
     )
     cc.add_argument(
@@ -146,7 +157,8 @@ def main(argv: list[str] | None = None) -> int:
     load_dotenv(find_dotenv(usecwd=True))
     parser = _build_parser()
     args = parser.parse_args(argv)
-    configure_logging(args.verbose)
+    # verbose only exists on subcommands; safe default for the no-args path.
+    configure_logging(getattr(args, "verbose", 0))
 
     if args.cmd is None:
         parser.print_help()
