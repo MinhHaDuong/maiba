@@ -4,11 +4,10 @@ from __future__ import annotations
 
 import os
 
-from rapidfuzz import fuzz
-
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
+from maiba.resolvers._scoring import score_candidate
 
 
 def _api_key() -> str:
@@ -42,36 +41,6 @@ _OPENALEX_TYPE_TO_RIS: dict[str, str] = {
     "review": "JOUR",
     "standard": "STAND",
 }
-
-
-def _extract_lastname(name: str) -> str:
-    """Extract a normalized lowercase lastname from various formats.
-
-    Handles "Last, First" and "First Last" conventions.
-    """
-    name = name.strip()
-    if "," in name:
-        return name.split(",")[0].strip().lower()
-    parts = name.split()
-    return parts[-1].lower() if parts else ""
-
-
-def _author_overlap(
-    input_authors: list[str], candidate_authors: list[str], forbidden: list[str]
-) -> float:
-    """Fraction of input authors (excluding forbidden) found in candidates."""
-    clean_input = [a for a in input_authors if a not in forbidden]
-    if not clean_input:
-        return 0.0
-
-    input_lastnames = {_extract_lastname(a) for a in clean_input}
-    candidate_lastnames = {_extract_lastname(a) for a in candidate_authors}
-
-    if not input_lastnames:
-        return 0.0
-
-    matches = input_lastnames & candidate_lastnames
-    return len(matches) / len(input_lastnames)
 
 
 def _reconstruct_abstract(inverted: dict | None) -> str | None:
@@ -178,20 +147,13 @@ class OpenAlexResolver:
         if not results:
             return None
 
-        forbidden = self._cfg.gaps.forbidden_authors
-        title_min = self._cfg.matching.title_similarity_min
-        author_min = self._cfg.matching.author_overlap_min
-
         best_result: ResolutionResult | None = None
         best_confidence = 0.0
 
         for work in results:
             candidate = _work_to_item(work)
-            title_sim = fuzz.token_sort_ratio(item.TI, candidate.TI) / 100.0
-            overlap = _author_overlap(item.AU, candidate.AU, forbidden)
-            confidence = title_sim * 0.7 + overlap * 0.3
-
-            if confidence >= title_min and overlap >= author_min and confidence > best_confidence:
+            confidence = score_candidate(item, candidate, self._cfg)
+            if confidence is not None and confidence > best_confidence:
                 best_confidence = confidence
                 best_result = ResolutionResult(
                     candidate=candidate, confidence=confidence, source="openalex"

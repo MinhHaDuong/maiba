@@ -1,12 +1,14 @@
 %erg v1
 Title: Resolver scorer must handle items with missing input fields
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0012
 
 --- log ---
 2026-04-28T12:00Z claude created
+2026-04-28T13:30Z claude claimed
+2026-04-28T13:50Z claude status closed all-exit-criteria-met
 
 --- body ---
 ## Context
