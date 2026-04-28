@@ -88,6 +88,25 @@ make help           # list targets
 uv run maiba --help # CLI entry point (when implemented)
 ```
 
+## Configuration
+
+### OpenAlex authentication (optional)
+
+OpenAlex moved from a free polite-pool model to credit-based billing.
+The unauthenticated path now returns HTTP 429 once the daily $0 free
+tier is exhausted. To use a prepaid balance, set `OPENALEX_API_KEY`
+in the environment or in a gitignored `.env`:
+
+```bash
+export OPENALEX_API_KEY=your-key-here
+```
+
+When set, MAIBA sends `Authorization: Bearer <key>` on every OpenAlex
+request. When unset, MAIBA falls back to the unauthenticated path
+(free-tier only; expect rate-limit aborts during long runs).
+
+The key never lives in `config/maiba.yaml` — env var only.
+
 ## Conventions
 
 - Toolchain: **`uv`**. Never `pip`, never bare `venv`, never `python -m venv`.

@@ -455,6 +455,18 @@ provenance:
   users; dev-loop and re-run users opt in with `--cache` (or wipe via
   `maiba clear-cache`). FilterPolicy with `cache_ttl_s` (30 days), since
   OpenAlex/Crossref omit `Cache-Control`.
+- **2026-04-28 — OpenAlex authentication → DECIDED: opt-in via
+  `OPENALEX_API_KEY` env var.** OpenAlex moved from a free polite-pool
+  model to credit-based billing during the MVP run; the unauthenticated
+  path now returns HTTP 429 once the daily $0 free tier is exhausted.
+  When the env var is set, the resolver injects `Authorization:
+  Bearer <key>` at construction time. When unset, behavior unchanged
+  (legacy polite-pool path). Credentials never live in
+  `config/maiba.yaml` — env var only. Only HTTP 429 raises
+  `ResolverRateLimitedError` (an abort-and-drain signal); other 4xx codes
+  continue to return `None` (treated as "no candidate"). Pipeline
+  catches the abort, drains remaining items unchanged, and reports
+  `rate_limited` so the user knows why a partial run happened.
 - **2026-04-28 — License → DECIDED: CeCILL-B v1.** CEA-CNRS-INRIA Logiciel
   Libre, BSD-equivalent, GPL-compatible, French-law jurisdiction. Chosen
   for institutional alignment with CNRS while keeping adoption friction at

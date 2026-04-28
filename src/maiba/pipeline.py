@@ -13,7 +13,7 @@ from maiba.detect import detect_gaps
 from maiba.model import Item
 from maiba.resolvers import MetadataResolver, ResolutionResult
 from maiba.resolvers.crossref import CrossrefResolver
-from maiba.resolvers.openalex import OpenAlexResolver
+from maiba.resolvers.openalex import OpenAlexResolver, ResolverRateLimitedError
 from maiba.ris import read_ris, write_ris
 
 _RESOLVER_BUILDERS = {
@@ -101,10 +101,11 @@ class Report:
     with_gaps: int = 0
     fixed: int = 0
     skipped_below_threshold: int = 0
+    rate_limited: int = 0
     fixes: list[FixApplied] = field(default_factory=list)
 
 
-def run(
+def run(  # noqa: PLR0915
     input: Path,
     output: Path | None,
     cfg: Config,
@@ -121,8 +122,12 @@ def run(
 
     _announce(len(items), *_preview_counts(items, cfg), quiet=quiet)
 
+    aborted = False
     try:
-        for item in items:
+        for idx, item in enumerate(items):
+            if aborted:
+                out_items.append(item)
+                continue
             gaps = detect_gaps(item, cfg)
             if not gaps:
                 out_items.append(item)
@@ -131,7 +136,19 @@ def run(
                 continue
             report.with_gaps += 1
 
-            result = _try_resolvers(item, resolvers)
+            try:
+                result = _try_resolvers(item, resolvers)
+            except ResolverRateLimitedError as exc:
+                report.rate_limited += 1
+                print(
+                    f"\n{exc.source}: rate limited — aborting remaining "
+                    f"resolver calls (record {idx + 1}/{len(items)}).",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                out_items.append(item)
+                aborted = True
+                continue
             if result is None:
                 out_items.append(item)
                 _emit_progress(_classify(len(gaps), 0), quiet=quiet)
