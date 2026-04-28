@@ -116,7 +116,7 @@ def _work_to_item(work: dict) -> Item:
 
 
 class OpenAlexResolver:
-    def __init__(self, cfg: Config, *, use_cache: bool = True) -> None:
+    def __init__(self, cfg: Config, *, use_cache: bool = False) -> None:
         self._cfg = cfg
         self._base_url = cfg.resolvers.openalex.base_url
         self._mailto = cfg.contact.mailto

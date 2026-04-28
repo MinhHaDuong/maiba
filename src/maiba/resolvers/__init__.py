@@ -24,12 +24,16 @@ class MetadataResolver(Protocol):
     def resolve(self, item: Item) -> ResolutionResult | None: ...
 
 
-def make_http_client(cfg_http, headers: dict[str, str], *, use_cache: bool = True) -> httpx.Client:
+def make_http_client(
+    cfg_http, headers: dict[str, str], *, use_cache: bool = False
+) -> httpx.Client:
     """Build an HTTP client, optionally with caching via hishel.
 
-    Uses FilterPolicy so responses are cached even when the upstream API
-    does not send Cache-Control headers (OpenAlex and Crossref omit them).
-    The storage default_ttl controls expiry instead.
+    Caching is opt-in (default off) to preserve the zero-state default
+    documented in ARCHITECTURE.md §2.3. When enabled, uses FilterPolicy
+    so responses are cached even when the upstream API does not send
+    Cache-Control headers (OpenAlex and Crossref omit them); the storage
+    default_ttl controls expiry instead.
     """
     if use_cache:
         cache_dir = Path(cfg_http.cache_dir).expanduser()

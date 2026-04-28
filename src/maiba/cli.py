@@ -26,9 +26,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     scan.add_argument("--report", type=Path, default=None, help="Write a markdown report")
     scan.add_argument("--quiet", action="store_true", help="Suppress per-record progress glyphs")
-    scan.add_argument("--no-cache", action="store_true", help="Bypass the HTTP response cache")
+    scan.add_argument(
+        "--cache",
+        action="store_true",
+        help=(
+            "Cache OpenAlex/Crossref responses on disk (default: off). "
+            "Cache lives at config http.cache_dir (default ~/.cache/maiba/http/); "
+            "delete the directory or run 'maiba clear-cache' to wipe."
+        ),
+    )
 
-    cc = sub.add_parser("clear-cache", help="Remove the HTTP response cache directory")
+    cc = sub.add_parser(
+        "clear-cache",
+        help="Remove the HTTP response cache directory (only relevant if --cache was used)",
+    )
     cc.add_argument(
         "--config", type=Path, default=Path("config/maiba.yaml"), help="Path to maiba.yaml"
     )
@@ -53,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
         cfg=cfg,
         apply=args.apply,
         quiet=args.quiet,
-        use_cache=not args.no_cache,
+        use_cache=args.cache,
     )
 
     print(f"Scanned: {report.scanned}")

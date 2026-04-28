@@ -25,7 +25,7 @@ _CROSSREF_TYPE_TO_RIS = {
 
 
 class CrossrefResolver:
-    def __init__(self, cfg: Config, *, use_cache: bool = True) -> None:
+    def __init__(self, cfg: Config, *, use_cache: bool = False) -> None:
         self._cfg = cfg
         self._base_url = cfg.resolvers.crossref.base_url
         headers = {"User-Agent": f"MAIBA/0.0 (mailto:{cfg.contact.mailto})"}

@@ -66,7 +66,7 @@ def run(
     cfg: Config,
     apply: bool,
     quiet: bool = False,
-    use_cache: bool = True,
+    use_cache: bool = False,
 ) -> Report:
     items = list(read_ris(input))
     resolvers = _build_resolvers(cfg, use_cache=use_cache)
@@ -115,7 +115,7 @@ def run(
     return report
 
 
-def _build_resolvers(cfg: Config, *, use_cache: bool = True) -> list[MetadataResolver]:
+def _build_resolvers(cfg: Config, *, use_cache: bool = False) -> list[MetadataResolver]:
     return [_RESOLVER_BUILDERS[name](cfg, use_cache=use_cache) for name in cfg.resolvers.order]
 
 
