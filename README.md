@@ -28,8 +28,10 @@ prints incomplete records and their candidate fixes. Everything else is incremen
 One command. Reads `/home/haduong/CNRS/html/ArchiveCCS/ArchiveCCS.ris`, calls
 **OpenAlex** then **Crossref** for records with gaps (missing title, author list,
 date, DOI), and writes back a corrected RIS with provenance lines. No LLM by
-default, no persistent state, no cache. Tunables live in `config/maiba.yaml` —
-no hardcoded constants in code.
+default. Resolver responses are cached at `~/.cache/maiba/http/` (safe to
+`rm -rf`; bypass with `--no-cache` or wipe via `maiba clear-cache`); no other
+persistent state. Tunables live in `config/maiba.yaml` — no hardcoded
+constants in code.
 
 That's the whole MVP. Everything below is roadmap, not commitment.
 
