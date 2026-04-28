@@ -43,6 +43,17 @@ def _emit_progress(char: str, *, quiet: bool = False) -> None:
     print(char, end="", flush=True, file=sys.stderr)
 
 
+def _announce(total: int, n_doi: int, *, quiet: bool = False) -> None:
+    if quiet or not sys.stderr.isatty() or total == 0:
+        return
+    n_search = total - n_doi
+    print(
+        f"Scanning {total} records ({n_doi} DOI lookups, {n_search} title searches)…",
+        file=sys.stderr,
+        flush=True,
+    )
+
+
 @dataclass
 class FixApplied:
     item_id: str
@@ -73,6 +84,9 @@ def run(
     report = Report(scanned=len(items))
     out_items: list[Item] = []
     emitted = False
+
+    n_doi = sum(1 for it in items if it.DO)
+    _announce(len(items), n_doi, quiet=quiet)
 
     try:
         for item in items:
