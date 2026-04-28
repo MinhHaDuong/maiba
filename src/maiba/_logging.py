@@ -32,9 +32,7 @@ def configure(verbosity: int) -> None:
     level = _LEVEL_FROM_VERBOSITY.get(verbosity, logging.DEBUG)
     logging.basicConfig(
         level=level,
-        # Leading \n so log lines don't run into the inline glyph stream
-        # printed by pipeline.py during -v scans.
-        format="\n%(asctime)s %(levelname)-7s %(name)s: %(message)s",
+        format="%(asctime)s %(levelname)-7s %(name)s: %(message)s",
         datefmt="%H:%M:%S",
         stream=sys.stderr,
         force=True,
