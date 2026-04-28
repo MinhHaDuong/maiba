@@ -1,0 +1,97 @@
+%erg v1
+Title: Skip the rate-limited resolver, don't abort the whole scan
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T15:00Z claude created
+2026-04-28T15:00Z claude claimed
+2026-04-28T15:30Z claude status closed all-exit-criteria-met; live smoke verified Crossref fix lands when OpenAlex 429s
+
+--- body ---
+## Context
+
+Ticket 0012 caught `ResolverRateLimitedError` at the outermost level
+in `pipeline.run()` and drained all remaining items unchanged
+("abort-and-drain"). The reasoning: don't burn quota on a known-dead
+resolver.
+
+The trade-off was wrong. A 429 from OpenAlex says nothing about
+Crossref's quota. The existing `_try_resolvers` already iterates
+`cfg.resolvers.order` (openalex → crossref); aborting at the outer
+level throws away ~200 perfectly-good Crossref calls per run.
+
+Ticket 0015 will add an LLM resolver as a third path. The same
+argument applies — abort-and-drain on first 429 makes that path
+moot too.
+
+## Actions
+
+1. **`src/maiba/resolvers/openalex.py`** and **crossref.py**: each
+   resolver class gets `source: ClassVar[str] = "openalex"` (or
+   `"crossref"`). Self-identifies for the dead-set bookkeeping below.
+
+2. **`src/maiba/pipeline.py`**:
+   - `_try_resolvers(item, resolvers, dead)` — new signature. Skips
+     resolvers in `dead`. Catches `ResolverRateLimitedError` from
+     each call, adds the source to `dead`, logs WARNING once, and
+     continues to the next resolver.
+   - `run()`: drops the outer `try/except ResolverRateLimitedError`.
+     Tracks `dead_resolvers: set[str]` across iterations. Drops the
+     `aborted` flag and the drain loop.
+   - `Report.rate_limited` semantic changes: now counts records that
+     ran with a *degraded* resolver chain (at least one resolver
+     skipped). Document the change in the dataclass docstring.
+
+3. **`tests/test_pipeline_integration.py`**: add a test that mocks
+   OpenAlex returning 429 and Crossref returning a clean candidate,
+   asserts:
+   - The pipeline does NOT abort.
+   - Every record gets a Crossref attempt (no early termination).
+   - At least one record is fixed via Crossref despite OpenAlex
+     being dead.
+   - `Report.rate_limited` equals the number of records that had to
+     skip OpenAlex.
+
+4. **`ARCHITECTURE.md` §9**: amend the OpenAlex auth entry to note
+   the policy change. New decision: rate-limited resolver is skipped
+   for the rest of the run; pipeline continues with the remaining
+   resolver chain.
+
+## Test (TDD red step)
+
+```python
+# tests/test_pipeline_integration.py — addition
+@respx.mock
+def test_pipeline_continues_after_openalex_rate_limit(tmp_path):
+    """OpenAlex 429 must not abort; Crossref must still be tried."""
+    respx.get(url__startswith="https://api.openalex.org").mock(
+        return_value=Response(429, json={"error": "Rate limit exceeded"})
+    )
+    crossref_route = respx.get(url__startswith="https://api.crossref.org").mock(
+        return_value=Response(200, json=_crossref_hit_payload())
+    )
+    cfg = load_config(Path("config/maiba.yaml"))
+    out = tmp_path / "out.ris"
+    report = run(input=Path("tests/fixtures/et-al-with-doi.ris"),
+                 output=out, cfg=cfg)
+    assert report.rate_limited >= 1, "rate-limited records should be counted"
+    assert crossref_route.called, "crossref must still be tried"
+```
+
+## Exit criteria
+
+- `make test` green; new pipeline integration test passes.
+- `make lint` green.
+- After this lands, smoke run on `tests/fixtures/ArchiveCCS.ris` with
+  no `OPENALEX_API_KEY` (so OpenAlex 429s on first call) still produces
+  Crossref hits for the rest of the records — verify by eyeballing
+  the diff.
+- ARCHITECTURE.md §9 entry amended.
+
+## Out of scope
+
+- Smarter retry (exponential backoff). YAGNI for MVP.
+- Per-resolver rate-limit budgets. YAGNI.
+- Cross-run dead-resolver memory. Each invocation resets.

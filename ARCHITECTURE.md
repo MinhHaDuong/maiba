@@ -463,10 +463,17 @@ provenance:
   Bearer <key>` at construction time. When unset, behavior unchanged
   (legacy polite-pool path). Credentials never live in
   `config/maiba.yaml` — env var only. Only HTTP 429 raises
-  `ResolverRateLimitedError` (an abort-and-drain signal); other 4xx codes
-  continue to return `None` (treated as "no candidate"). Pipeline
-  catches the abort, drains remaining items unchanged, and reports
-  `rate_limited` so the user knows why a partial run happened.
+  `ResolverRateLimitedError`; other 4xx codes continue to return
+  `None` (treated as "no candidate").
+- **2026-04-28 — Rate-limit policy (amends 0012) → DECIDED: skip,
+  don't abort.** The pipeline catches `ResolverRateLimitedError`
+  per resolver, not globally (ticket 0018). The dead resolver is
+  skipped for the rest of the run; remaining resolvers in the chain
+  (Crossref today, LLM tomorrow per ticket 0015) keep running.
+  `Report.rate_limited` counts records that ran with a degraded
+  resolver chain. The original "abort-and-drain" semantic threw away
+  ~200 perfectly-good Crossref calls per run on `ArchiveCCS.ris` and
+  was wrong.
 - **2026-04-28 — License → DECIDED: CeCILL-B v1.** CEA-CNRS-INRIA Logiciel
   Libre, BSD-equivalent, GPL-compatible, French-law jurisdiction. Chosen
   for institutional alignment with CNRS while keeping adoption friction at
