@@ -1,0 +1,70 @@
+%erg v1
+Title: Capture real OpenAlex and Crossref responses as test fixtures
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T09:00Z claude created
+2026-04-28T09:00Z claude claimed
+2026-04-28T09:05Z claude status closed work-complete
+
+--- body ---
+## Context
+
+Pre-flight derisk before MVP code lands. Without real API responses on disk,
+the resolver tests in tickets 0003 / 0004 / 0005 would mock fabricated JSON
+shapes from memory and silently drift from reality. Capturing 6 real records
+(2 DOI hits, 4 search lookups) against both APIs grounds every resolver test
+in actual server output and forces the `Item` data model in ticket 0001 to
+accommodate real-world shape variation (date forms, author shapes, missing
+host_venue, empty results, etc.).
+
+## Captured fixtures
+
+`tests/fixtures/responses/openalex/` and `tests/fixtures/responses/crossref/`,
+6 files each:
+
+| Slug | Lookup | OA result | CR result |
+|------|--------|-----------|-----------|
+| `ashworth-2009-doi`         | DOI 10.1016/j.egypro.2009.02.302 | full record | full record |
+| `stone-2008-doi`            | DOI 10.1039/b807747a              | full record | full record |
+| `adler-2005-search`         | title + author "adler"            | candidates  | candidates  |
+| `akimoto-2004-search`       | title + author "akimoto"          | candidates  | candidates  |
+| `ademe-2002-search`         | French title + "ademe"            | candidates  | candidates  |
+| `lemonde-sleipner-2008-search` | French news title              | **0 results** (true miss) | 3 noisy candidates |
+
+Each fixture is the raw HTTP response body (pretty-printed JSON) — no
+post-processing, no field stripping. The two negative cases
+(`lemonde-sleipner` for OA; the noisy CR results) are deliberately kept so
+the matching threshold and "no candidate above τ → return None" path can be
+unit-tested against ground truth.
+
+## Method
+
+```bash
+UA="MAIBA/0.0 (mailto:minh.ha-duong@cnrs.fr)"
+# DOI hits
+curl -sS -A "$UA" "https://api.openalex.org/works/doi:<DOI>?mailto=..." | python3 -m json.tool
+curl -sS -A "$UA" "https://api.crossref.org/works/<DOI>"               | python3 -m json.tool
+# Searches
+curl -sS -A "$UA" "https://api.openalex.org/works?search=<title>&per_page=3&mailto=..."
+curl -sS -A "$UA" "https://api.crossref.org/works?query.title=<title>&query.author=<au>&rows=3"
+```
+
+Both APIs were called from the polite pool (mailto in User-Agent and query
+parameter). No API keys required.
+
+## Why a one-shot ticket, not a recurring script
+
+Per ARCHITECTURE.md §0, MAIBA must minimize state. These fixtures are the
+*test contract* — frozen in git, replayed forever via `respx.mock`. We do
+*not* re-record on every run; that would re-introduce network dependence
+into the test suite. If the upstream APIs change shape someday, that change
+shows up as a downstream test failure, and we re-record deliberately.
+
+## Exit criteria (met)
+
+- 12 JSON files committed under `tests/fixtures/responses/{openalex,crossref}/`.
+- Includes at least one DOI hit, one search hit, one true miss.
+- Tickets 0003, 0004, 0005 reference these fixtures instead of inline JSON literals.

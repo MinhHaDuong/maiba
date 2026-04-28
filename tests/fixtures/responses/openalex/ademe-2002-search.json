@@ -1,0 +1,2912 @@
+{
+    "meta": {
+        "count": 1008,
+        "db_response_time_ms": 220,
+        "page": 1,
+        "per_page": 3,
+        "groups_count": null,
+        "cost_usd": 0.001
+    },
+    "results": [
+        {
+            "id": "https://openalex.org/W1990749219",
+            "doi": "https://doi.org/10.4000/developpementdurable.9208",
+            "title": "La R\u00e9silience urbaine\u00a0: un nouveau concept op\u00e9rationnel vecteur de durabilit\u00e9 urbaine\u00a0?",
+            "display_name": "La R\u00e9silience urbaine\u00a0: un nouveau concept op\u00e9rationnel vecteur de durabilit\u00e9 urbaine\u00a0?",
+            "relevance_score": 10.384539,
+            "publication_year": 2012,
+            "publication_date": "2012-01-01",
+            "ids": {
+                "openalex": "https://openalex.org/W1990749219",
+                "doi": "https://doi.org/10.4000/developpementdurable.9208",
+                "mag": "1990749219"
+            },
+            "language": "fr",
+            "primary_location": {
+                "id": "doi:10.4000/developpementdurable.9208",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.4000/developpementdurable.9208",
+                "pdf_url": "https://journals.openedition.org/developpementdurable/pdf/9208",
+                "source": {
+                    "id": "https://openalex.org/S2739279844",
+                    "display_name": "D\u00e9veloppement durable et territoires",
+                    "issn_l": "1772-9971",
+                    "issn": [
+                        "1772-9971"
+                    ],
+                    "is_oa": true,
+                    "is_in_doaj": true,
+                    "is_core": false,
+                    "host_organization": "https://openalex.org/P4310311494",
+                    "host_organization_name": "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310311494"
+                    ],
+                    "host_organization_lineage_names": [
+                        "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles"
+                    ],
+                    "type": "journal"
+                },
+                "license": "cc-by-nc",
+                "license_id": "https://openalex.org/licenses/cc-by-nc",
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "D\u00e9veloppement durable et territoires",
+                "raw_type": "journal-article"
+            },
+            "type": "article",
+            "indexed_in": [
+                "crossref",
+                "doaj"
+            ],
+            "open_access": {
+                "is_oa": true,
+                "oa_status": "diamond",
+                "oa_url": "https://journals.openedition.org/developpementdurable/pdf/9208",
+                "any_repository_has_fulltext": true
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": "https://openalex.org/A5002778476",
+                        "display_name": "Marie Toubin",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1294671590",
+                            "display_name": "Centre National de la Recherche Scientifique",
+                            "ror": "https://ror.org/02feahw73",
+                            "country_code": "FR",
+                            "type": "government",
+                            "lineage": [
+                                "https://openalex.org/I1294671590"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I204730241",
+                            "display_name": "Universit\u00e9 Paris Cit\u00e9",
+                            "ror": "https://ror.org/05f82e368",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I204730241"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210087727",
+                            "display_name": "P\u00f4le de Recherche pour l'Organisation et la Diffusion de l'Information G\u00e9ographique",
+                            "ror": "https://ror.org/002v3cy83",
+                            "country_code": "FR",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1327553481",
+                                "https://openalex.org/I154202486",
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I22248866",
+                                "https://openalex.org/I277688954",
+                                "https://openalex.org/I2799535048",
+                                "https://openalex.org/I2802818602",
+                                "https://openalex.org/I39804081",
+                                "https://openalex.org/I4210087727",
+                                "https://openalex.org/I4210088668",
+                                "https://openalex.org/I4210090127",
+                                "https://openalex.org/I4210113730",
+                                "https://openalex.org/I4210131494",
+                                "https://openalex.org/I4210166444",
+                                "https://openalex.org/I4405257220",
+                                "https://openalex.org/I51101395"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210154111",
+                            "display_name": "Universit\u00e9 Gustave Eiffel",
+                            "ror": "https://ror.org/03x42jk29",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I4210154111"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": true,
+                    "raw_author_name": "Marie Toubin",
+                    "raw_affiliation_strings": [
+                        "Marie Toubin, Doctorante CIFRE avec Egis, en collaboration avec l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris (Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e) et l\u2019Universit\u00e9 Paris 7 Paris Diderot, Laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Marie.toubin@eivp-paris.fr",
+                        "LAB'URBA"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Marie Toubin, Doctorante CIFRE avec Egis, en collaboration avec l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris (Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e) et l\u2019Universit\u00e9 Paris 7 Paris Diderot, Laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Marie.toubin@eivp-paris.fr",
+                            "institution_ids": [
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I4210087727",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I4210154111"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "LAB'URBA",
+                            "institution_ids": []
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5002014069",
+                        "display_name": "Serge Lhomme",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1294671590",
+                            "display_name": "Centre National de la Recherche Scientifique",
+                            "ror": "https://ror.org/02feahw73",
+                            "country_code": "FR",
+                            "type": "government",
+                            "lineage": [
+                                "https://openalex.org/I1294671590"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I204730241",
+                            "display_name": "Universit\u00e9 Paris Cit\u00e9",
+                            "ror": "https://ror.org/05f82e368",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I204730241"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210087727",
+                            "display_name": "P\u00f4le de Recherche pour l'Organisation et la Diffusion de l'Information G\u00e9ographique",
+                            "ror": "https://ror.org/002v3cy83",
+                            "country_code": "FR",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1327553481",
+                                "https://openalex.org/I154202486",
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I22248866",
+                                "https://openalex.org/I277688954",
+                                "https://openalex.org/I2799535048",
+                                "https://openalex.org/I2802818602",
+                                "https://openalex.org/I39804081",
+                                "https://openalex.org/I4210087727",
+                                "https://openalex.org/I4210088668",
+                                "https://openalex.org/I4210090127",
+                                "https://openalex.org/I4210113730",
+                                "https://openalex.org/I4210131494",
+                                "https://openalex.org/I4210166444",
+                                "https://openalex.org/I4405257220",
+                                "https://openalex.org/I51101395"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210154111",
+                            "display_name": "Universit\u00e9 Gustave Eiffel",
+                            "ror": "https://ror.org/03x42jk29",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I4210154111"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Serge Lhomme",
+                    "raw_affiliation_strings": [
+                        "Serge Lhomme, Doctorant en G\u00e9nie Urbain \u00e0 l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris en collaboration avec l\u2019Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e et l\u2019Universit\u00e9 Paris 7 Paris Diderot, Laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Serge.lhomme@eivp-paris.fr",
+                        "LAB'URBA"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Serge Lhomme, Doctorant en G\u00e9nie Urbain \u00e0 l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris en collaboration avec l\u2019Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e et l\u2019Universit\u00e9 Paris 7 Paris Diderot, Laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Serge.lhomme@eivp-paris.fr",
+                            "institution_ids": [
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I4210087727",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I4210154111"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "LAB'URBA",
+                            "institution_ids": []
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5103824044",
+                        "display_name": "Youssef Diab",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I204730241",
+                            "display_name": "Universit\u00e9 Paris Cit\u00e9",
+                            "ror": "https://ror.org/05f82e368",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I204730241"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I3019908861",
+                            "display_name": "Laboratoire de G\u00e9nie \u00c9lectrique et \u00c9lectronique de Paris",
+                            "ror": "https://ror.org/02xnnng09",
+                            "country_code": "FR",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I277688954",
+                                "https://openalex.org/I277688954",
+                                "https://openalex.org/I3019908861",
+                                "https://openalex.org/I39804081",
+                                "https://openalex.org/I4210107720"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210154111",
+                            "display_name": "Universit\u00e9 Gustave Eiffel",
+                            "ror": "https://ror.org/03x42jk29",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I4210154111"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Youssef Diab",
+                    "raw_affiliation_strings": [
+                        "Youssef Diab, Directeur scientifique de l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris, Professeur de g\u00e9nie civil urbain \u00e0 l\u2019Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Youssef.diab@univ-mlv.fr",
+                        "Universit\u00e9 Paris-Est, EIVP"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Youssef Diab, Directeur scientifique de l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris, Professeur de g\u00e9nie civil urbain \u00e0 l\u2019Universit\u00e9 Paris-Est Marne-la-Vall\u00e9e. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Youssef.diab@univ-mlv.fr",
+                            "institution_ids": [
+                                "https://openalex.org/I3019908861",
+                                "https://openalex.org/I4210154111"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "Universit\u00e9 Paris-Est, EIVP",
+                            "institution_ids": [
+                                "https://openalex.org/I204730241"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5068855207",
+                        "display_name": "Damien Serre",
+                        "orcid": "https://orcid.org/0000-0002-2902-2989"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210097854",
+                            "display_name": "Association pour l'Utilisation du Rein Artificiel dans la r\u00e9gion Lyonnaise",
+                            "ror": "https://ror.org/0157ce014",
+                            "country_code": "FR",
+                            "type": "other",
+                            "lineage": [
+                                "https://openalex.org/I4210097854"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210143141",
+                            "display_name": "Minist\u00e8re de l\u2019Environnement et du D\u00e9veloppement Durable",
+                            "ror": "https://ror.org/04t39kh72",
+                            "country_code": "SN",
+                            "type": "government",
+                            "lineage": [
+                                "https://openalex.org/I4210143141"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR",
+                        "SN"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Damien Serre",
+                    "raw_affiliation_strings": [
+                        "Damien Serre, Enseignant-Chercheur HDR \u00e0 l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris, responsable de l\u2019axe de recherche \u00ab\u00a0r\u00e9silience urbaine \u00bb. Ses recherches ont pour finalit\u00e9 la formalisation des connaissances utiles pour l\u2019aide \u00e0 la d\u00e9cision et pour l\u2019aide \u00e0 la conception de villes r\u00e9silientes face aux risques. Sa recherche est transdisciplinaire et au service de la ville. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Damien.serre@eivp-paris.fr",
+                        "D\u00e9veloppement durable et territoires"
+                    ],
+                    "raw_orcid": "https://orcid.org/0000-0002-2902-2989",
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Damien Serre, Enseignant-Chercheur HDR \u00e0 l\u2019Ecole des Ing\u00e9nieurs de la Ville de Paris, responsable de l\u2019axe de recherche \u00ab\u00a0r\u00e9silience urbaine \u00bb. Ses recherches ont pour finalit\u00e9 la formalisation des connaissances utiles pour l\u2019aide \u00e0 la d\u00e9cision et pour l\u2019aide \u00e0 la conception de villes r\u00e9silientes face aux risques. Sa recherche est transdisciplinaire et au service de la ville. EIVP, 15 rue F\u00e9nelon, 75010 Paris. Damien.serre@eivp-paris.fr",
+                            "institution_ids": [
+                                "https://openalex.org/I4210097854"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "D\u00e9veloppement durable et territoires",
+                            "institution_ids": [
+                                "https://openalex.org/I4210143141"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "last",
+                    "author": {
+                        "id": "https://openalex.org/A5082802928",
+                        "display_name": "Richard Laganier",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1294671590",
+                            "display_name": "Centre National de la Recherche Scientifique",
+                            "ror": "https://ror.org/02feahw73",
+                            "country_code": "FR",
+                            "type": "government",
+                            "lineage": [
+                                "https://openalex.org/I1294671590"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I204730241",
+                            "display_name": "Universit\u00e9 Paris Cit\u00e9",
+                            "ror": "https://ror.org/05f82e368",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I204730241"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I4210087727",
+                            "display_name": "P\u00f4le de Recherche pour l'Organisation et la Diffusion de l'Information G\u00e9ographique",
+                            "ror": "https://ror.org/002v3cy83",
+                            "country_code": "FR",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I1327553481",
+                                "https://openalex.org/I154202486",
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I22248866",
+                                "https://openalex.org/I277688954",
+                                "https://openalex.org/I2799535048",
+                                "https://openalex.org/I2802818602",
+                                "https://openalex.org/I39804081",
+                                "https://openalex.org/I4210087727",
+                                "https://openalex.org/I4210088668",
+                                "https://openalex.org/I4210090127",
+                                "https://openalex.org/I4210113730",
+                                "https://openalex.org/I4210131494",
+                                "https://openalex.org/I4210166444",
+                                "https://openalex.org/I4405257220",
+                                "https://openalex.org/I51101395"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Richard Laganier",
+                    "raw_affiliation_strings": [
+                        "Richard Laganier, Professeur de G\u00e9ographie \u00e0 l\u2019Universit\u00e9 Paris 7 Paris Diderot, Sorbonne Paris Cit\u00e9, laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. Son activit\u00e9 de recherche porte sur l\u2019\u00e9tude des rapports entre risques li\u00e9s \u00e0 l\u2019eau et territoire et l\u2019analyse des conditions de d\u00e9veloppement de la r\u00e9silience. Il est auteur ou co-auteur de nombreux ouvrages sur les extr\u00eames hydrologiques et leur gestion. Univ. Paris 7, 7 rue Watt, 75013 Paris. Richard.laganier@univ-paris-diderot.fr",
+                        "P\u00f4le de recherche pour l'organisation et la diffusion de l'information g\u00e9ographique"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Richard Laganier, Professeur de G\u00e9ographie \u00e0 l\u2019Universit\u00e9 Paris 7 Paris Diderot, Sorbonne Paris Cit\u00e9, laboratoire PRODIG (P\u00f4le de Recherche pour l\u2019Organisation et la diffusion de l\u2019Information G\u00e9ographique), UMR CNRS 8586. Son activit\u00e9 de recherche porte sur l\u2019\u00e9tude des rapports entre risques li\u00e9s \u00e0 l\u2019eau et territoire et l\u2019analyse des conditions de d\u00e9veloppement de la r\u00e9silience. Il est auteur ou co-auteur de nombreux ouvrages sur les extr\u00eames hydrologiques et leur gestion. Univ. Paris 7, 7 rue Watt, 75013 Paris. Richard.laganier@univ-paris-diderot.fr",
+                            "institution_ids": [
+                                "https://openalex.org/I204730241",
+                                "https://openalex.org/I1294671590",
+                                "https://openalex.org/I4210087727"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "P\u00f4le de recherche pour l'organisation et la diffusion de l'information g\u00e9ographique",
+                            "institution_ids": [
+                                "https://openalex.org/I4210087727"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 2,
+            "institutions_distinct_count": 5,
+            "corresponding_author_ids": [
+                "https://openalex.org/A5002778476"
+            ],
+            "corresponding_institution_ids": [
+                "https://openalex.org/I1294671590",
+                "https://openalex.org/I204730241",
+                "https://openalex.org/I4210087727",
+                "https://openalex.org/I4210154111"
+            ],
+            "apc_list": null,
+            "apc_paid": null,
+            "fwci": 11.6466,
+            "has_fulltext": true,
+            "cited_by_count": 49,
+            "citation_normalized_percentile": {
+                "value": 0.97971719,
+                "is_in_top_1_percent": false,
+                "is_in_top_10_percent": true
+            },
+            "cited_by_percentile_year": {
+                "min": 90,
+                "max": 99
+            },
+            "biblio": {
+                "volume": "Vol. 3, n\u00b0 1",
+                "issue": null,
+                "first_page": null,
+                "last_page": null
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T10747",
+                "display_name": "Disaster Management and Resilience",
+                "score": 0.9934999942779541,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/3312",
+                    "display_name": "Sociology and Political Science"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/33",
+                    "display_name": "Social Sciences"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/2",
+                    "display_name": "Social Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T10747",
+                    "display_name": "Disaster Management and Resilience",
+                    "score": 0.9934999942779541,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/3312",
+                        "display_name": "Sociology and Political Science"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/33",
+                        "display_name": "Social Sciences"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T13588",
+                    "display_name": "Regional resilience and development",
+                    "score": 0.972000002861023,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2002",
+                        "display_name": "Economics and Econometrics"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/20",
+                        "display_name": "Economics, Econometrics and Finance"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T11807",
+                    "display_name": "Infrastructure Resilience and Vulnerability Analysis",
+                    "score": 0.9508000016212463,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2205",
+                        "display_name": "Civil and Structural Engineering"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/22",
+                        "display_name": "Engineering"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/humanities",
+                    "display_name": "Humanities",
+                    "score": 0.7905764579772949
+                },
+                {
+                    "id": "https://openalex.org/keywords/physics",
+                    "display_name": "Physics",
+                    "score": 0.32648929953575134
+                },
+                {
+                    "id": "https://openalex.org/keywords/art",
+                    "display_name": "Art",
+                    "score": 0.3190057873725891
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C15708023",
+                    "wikidata": "https://www.wikidata.org/wiki/Q80083",
+                    "display_name": "Humanities",
+                    "level": 1,
+                    "score": 0.7905764579772949
+                },
+                {
+                    "id": "https://openalex.org/C121332964",
+                    "wikidata": "https://www.wikidata.org/wiki/Q413",
+                    "display_name": "Physics",
+                    "level": 0,
+                    "score": 0.32648929953575134
+                },
+                {
+                    "id": "https://openalex.org/C142362112",
+                    "wikidata": "https://www.wikidata.org/wiki/Q735",
+                    "display_name": "Art",
+                    "level": 0,
+                    "score": 0.3190057873725891
+                }
+            ],
+            "mesh": [],
+            "locations_count": 6,
+            "locations": [
+                {
+                    "id": "doi:10.4000/developpementdurable.9208",
+                    "is_oa": true,
+                    "landing_page_url": "https://doi.org/10.4000/developpementdurable.9208",
+                    "pdf_url": "https://journals.openedition.org/developpementdurable/pdf/9208",
+                    "source": {
+                        "id": "https://openalex.org/S2739279844",
+                        "display_name": "D\u00e9veloppement durable et territoires",
+                        "issn_l": "1772-9971",
+                        "issn": [
+                            "1772-9971"
+                        ],
+                        "is_oa": true,
+                        "is_in_doaj": true,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/P4310311494",
+                        "host_organization_name": "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles",
+                        "host_organization_lineage": [
+                            "https://openalex.org/P4310311494"
+                        ],
+                        "host_organization_lineage_names": [
+                            "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles"
+                        ],
+                        "type": "journal"
+                    },
+                    "license": "cc-by-nc",
+                    "license_id": "https://openalex.org/licenses/cc-by-nc",
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "D\u00e9veloppement durable et territoires",
+                    "raw_type": "journal-article"
+                },
+                {
+                    "id": "pmh:oai:HAL:halshs-01210012v1",
+                    "is_oa": false,
+                    "landing_page_url": "https://shs.hal.science/halshs-01210012",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4406922466",
+                        "display_name": "SPIRE - Sciences Po Institutional REpository",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "http://developpementdurable.revues.org/9208",
+                    "raw_type": "Journal articles"
+                },
+                {
+                    "id": "pmh:oai:doaj.org/article:43c28352170d4124a836cd9f6fdf0232",
+                    "is_oa": true,
+                    "landing_page_url": "https://doaj.org/article/43c28352170d4124a836cd9f6fdf0232",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S112646816",
+                        "display_name": "SHILAP Revista de lepidopterolog\u00eda",
+                        "issn_l": "0300-5267",
+                        "issn": [
+                            "0300-5267",
+                            "2340-4078"
+                        ],
+                        "is_oa": true,
+                        "is_in_doaj": true,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "D\u00e9veloppement Durable et Territoires, Vol 3, Iss 1",
+                    "raw_type": "article"
+                },
+                {
+                    "id": "pmh:oai:doaj.org/article:94b9d794f47849a597995f0c4e7ce257",
+                    "is_oa": true,
+                    "landing_page_url": "https://doaj.org/article/94b9d794f47849a597995f0c4e7ce257",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S112646816",
+                        "display_name": "SHILAP Revista de lepidopterolog\u00eda",
+                        "issn_l": "0300-5267",
+                        "issn": [
+                            "0300-5267",
+                            "2340-4078"
+                        ],
+                        "is_oa": true,
+                        "is_in_doaj": true,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "D\u00e9veloppement Durable et Territoires (2012)",
+                    "raw_type": "article"
+                },
+                {
+                    "id": "pmh:oai:doaj.org/article:d1280384d87e488ea38cf6802a63b028",
+                    "is_oa": true,
+                    "landing_page_url": "https://doaj.org/article/d1280384d87e488ea38cf6802a63b028",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S112646816",
+                        "display_name": "SHILAP Revista de lepidopterolog\u00eda",
+                        "issn_l": "0300-5267",
+                        "issn": [
+                            "0300-5267",
+                            "2340-4078"
+                        ],
+                        "is_oa": true,
+                        "is_in_doaj": true,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "D\u00e9veloppement Durable et Territoires, Vol 3, Iss 1 (2012)",
+                    "raw_type": "article"
+                },
+                {
+                    "id": "pmh:oai:revues.org:developpementdurable/9208",
+                    "is_oa": true,
+                    "landing_page_url": "https://journals.openedition.org/developpementdurable/9208",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306402281",
+                        "display_name": "OpenEdition (OpenEdition)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": "cc-by-nc",
+                    "license_id": "https://openalex.org/licenses/cc-by-nc",
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "info:eu-repo/semantics/article"
+                }
+            ],
+            "best_oa_location": {
+                "id": "doi:10.4000/developpementdurable.9208",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.4000/developpementdurable.9208",
+                "pdf_url": "https://journals.openedition.org/developpementdurable/pdf/9208",
+                "source": {
+                    "id": "https://openalex.org/S2739279844",
+                    "display_name": "D\u00e9veloppement durable et territoires",
+                    "issn_l": "1772-9971",
+                    "issn": [
+                        "1772-9971"
+                    ],
+                    "is_oa": true,
+                    "is_in_doaj": true,
+                    "is_core": false,
+                    "host_organization": "https://openalex.org/P4310311494",
+                    "host_organization_name": "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310311494"
+                    ],
+                    "host_organization_lineage_names": [
+                        "R\u00e9seau D\u00e9veloppement Durable et Territoires Fragiles"
+                    ],
+                    "type": "journal"
+                },
+                "license": "cc-by-nc",
+                "license_id": "https://openalex.org/licenses/cc-by-nc",
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "D\u00e9veloppement durable et territoires",
+                "raw_type": "journal-article"
+            },
+            "sustainable_development_goals": [],
+            "awards": [],
+            "funders": [],
+            "has_content": {
+                "grobid_xml": true,
+                "pdf": true
+            },
+            "content_urls": {
+                "pdf": "https://content.openalex.org/works/W1990749219.pdf",
+                "grobid_xml": "https://content.openalex.org/works/W1990749219.grobid-xml"
+            },
+            "referenced_works_count": 28,
+            "referenced_works": [
+                "https://openalex.org/W140379870",
+                "https://openalex.org/W186505451",
+                "https://openalex.org/W1500464421",
+                "https://openalex.org/W1525603239",
+                "https://openalex.org/W1542279306",
+                "https://openalex.org/W1571276216",
+                "https://openalex.org/W1932211504",
+                "https://openalex.org/W1985358877",
+                "https://openalex.org/W2010907175",
+                "https://openalex.org/W2011303397",
+                "https://openalex.org/W2014785110",
+                "https://openalex.org/W2044427125",
+                "https://openalex.org/W2045323216",
+                "https://openalex.org/W2060654057",
+                "https://openalex.org/W2061118665",
+                "https://openalex.org/W2082865867",
+                "https://openalex.org/W2110013894",
+                "https://openalex.org/W2113188272",
+                "https://openalex.org/W2148433648",
+                "https://openalex.org/W2151933910",
+                "https://openalex.org/W2169483594",
+                "https://openalex.org/W2172220302",
+                "https://openalex.org/W2175360117",
+                "https://openalex.org/W2418852630",
+                "https://openalex.org/W2610893086",
+                "https://openalex.org/W2764163973",
+                "https://openalex.org/W3126001915",
+                "https://openalex.org/W4404163593"
+            ],
+            "related_works": [
+                "https://openalex.org/W4387497383",
+                "https://openalex.org/W3183948672",
+                "https://openalex.org/W3173606202",
+                "https://openalex.org/W3110381201",
+                "https://openalex.org/W2948807893",
+                "https://openalex.org/W2935909890",
+                "https://openalex.org/W2778153218",
+                "https://openalex.org/W2758277628",
+                "https://openalex.org/W2748952813",
+                "https://openalex.org/W1531601525"
+            ],
+            "abstract_inverted_index": {
+                "Le": [
+                    0
+                ],
+                "concept": [
+                    1,
+                    48,
+                    95
+                ],
+                "de": [
+                    2,
+                    7,
+                    41,
+                    81,
+                    83,
+                    90,
+                    96,
+                    110,
+                    118,
+                    122,
+                    129,
+                    132,
+                    139,
+                    143,
+                    152,
+                    155,
+                    159,
+                    169,
+                    175
+                ],
+                "r\u00e9silience": [
+                    3,
+                    97,
+                    133,
+                    153,
+                    168
+                ],
+                "r\u00e9interroge": [
+                    4
+                ],
+                "la": [
+                    5,
+                    17,
+                    24,
+                    39,
+                    51,
+                    87,
+                    91,
+                    100,
+                    136,
+                    146,
+                    167,
+                    170
+                ],
+                "fa\u00e7on": [
+                    6,
+                    147
+                ],
+                "penser": [
+                    8
+                ],
+                "le": [
+                    9,
+                    54,
+                    68,
+                    94
+                ],
+                "syst\u00e8me": [
+                    10,
+                    27,
+                    57,
+                    69
+                ],
+                "urbain": [
+                    11,
+                    28,
+                    58,
+                    70
+                ],
+                "et": [
+                    12,
+                    33,
+                    131,
+                    154,
+                    163
+                ],
+                "ses": [
+                    13,
+                    36,
+                    61
+                ],
+                "perturbations.": [
+                    14
+                ],
+                "Appliqu\u00e9": [
+                    15
+                ],
+                "\u00e0": [
+                    16,
+                    29,
+                    34,
+                    38,
+                    66,
+                    72,
+                    77,
+                    99,
+                    135,
+                    166
+                ],
+                "ville,": [
+                    18,
+                    137
+                ],
+                "il": [
+                    19
+                ],
+                "peut": [
+                    20
+                ],
+                "\u00eatre": [
+                    21
+                ],
+                "d\u00e9fini": [
+                    22
+                ],
+                "comme": [
+                    23,
+                    60
+                ],
+                "capacit\u00e9": [
+                    25
+                ],
+                "d'un": [
+                    26
+                ],
+                "absorber": [
+                    30
+                ],
+                "une": [
+                    31,
+                    73,
+                    173
+                ],
+                "perturbation": [
+                    32,
+                    74
+                ],
+                "retrouver": [
+                    35
+                ],
+                "fonctions": [
+                    37
+                ],
+                "suite": [
+                    40,
+                    71
+                ],
+                "cette": [
+                    42
+                ],
+                "perturbation.": [
+                    43
+                ],
+                "D\u00e8s": [
+                    44
+                ],
+                "lors,": [
+                    45
+                ],
+                "l\u2019op\u00e9rationnalit\u00e9": [
+                    46
+                ],
+                "du": [
+                    47,
+                    56
+                ],
+                "passerait": [
+                    49
+                ],
+                "par": [
+                    50
+                ],
+                "n\u00e9cessit\u00e9": [
+                    52
+                ],
+                "d\u2019adapter": [
+                    53
+                ],
+                "fonctionnement": [
+                    55
+                ],
+                "tout": [
+                    59
+                ],
+                "composants": [
+                    62
+                ],
+                "aux": [
+                    63,
+                    116
+                ],
+                "perturbations": [
+                    64
+                ],
+                "potentielles,": [
+                    65
+                ],
+                "reconstruire": [
+                    67
+                ],
+                "majeure": [
+                    75
+                ],
+                "ou": [
+                    76
+                ],
+                "d\u00e9finir": [
+                    78
+                ],
+                "des": [
+                    79,
+                    104,
+                    124,
+                    126,
+                    161
+                ],
+                "modalit\u00e9s": [
+                    80
+                ],
+                "gestion": [
+                    82
+                ],
+                "crise": [
+                    84
+                ],
+                "en": [
+                    85,
+                    108
+                ],
+                "int\u00e9grant": [
+                    86
+                ],
+                "complexit\u00e9": [
+                    88
+                ],
+                "m\u00eame": [
+                    89
+                ],
+                "ville.": [
+                    92
+                ],
+                "Ainsi": [
+                    93
+                ],
+                "appliqu\u00e9": [
+                    98
+                ],
+                "ville": [
+                    101,
+                    156,
+                    171
+                ],
+                "semble": [
+                    102
+                ],
+                "trouver": [
+                    103
+                ],
+                "traductions": [
+                    105
+                ],
+                "op\u00e9rationnelles,": [
+                    106
+                ],
+                "notamment": [
+                    107
+                ],
+                "mati\u00e8re": [
+                    109
+                ],
+                "services": [
+                    111
+                ],
+                "urbains,": [
+                    112
+                ],
+                "qui": [
+                    113
+                ],
+                "r\u00e9pondent": [
+                    114
+                ],
+                "\u00e9galement": [
+                    115
+                ],
+                "objectifs": [
+                    117
+                ],
+                "durabilit\u00e9.": [
+                    119
+                ],
+                "En": [
+                    120
+                ],
+                "partant": [
+                    121
+                ],
+                "l\u2019analyse": [
+                    123
+                ],
+                "d\u00e9finitions": [
+                    125
+                ],
+                "deux": [
+                    127
+                ],
+                "concepts": [
+                    128,
+                    151
+                ],
+                "durabilit\u00e9": [
+                    130
+                ],
+                "appliqu\u00e9s": [
+                    134
+                ],
+                "l\u2019objectif": [
+                    138
+                ],
+                "cet": [
+                    140
+                ],
+                "article": [
+                    141
+                ],
+                "est": [
+                    142
+                ],
+                "s\u2019interroger": [
+                    144
+                ],
+                "sur": [
+                    145
+                ],
+                "dont": [
+                    148
+                ],
+                "s\u2019articulent": [
+                    149
+                ],
+                "les": [
+                    150,
+                    180
+                ],
+                "durable": [
+                    157
+                ],
+                "puis": [
+                    158
+                ],
+                "proposer": [
+                    160
+                ],
+                "outils": [
+                    162
+                ],
+                "m\u00e9thodes": [
+                    164
+                ],
+                "contribuant": [
+                    165
+                ],
+                "dans": [
+                    172
+                ],
+                "optique": [
+                    174
+                ],
+                "durabilit\u00e9,": [
+                    176
+                ],
+                "avant": [
+                    177
+                ],
+                "d\u2019en": [
+                    178
+                ],
+                "\u00e9tudier": [
+                    179
+                ],
+                "limites.": [
+                    181
+                ]
+            },
+            "counts_by_year": [
+                {
+                    "year": 2025,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2024,
+                    "cited_by_count": 2
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 2
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 2
+                },
+                {
+                    "year": 2021,
+                    "cited_by_count": 8
+                },
+                {
+                    "year": 2020,
+                    "cited_by_count": 8
+                },
+                {
+                    "year": 2019,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2018,
+                    "cited_by_count": 5
+                },
+                {
+                    "year": 2017,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2016,
+                    "cited_by_count": 5
+                },
+                {
+                    "year": 2015,
+                    "cited_by_count": 7
+                },
+                {
+                    "year": 2014,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2013,
+                    "cited_by_count": 2
+                }
+            ],
+            "updated_date": "2026-03-25T13:04:00.132906",
+            "created_date": "2025-10-10T00:00:00"
+        },
+        {
+            "id": "https://openalex.org/W3083294597",
+            "doi": "https://doi.org/10.1016/j.jbusres.2020.08.047",
+            "title": "How anticipated emotions shape behavioral intentions to fight climate change",
+            "display_name": "How anticipated emotions shape behavioral intentions to fight climate change",
+            "relevance_score": 9.766929,
+            "publication_year": 2020,
+            "publication_date": "2020-09-03",
+            "ids": {
+                "openalex": "https://openalex.org/W3083294597",
+                "doi": "https://doi.org/10.1016/j.jbusres.2020.08.047",
+                "mag": "3083294597"
+            },
+            "language": "en",
+            "primary_location": {
+                "id": "doi:10.1016/j.jbusres.2020.08.047",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.1016/j.jbusres.2020.08.047",
+                "pdf_url": "https://www.sciencedirect.com/science/article/am/pii/S0148296320305518",
+                "source": {
+                    "id": "https://openalex.org/S93284759",
+                    "display_name": "Journal of Business Research",
+                    "issn_l": "0148-2963",
+                    "issn": [
+                        "0148-2963",
+                        "1873-7978"
+                    ],
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": true,
+                    "host_organization": "https://openalex.org/P4310320990",
+                    "host_organization_name": "Elsevier BV",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310320990"
+                    ],
+                    "host_organization_lineage_names": [
+                        "Elsevier BV"
+                    ],
+                    "type": "journal"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Journal of Business Research",
+                "raw_type": "journal-article"
+            },
+            "type": "article",
+            "indexed_in": [
+                "crossref"
+            ],
+            "open_access": {
+                "is_oa": true,
+                "oa_status": "bronze",
+                "oa_url": "https://www.sciencedirect.com/science/article/am/pii/S0148296320305518",
+                "any_repository_has_fulltext": false
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": "https://openalex.org/A5038901621",
+                        "display_name": "Philippe Odou",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I96226040",
+                            "display_name": "Universit\u00e9 de Reims Champagne-Ardenne",
+                            "ror": "https://ror.org/03hypw319",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I96226040"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Philippe Odou",
+                    "raw_affiliation_strings": [
+                        "Universit\u00e9 de Reims Champagne Ardenne, REGARDS EA 6292, 57 bis rue Pierre Taittinger, 51097 Reims Cedex, France",
+                        "Recherches en \u00c9conomie Gestion AgroRessources Durabilit\u00e9 Sant\u00e9- EA 6292"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Universit\u00e9 de Reims Champagne Ardenne, REGARDS EA 6292, 57 bis rue Pierre Taittinger, 51097 Reims Cedex, France",
+                            "institution_ids": [
+                                "https://openalex.org/I96226040"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "Recherches en \u00c9conomie Gestion AgroRessources Durabilit\u00e9 Sant\u00e9- EA 6292",
+                            "institution_ids": []
+                        }
+                    ]
+                },
+                {
+                    "author_position": "last",
+                    "author": {
+                        "id": "https://openalex.org/A5048450594",
+                        "display_name": "Marie Schill",
+                        "orcid": "https://orcid.org/0000-0001-6721-7691"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I96226040",
+                            "display_name": "Universit\u00e9 de Reims Champagne-Ardenne",
+                            "ror": "https://ror.org/03hypw319",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I96226040"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": true,
+                    "raw_author_name": "Marie Schill",
+                    "raw_affiliation_strings": [
+                        "Universit\u00e9 de Reims Champagne Ardenne, REGARDS EA 6292, 57 bis rue Pierre Taittinger, 51097 Reims Cedex, France",
+                        "Recherches en \u00c9conomie Gestion AgroRessources Durabilit\u00e9 Sant\u00e9- EA 6292"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Universit\u00e9 de Reims Champagne Ardenne, REGARDS EA 6292, 57 bis rue Pierre Taittinger, 51097 Reims Cedex, France",
+                            "institution_ids": [
+                                "https://openalex.org/I96226040"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "Recherches en \u00c9conomie Gestion AgroRessources Durabilit\u00e9 Sant\u00e9- EA 6292",
+                            "institution_ids": []
+                        }
+                    ]
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 1,
+            "institutions_distinct_count": 2,
+            "corresponding_author_ids": [
+                "https://openalex.org/A5048450594"
+            ],
+            "corresponding_institution_ids": [
+                "https://openalex.org/I96226040"
+            ],
+            "apc_list": {
+                "value": 3670,
+                "currency": "USD",
+                "value_usd": 3670
+            },
+            "apc_paid": null,
+            "fwci": 4.488,
+            "has_fulltext": true,
+            "cited_by_count": 97,
+            "citation_normalized_percentile": {
+                "value": 0.95102364,
+                "is_in_top_1_percent": false,
+                "is_in_top_10_percent": true
+            },
+            "cited_by_percentile_year": {
+                "min": 99,
+                "max": 100
+            },
+            "biblio": {
+                "volume": "121",
+                "issue": null,
+                "first_page": "243",
+                "last_page": "253"
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T11542",
+                "display_name": "Behavioral Health and Interventions",
+                "score": 0.9990000128746033,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/3202",
+                    "display_name": "Applied Psychology"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/32",
+                    "display_name": "Psychology"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/2",
+                    "display_name": "Social Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T11542",
+                    "display_name": "Behavioral Health and Interventions",
+                    "score": 0.9990000128746033,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/3202",
+                        "display_name": "Applied Psychology"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/32",
+                        "display_name": "Psychology"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T11488",
+                    "display_name": "Climate Change Communication and Perception",
+                    "score": 0.9987999796867371,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/3312",
+                        "display_name": "Sociology and Political Science"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/33",
+                        "display_name": "Social Sciences"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T10898",
+                    "display_name": "Environmental Education and Sustainability",
+                    "score": 0.9983000159263611,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2308",
+                        "display_name": "Management, Monitoring, Policy and Law"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/psychology",
+                    "display_name": "Psychology",
+                    "score": 0.7718750238418579
+                },
+                {
+                    "id": "https://openalex.org/keywords/structural-equation-modeling",
+                    "display_name": "Structural equation modeling",
+                    "score": 0.6262502670288086
+                },
+                {
+                    "id": "https://openalex.org/keywords/context",
+                    "display_name": "Context (archaeology)",
+                    "score": 0.620021641254425
+                },
+                {
+                    "id": "https://openalex.org/keywords/social-psychology",
+                    "display_name": "Social psychology",
+                    "score": 0.5455082058906555
+                },
+                {
+                    "id": "https://openalex.org/keywords/behavioral-inhibition",
+                    "display_name": "Behavioral inhibition",
+                    "score": 0.4829270541667938
+                },
+                {
+                    "id": "https://openalex.org/keywords/behavioral-pattern",
+                    "display_name": "Behavioral pattern",
+                    "score": 0.4318125545978546
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C15744967",
+                    "wikidata": "https://www.wikidata.org/wiki/Q9418",
+                    "display_name": "Psychology",
+                    "level": 0,
+                    "score": 0.7718750238418579
+                },
+                {
+                    "id": "https://openalex.org/C71104824",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1476639",
+                    "display_name": "Structural equation modeling",
+                    "level": 2,
+                    "score": 0.6262502670288086
+                },
+                {
+                    "id": "https://openalex.org/C2779343474",
+                    "wikidata": "https://www.wikidata.org/wiki/Q3109175",
+                    "display_name": "Context (archaeology)",
+                    "level": 2,
+                    "score": 0.620021641254425
+                },
+                {
+                    "id": "https://openalex.org/C77805123",
+                    "wikidata": "https://www.wikidata.org/wiki/Q161272",
+                    "display_name": "Social psychology",
+                    "level": 1,
+                    "score": 0.5455082058906555
+                },
+                {
+                    "id": "https://openalex.org/C2993486096",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7551193",
+                    "display_name": "Behavioral inhibition",
+                    "level": 3,
+                    "score": 0.4829270541667938
+                },
+                {
+                    "id": "https://openalex.org/C83804111",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1063558",
+                    "display_name": "Behavioral pattern",
+                    "level": 2,
+                    "score": 0.4318125545978546
+                },
+                {
+                    "id": "https://openalex.org/C33923547",
+                    "wikidata": "https://www.wikidata.org/wiki/Q395",
+                    "display_name": "Mathematics",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C105795698",
+                    "wikidata": "https://www.wikidata.org/wiki/Q12483",
+                    "display_name": "Statistics",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C118552586",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7867",
+                    "display_name": "Psychiatry",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C151730666",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7205",
+                    "display_name": "Paleontology",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C115903868",
+                    "wikidata": "https://www.wikidata.org/wiki/Q80993",
+                    "display_name": "Software engineering",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C86803240",
+                    "wikidata": "https://www.wikidata.org/wiki/Q420",
+                    "display_name": "Biology",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C558461103",
+                    "wikidata": "https://www.wikidata.org/wiki/Q154430",
+                    "display_name": "Anxiety",
+                    "level": 2,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C127413603",
+                    "wikidata": "https://www.wikidata.org/wiki/Q11023",
+                    "display_name": "Engineering",
+                    "level": 0,
+                    "score": 0.0
+                }
+            ],
+            "mesh": [],
+            "locations_count": 2,
+            "locations": [
+                {
+                    "id": "doi:10.1016/j.jbusres.2020.08.047",
+                    "is_oa": true,
+                    "landing_page_url": "https://doi.org/10.1016/j.jbusres.2020.08.047",
+                    "pdf_url": "https://www.sciencedirect.com/science/article/am/pii/S0148296320305518",
+                    "source": {
+                        "id": "https://openalex.org/S93284759",
+                        "display_name": "Journal of Business Research",
+                        "issn_l": "0148-2963",
+                        "issn": [
+                            "0148-2963",
+                            "1873-7978"
+                        ],
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": true,
+                        "host_organization": "https://openalex.org/P4310320990",
+                        "host_organization_name": "Elsevier BV",
+                        "host_organization_lineage": [
+                            "https://openalex.org/P4310320990"
+                        ],
+                        "host_organization_lineage_names": [
+                            "Elsevier BV"
+                        ],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Journal of Business Research",
+                    "raw_type": "journal-article"
+                },
+                {
+                    "id": "pmh:oai:HAL:hal-02929920v1",
+                    "is_oa": false,
+                    "landing_page_url": "https://hal.science/hal-02929920",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306402512",
+                        "display_name": "HAL (Le Centre pour la Communication Scientifique Directe)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I1294671590",
+                        "host_organization_name": "Centre National de la Recherche Scientifique",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I1294671590"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "Journal of Business Research, 2020, 121, pp.243-253. &#x27E8;10.1016/j.jbusres.2020.08.047&#x27E9;",
+                    "raw_type": "Journal articles"
+                }
+            ],
+            "best_oa_location": {
+                "id": "doi:10.1016/j.jbusres.2020.08.047",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.1016/j.jbusres.2020.08.047",
+                "pdf_url": "https://www.sciencedirect.com/science/article/am/pii/S0148296320305518",
+                "source": {
+                    "id": "https://openalex.org/S93284759",
+                    "display_name": "Journal of Business Research",
+                    "issn_l": "0148-2963",
+                    "issn": [
+                        "0148-2963",
+                        "1873-7978"
+                    ],
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": true,
+                    "host_organization": "https://openalex.org/P4310320990",
+                    "host_organization_name": "Elsevier BV",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310320990"
+                    ],
+                    "host_organization_lineage_names": [
+                        "Elsevier BV"
+                    ],
+                    "type": "journal"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Journal of Business Research",
+                "raw_type": "journal-article"
+            },
+            "sustainable_development_goals": [
+                {
+                    "score": 0.8500000238418579,
+                    "display_name": "Climate action",
+                    "id": "https://metadata.un.org/sdg/13"
+                }
+            ],
+            "awards": [],
+            "funders": [],
+            "has_content": {
+                "grobid_xml": true,
+                "pdf": true
+            },
+            "content_urls": {
+                "pdf": "https://content.openalex.org/works/W3083294597.pdf",
+                "grobid_xml": "https://content.openalex.org/works/W3083294597.grobid-xml"
+            },
+            "referenced_works_count": 117,
+            "referenced_works": [
+                "https://openalex.org/W119722345",
+                "https://openalex.org/W332418062",
+                "https://openalex.org/W995628848",
+                "https://openalex.org/W1217231470",
+                "https://openalex.org/W1490774257",
+                "https://openalex.org/W1567325686",
+                "https://openalex.org/W1572890926",
+                "https://openalex.org/W1575525139",
+                "https://openalex.org/W1756431552",
+                "https://openalex.org/W1774460361",
+                "https://openalex.org/W1816295463",
+                "https://openalex.org/W1901329711",
+                "https://openalex.org/W1920898554",
+                "https://openalex.org/W1965538636",
+                "https://openalex.org/W1966336169",
+                "https://openalex.org/W1967474454",
+                "https://openalex.org/W1973458345",
+                "https://openalex.org/W1981076072",
+                "https://openalex.org/W1983385228",
+                "https://openalex.org/W1987258130",
+                "https://openalex.org/W1989981203",
+                "https://openalex.org/W1994751765",
+                "https://openalex.org/W1995248441",
+                "https://openalex.org/W1997231614",
+                "https://openalex.org/W2004279120",
+                "https://openalex.org/W2005542483",
+                "https://openalex.org/W2006960573",
+                "https://openalex.org/W2007445014",
+                "https://openalex.org/W2008068229",
+                "https://openalex.org/W2008284276",
+                "https://openalex.org/W2009720692",
+                "https://openalex.org/W2010905135",
+                "https://openalex.org/W2024683908",
+                "https://openalex.org/W2024994606",
+                "https://openalex.org/W2025067786",
+                "https://openalex.org/W2038702827",
+                "https://openalex.org/W2038868688",
+                "https://openalex.org/W2040780635",
+                "https://openalex.org/W2042349803",
+                "https://openalex.org/W2042785919",
+                "https://openalex.org/W2047826176",
+                "https://openalex.org/W2052534607",
+                "https://openalex.org/W2054371084",
+                "https://openalex.org/W2056004734",
+                "https://openalex.org/W2068963615",
+                "https://openalex.org/W2073816627",
+                "https://openalex.org/W2078323094",
+                "https://openalex.org/W2080872963",
+                "https://openalex.org/W2081255167",
+                "https://openalex.org/W2084470243",
+                "https://openalex.org/W2084580378",
+                "https://openalex.org/W2085912225",
+                "https://openalex.org/W2088135512",
+                "https://openalex.org/W2090162505",
+                "https://openalex.org/W2090242685",
+                "https://openalex.org/W2090833829",
+                "https://openalex.org/W2095182938",
+                "https://openalex.org/W2099342631",
+                "https://openalex.org/W2099697766",
+                "https://openalex.org/W2105515753",
+                "https://openalex.org/W2106096361",
+                "https://openalex.org/W2107951160",
+                "https://openalex.org/W2109381932",
+                "https://openalex.org/W2116501629",
+                "https://openalex.org/W2118016181",
+                "https://openalex.org/W2120618638",
+                "https://openalex.org/W2123844281",
+                "https://openalex.org/W2124911764",
+                "https://openalex.org/W2126280835",
+                "https://openalex.org/W2127670722",
+                "https://openalex.org/W2131553793",
+                "https://openalex.org/W2132470305",
+                "https://openalex.org/W2132605910",
+                "https://openalex.org/W2134419850",
+                "https://openalex.org/W2135869619",
+                "https://openalex.org/W2141554808",
+                "https://openalex.org/W2141846678",
+                "https://openalex.org/W2142988015",
+                "https://openalex.org/W2145437113",
+                "https://openalex.org/W2145507836",
+                "https://openalex.org/W2146757268",
+                "https://openalex.org/W2155675907",
+                "https://openalex.org/W2168072684",
+                "https://openalex.org/W2169662154",
+                "https://openalex.org/W2169771737",
+                "https://openalex.org/W2171149071",
+                "https://openalex.org/W2171515724",
+                "https://openalex.org/W2196566555",
+                "https://openalex.org/W2196600089",
+                "https://openalex.org/W2197003885",
+                "https://openalex.org/W2197723830",
+                "https://openalex.org/W2279692628",
+                "https://openalex.org/W2296573691",
+                "https://openalex.org/W2328593712",
+                "https://openalex.org/W2337067753",
+                "https://openalex.org/W2342179656",
+                "https://openalex.org/W2463011669",
+                "https://openalex.org/W2467696562",
+                "https://openalex.org/W2619731159",
+                "https://openalex.org/W2746501949",
+                "https://openalex.org/W2766340867",
+                "https://openalex.org/W2769645534",
+                "https://openalex.org/W2775943242",
+                "https://openalex.org/W2785888382",
+                "https://openalex.org/W2786701906",
+                "https://openalex.org/W2806551979",
+                "https://openalex.org/W2907106817",
+                "https://openalex.org/W2907176429",
+                "https://openalex.org/W2927412080",
+                "https://openalex.org/W2928751720",
+                "https://openalex.org/W2933766816",
+                "https://openalex.org/W3125264974",
+                "https://openalex.org/W4235678817",
+                "https://openalex.org/W4242883546",
+                "https://openalex.org/W4243667233",
+                "https://openalex.org/W6637896986",
+                "https://openalex.org/W6684521036"
+            ],
+            "related_works": [
+                "https://openalex.org/W2892587673",
+                "https://openalex.org/W2044083096",
+                "https://openalex.org/W2358314747",
+                "https://openalex.org/W2237882259",
+                "https://openalex.org/W2303747485",
+                "https://openalex.org/W2780328927",
+                "https://openalex.org/W4254057609",
+                "https://openalex.org/W2079267390",
+                "https://openalex.org/W2224839333",
+                "https://openalex.org/W2123147588"
+            ],
+            "abstract_inverted_index": null,
+            "counts_by_year": [
+                {
+                    "year": 2026,
+                    "cited_by_count": 13
+                },
+                {
+                    "year": 2025,
+                    "cited_by_count": 26
+                },
+                {
+                    "year": 2024,
+                    "cited_by_count": 24
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 15
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 9
+                },
+                {
+                    "year": 2021,
+                    "cited_by_count": 10
+                }
+            ],
+            "updated_date": "2026-04-25T08:17:42.794288",
+            "created_date": "2025-10-10T00:00:00"
+        },
+        {
+            "id": "https://openalex.org/W1509998943",
+            "doi": "https://doi.org/10.4000/rfp.3590",
+            "title": "L\u2019utilisation de la vid\u00e9o dans la\u00a0formation professionnelle des enseignants novices",
+            "display_name": "L\u2019utilisation de la vid\u00e9o dans la\u00a0formation professionnelle des enseignants novices",
+            "relevance_score": 9.505871,
+            "publication_year": 2012,
+            "publication_date": "2012-01-01",
+            "ids": {
+                "openalex": "https://openalex.org/W1509998943",
+                "doi": "https://doi.org/10.4000/rfp.3590",
+                "mag": "1509998943"
+            },
+            "language": "fr",
+            "primary_location": {
+                "id": "doi:10.4000/rfp.3590",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.4000/rfp.3590",
+                "pdf_url": "http://journals.openedition.org/rfp/pdf/3590",
+                "source": {
+                    "id": "https://openalex.org/S4210180777",
+                    "display_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                    "issn_l": "0556-7807",
+                    "issn": [
+                        "0556-7807",
+                        "2105-2913"
+                    ],
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": false,
+                    "host_organization": null,
+                    "host_organization_name": null,
+                    "host_organization_lineage": [],
+                    "host_organization_lineage_names": [],
+                    "type": "journal"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                "raw_type": "journal-article"
+            },
+            "type": "article",
+            "indexed_in": [
+                "crossref"
+            ],
+            "open_access": {
+                "is_oa": true,
+                "oa_status": "bronze",
+                "oa_url": "http://journals.openedition.org/rfp/pdf/3590",
+                "any_repository_has_fulltext": true
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": "https://openalex.org/A5041433771",
+                        "display_name": "Cyrille Gaudin",
+                        "orcid": "https://orcid.org/0000-0002-8387-8518"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I17866349",
+                            "display_name": "Universit\u00e9 F\u00e9d\u00e9rale de Toulouse Midi-Pyr\u00e9n\u00e9es",
+                            "ror": "https://ror.org/004raaa70",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I17866349"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": true,
+                    "raw_author_name": "Cyrille Gaudin",
+                    "raw_affiliation_strings": [
+                        "ESPE Toulouse - \u00c9cole sup\u00e9rieure du professorat et de l'\u00e9ducation - Toulouse Midi-Pyr\u00e9n\u00e9es (56, avenue de l'URSS - BP 64006 - 31078 Toulouse cedex - France)",
+                        "EFTS - Education, Formation, Travail, Savoirs (Universit\u00e9 de Toulouse II - Maison de la recherche UMR EFTS 5, all\u00e9es Antonio-Machado F - 31 058 Toulouse Cedex 9 Ecole Nationale de Formation Agronomique UMR EFTS BP 22687 2 route de Narbonne 31 326 Castanet Tolosan cedex - France)"
+                    ],
+                    "raw_orcid": "https://orcid.org/0000-0002-8387-8518",
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "ESPE Toulouse - \u00c9cole sup\u00e9rieure du professorat et de l'\u00e9ducation - Toulouse Midi-Pyr\u00e9n\u00e9es (56, avenue de l'URSS - BP 64006 - 31078 Toulouse cedex - France)",
+                            "institution_ids": []
+                        },
+                        {
+                            "raw_affiliation_string": "EFTS - Education, Formation, Travail, Savoirs (Universit\u00e9 de Toulouse II - Maison de la recherche UMR EFTS 5, all\u00e9es Antonio-Machado F - 31 058 Toulouse Cedex 9 Ecole Nationale de Formation Agronomique UMR EFTS BP 22687 2 route de Narbonne 31 326 Castanet Tolosan cedex - France)",
+                            "institution_ids": [
+                                "https://openalex.org/I17866349"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "last",
+                    "author": {
+                        "id": "https://openalex.org/A5040104530",
+                        "display_name": "S\u00e9bastien Chali\u00e8s",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I17866349",
+                            "display_name": "Universit\u00e9 F\u00e9d\u00e9rale de Toulouse Midi-Pyr\u00e9n\u00e9es",
+                            "ror": "https://ror.org/004raaa70",
+                            "country_code": "FR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I17866349"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "FR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "S\u00e9bastien Chali\u00e8s",
+                    "raw_affiliation_strings": [
+                        "ESPE Toulouse - \u00c9cole sup\u00e9rieure du professorat et de l'\u00e9ducation - Toulouse Midi-Pyr\u00e9n\u00e9es (56, avenue de l'URSS - BP 64006 - 31078 Toulouse cedex - France)",
+                        "EFTS - Education, Formation, Travail, Savoirs (Universit\u00e9 de Toulouse II - Maison de la recherche UMR EFTS 5, all\u00e9es Antonio-Machado F - 31 058 Toulouse Cedex 9 Ecole Nationale de Formation Agronomique UMR EFTS BP 22687 2 route de Narbonne 31 326 Castanet Tolosan cedex - France)"
+                    ],
+                    "raw_orcid": "https://orcid.org/0000-0002-0442-6709",
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "ESPE Toulouse - \u00c9cole sup\u00e9rieure du professorat et de l'\u00e9ducation - Toulouse Midi-Pyr\u00e9n\u00e9es (56, avenue de l'URSS - BP 64006 - 31078 Toulouse cedex - France)",
+                            "institution_ids": []
+                        },
+                        {
+                            "raw_affiliation_string": "EFTS - Education, Formation, Travail, Savoirs (Universit\u00e9 de Toulouse II - Maison de la recherche UMR EFTS 5, all\u00e9es Antonio-Machado F - 31 058 Toulouse Cedex 9 Ecole Nationale de Formation Agronomique UMR EFTS BP 22687 2 route de Narbonne 31 326 Castanet Tolosan cedex - France)",
+                            "institution_ids": [
+                                "https://openalex.org/I17866349"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 1,
+            "institutions_distinct_count": 2,
+            "corresponding_author_ids": [
+                "https://openalex.org/A5041433771"
+            ],
+            "corresponding_institution_ids": [
+                "https://openalex.org/I17866349"
+            ],
+            "apc_list": null,
+            "apc_paid": null,
+            "fwci": 12.6171,
+            "has_fulltext": true,
+            "cited_by_count": 43,
+            "citation_normalized_percentile": {
+                "value": 0.98133266,
+                "is_in_top_1_percent": false,
+                "is_in_top_10_percent": true
+            },
+            "cited_by_percentile_year": {
+                "min": 90,
+                "max": 99
+            },
+            "biblio": {
+                "volume": "178",
+                "issue": null,
+                "first_page": "115",
+                "last_page": "130"
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T11859",
+                "display_name": "Educator Training and Historical Pedagogy",
+                "score": 0.9724000096321106,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/3312",
+                    "display_name": "Sociology and Political Science"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/33",
+                    "display_name": "Social Sciences"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/2",
+                    "display_name": "Social Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T11859",
+                    "display_name": "Educator Training and Historical Pedagogy",
+                    "score": 0.9724000096321106,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/3312",
+                        "display_name": "Sociology and Political Science"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/33",
+                        "display_name": "Social Sciences"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T14081",
+                    "display_name": "Linguistic Education and Pedagogy",
+                    "score": 0.9394000172615051,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/1203",
+                        "display_name": "Language and Linguistics"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/12",
+                        "display_name": "Arts and Humanities"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T10153",
+                    "display_name": "Education, sociology, and vocational training",
+                    "score": 0.9369999766349792,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/3312",
+                        "display_name": "Sociology and Political Science"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/33",
+                        "display_name": "Social Sciences"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/humanities",
+                    "display_name": "Humanities",
+                    "score": 0.7269381880760193
+                },
+                {
+                    "id": "https://openalex.org/keywords/political-science",
+                    "display_name": "Political science",
+                    "score": 0.4354497194290161
+                },
+                {
+                    "id": "https://openalex.org/keywords/art",
+                    "display_name": "Art",
+                    "score": 0.29951220750808716
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C15708023",
+                    "wikidata": "https://www.wikidata.org/wiki/Q80083",
+                    "display_name": "Humanities",
+                    "level": 1,
+                    "score": 0.7269381880760193
+                },
+                {
+                    "id": "https://openalex.org/C17744445",
+                    "wikidata": "https://www.wikidata.org/wiki/Q36442",
+                    "display_name": "Political science",
+                    "level": 0,
+                    "score": 0.4354497194290161
+                },
+                {
+                    "id": "https://openalex.org/C142362112",
+                    "wikidata": "https://www.wikidata.org/wiki/Q735",
+                    "display_name": "Art",
+                    "level": 0,
+                    "score": 0.29951220750808716
+                }
+            ],
+            "mesh": [],
+            "locations_count": 3,
+            "locations": [
+                {
+                    "id": "doi:10.4000/rfp.3590",
+                    "is_oa": true,
+                    "landing_page_url": "https://doi.org/10.4000/rfp.3590",
+                    "pdf_url": "http://journals.openedition.org/rfp/pdf/3590",
+                    "source": {
+                        "id": "https://openalex.org/S4210180777",
+                        "display_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                        "issn_l": "0556-7807",
+                        "issn": [
+                            "0556-7807",
+                            "2105-2913"
+                        ],
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                    "raw_type": "journal-article"
+                },
+                {
+                    "id": "pmh:oai:HAL:hal-01386107v1",
+                    "is_oa": false,
+                    "landing_page_url": "https://hal.science/hal-01386107",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306402512",
+                        "display_name": "HAL (Le Centre pour la Communication Scientifique Directe)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I1294671590",
+                        "host_organization_name": "Centre National de la Recherche Scientifique",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I1294671590"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "Revue fran\u00e7aise de p\u00e9dagogie, 2012, 1 (178), pp.115-130. &#x27E8;10.4000/rfp.3590&#x27E9;",
+                    "raw_type": "Journal articles"
+                },
+                {
+                    "id": "pmh:oai:revues.org:rfp/3590",
+                    "is_oa": true,
+                    "landing_page_url": "http://journals.openedition.org/rfp/3590",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306402281",
+                        "display_name": "OpenEdition (OpenEdition)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": "cc-by-nc-nd",
+                    "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "info:eu-repo/semantics/article"
+                }
+            ],
+            "best_oa_location": {
+                "id": "doi:10.4000/rfp.3590",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.4000/rfp.3590",
+                "pdf_url": "http://journals.openedition.org/rfp/pdf/3590",
+                "source": {
+                    "id": "https://openalex.org/S4210180777",
+                    "display_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                    "issn_l": "0556-7807",
+                    "issn": [
+                        "0556-7807",
+                        "2105-2913"
+                    ],
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": false,
+                    "host_organization": null,
+                    "host_organization_name": null,
+                    "host_organization_lineage": [],
+                    "host_organization_lineage_names": [],
+                    "type": "journal"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Revue fran\u00e7aise de p\u00e9dagogie",
+                "raw_type": "journal-article"
+            },
+            "sustainable_development_goals": [
+                {
+                    "score": 0.5899999737739563,
+                    "display_name": "Quality Education",
+                    "id": "https://metadata.un.org/sdg/4"
+                }
+            ],
+            "awards": [],
+            "funders": [],
+            "has_content": {
+                "grobid_xml": true,
+                "pdf": true
+            },
+            "content_urls": {
+                "pdf": "https://content.openalex.org/works/W1509998943.pdf",
+                "grobid_xml": "https://content.openalex.org/works/W1509998943.grobid-xml"
+            },
+            "referenced_works_count": 63,
+            "referenced_works": [
+                "https://openalex.org/W160088989",
+                "https://openalex.org/W196170528",
+                "https://openalex.org/W603586669",
+                "https://openalex.org/W611697258",
+                "https://openalex.org/W611983019",
+                "https://openalex.org/W1497118769",
+                "https://openalex.org/W1506407333",
+                "https://openalex.org/W1516666697",
+                "https://openalex.org/W1574786388",
+                "https://openalex.org/W1591389014",
+                "https://openalex.org/W1634032837",
+                "https://openalex.org/W1899755636",
+                "https://openalex.org/W1908803361",
+                "https://openalex.org/W1931693875",
+                "https://openalex.org/W1975373128",
+                "https://openalex.org/W1977834472",
+                "https://openalex.org/W1987802391",
+                "https://openalex.org/W1989937405",
+                "https://openalex.org/W1992141640",
+                "https://openalex.org/W2000276264",
+                "https://openalex.org/W2000324426",
+                "https://openalex.org/W2003381610",
+                "https://openalex.org/W2014511864",
+                "https://openalex.org/W2016958842",
+                "https://openalex.org/W2025017727",
+                "https://openalex.org/W2031374048",
+                "https://openalex.org/W2033015875",
+                "https://openalex.org/W2041927652",
+                "https://openalex.org/W2043237015",
+                "https://openalex.org/W2044662025",
+                "https://openalex.org/W2048170976",
+                "https://openalex.org/W2048550362",
+                "https://openalex.org/W2055683518",
+                "https://openalex.org/W2064026693",
+                "https://openalex.org/W2066195299",
+                "https://openalex.org/W2079513073",
+                "https://openalex.org/W2081999062",
+                "https://openalex.org/W2094198922",
+                "https://openalex.org/W2102867679",
+                "https://openalex.org/W2105061562",
+                "https://openalex.org/W2106980576",
+                "https://openalex.org/W2122174115",
+                "https://openalex.org/W2130059081",
+                "https://openalex.org/W2137576942",
+                "https://openalex.org/W2147262161",
+                "https://openalex.org/W2153743575",
+                "https://openalex.org/W2165280122",
+                "https://openalex.org/W2188123843",
+                "https://openalex.org/W2223639328",
+                "https://openalex.org/W2321226147",
+                "https://openalex.org/W2471842126",
+                "https://openalex.org/W2491592274",
+                "https://openalex.org/W2501795502",
+                "https://openalex.org/W2799615065",
+                "https://openalex.org/W2898891136",
+                "https://openalex.org/W2977861954",
+                "https://openalex.org/W3113663984",
+                "https://openalex.org/W4211162281",
+                "https://openalex.org/W4235114045",
+                "https://openalex.org/W4239719767",
+                "https://openalex.org/W4245961435",
+                "https://openalex.org/W4247546408",
+                "https://openalex.org/W4252535617"
+            ],
+            "related_works": [
+                "https://openalex.org/W4391375266",
+                "https://openalex.org/W2899084033",
+                "https://openalex.org/W2748952813",
+                "https://openalex.org/W93312527",
+                "https://openalex.org/W2603296253",
+                "https://openalex.org/W1589203209",
+                "https://openalex.org/W2557454913",
+                "https://openalex.org/W828925460",
+                "https://openalex.org/W11365241",
+                "https://openalex.org/W1013667899"
+            ],
+            "abstract_inverted_index": {
+                "On": [
+                    0
+                ],
+                "constate": [
+                    1
+                ],
+                "une": [
+                    2,
+                    89,
+                    128
+                ],
+                "utilisation": [
+                    3,
+                    77
+                ],
+                "accrue": [
+                    4
+                ],
+                "de": [
+                    5,
+                    21,
+                    26,
+                    60,
+                    73,
+                    92,
+                    118,
+                    136,
+                    148,
+                    158
+                ],
+                "la": [
+                    6,
+                    9,
+                    18,
+                    27,
+                    35,
+                    66,
+                    69,
+                    79,
+                    93,
+                    114,
+                    137,
+                    159
+                ],
+                "vid\u00e9o": [
+                    7,
+                    28,
+                    46,
+                    138
+                ],
+                "dans": [
+                    8,
+                    78,
+                    133,
+                    155
+                ],
+                "formation": [
+                    10,
+                    36,
+                    80,
+                    151
+                ],
+                "professionnelle": [
+                    11,
+                    81
+                ],
+                "des": [
+                    12,
+                    32,
+                    71,
+                    82,
+                    100,
+                    103,
+                    107
+                ],
+                "enseignants": [
+                    13,
+                    83
+                ],
+                "novices.": [
+                    14
+                ],
+                "Due": [
+                    15
+                ],
+                "notamment": [
+                    16
+                ],
+                "\u00e0": [
+                    17,
+                    37,
+                    64,
+                    126
+                ],
+                "r\u00e9forme": [
+                    19
+                ],
+                "institutionnelle": [
+                    20
+                ],
+                "cette": [
+                    22,
+                    24,
+                    56
+                ],
+                "derni\u00e8re,": [
+                    23
+                ],
+                "int\u00e9gration": [
+                    25
+                ],
+                "vise": [
+                    29
+                ],
+                "le": [
+                    30,
+                    145,
+                    156
+                ],
+                "renforcement": [
+                    31
+                ],
+                "liens": [
+                    33
+                ],
+                "entre": [
+                    34,
+                    144
+                ],
+                "l\u2019universit\u00e9": [
+                    38
+                ],
+                "et": [
+                    39,
+                    68,
+                    152
+                ],
+                "les": [
+                    40,
+                    131
+                ],
+                "stages": [
+                    41
+                ],
+                "en": [
+                    42,
+                    48,
+                    58,
+                    150
+                ],
+                "\u00e9tablissement": [
+                    43
+                ],
+                "scolaire.": [
+                    44
+                ],
+                "La": [
+                    45
+                ],
+                "appara\u00eet": [
+                    47
+                ],
+                "effet": [
+                    49
+                ],
+                "comme": [
+                    50
+                ],
+                "un": [
+                    51,
+                    141
+                ],
+                "moyen": [
+                    52
+                ],
+                "privil\u00e9gi\u00e9": [
+                    53
+                ],
+                "pour": [
+                    54
+                ],
+                "favoriser": [
+                    55
+                ],
+                "alternance": [
+                    57
+                ],
+                "raison": [
+                    59
+                ],
+                "sa": [
+                    61,
+                    153
+                ],
+                "capacit\u00e9": [
+                    62
+                ],
+                "unique": [
+                    63
+                ],
+                "capturer": [
+                    65
+                ],
+                "richesse": [
+                    67
+                ],
+                "complexit\u00e9": [
+                    70
+                ],
+                "salles": [
+                    72
+                ],
+                "classe.": [
+                    74,
+                    160
+                ],
+                "Si": [
+                    75
+                ],
+                "son": [
+                    76
+                ],
+                "novices": [
+                    84
+                ],
+                "semble": [
+                    85
+                ],
+                "apparemment": [
+                    86
+                ],
+                "faire": [
+                    87
+                ],
+                "consensus,": [
+                    88
+                ],
+                "lecture": [
+                    90
+                ],
+                "fine": [
+                    91
+                ],
+                "litt\u00e9rature": [
+                    94
+                ],
+                "du": [
+                    95
+                ],
+                "domaine": [
+                    96
+                ],
+                "laisse": [
+                    97
+                ],
+                "toutefois": [
+                    98
+                ],
+                "entrevoir": [
+                    99
+                ],
+                "points": [
+                    101
+                ],
+                "d\u2019accord,": [
+                    102
+                ],
+                "controverses": [
+                    104
+                ],
+                "mais": [
+                    105
+                ],
+                "aussi": [
+                    106
+                ],
+                "\u00ab": [
+                    108
+                ],
+                "zones": [
+                    109
+                ],
+                "potentielles": [
+                    110
+                ],
+                "d\u2019\u00e9tude": [
+                    111
+                ],
+                "\u00bb.": [
+                    112
+                ],
+                "Sur": [
+                    113
+                ],
+                "base": [
+                    115
+                ],
+                "d\u2019une": [
+                    116
+                ],
+                "explicitation": [
+                    117
+                ],
+                "ces": [
+                    119
+                ],
+                "principales": [
+                    120
+                ],
+                "zones,": [
+                    121
+                ],
+                "cet": [
+                    122
+                ],
+                "article": [
+                    123
+                ],
+                "invite": [
+                    124
+                ],
+                "finalement": [
+                    125
+                ],
+                "engager": [
+                    127
+                ],
+                "r\u00e9flexion": [
+                    129
+                ],
+                "sur": [
+                    130
+                ],
+                "circonstances": [
+                    132
+                ],
+                "lesquelles": [
+                    134
+                ],
+                "l\u2019usage": [
+                    135
+                ],
+                "peut": [
+                    139
+                ],
+                "constituer": [
+                    140
+                ],
+                "trait": [
+                    142
+                ],
+                "d\u2019union": [
+                    143
+                ],
+                "caract\u00e8re": [
+                    146
+                ],
+                "virtuel": [
+                    147
+                ],
+                "l\u2019enseignement": [
+                    149
+                ],
+                "r\u00e9alit\u00e9": [
+                    154
+                ],
+                "contexte": [
+                    157
+                ]
+            },
+            "counts_by_year": [
+                {
+                    "year": 2025,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2024,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 4
+                },
+                {
+                    "year": 2020,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2019,
+                    "cited_by_count": 4
+                },
+                {
+                    "year": 2018,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2017,
+                    "cited_by_count": 2
+                },
+                {
+                    "year": 2016,
+                    "cited_by_count": 9
+                },
+                {
+                    "year": 2015,
+                    "cited_by_count": 6
+                },
+                {
+                    "year": 2014,
+                    "cited_by_count": 4
+                },
+                {
+                    "year": 2013,
+                    "cited_by_count": 3
+                }
+            ],
+            "updated_date": "2026-03-25T13:04:00.132906",
+            "created_date": "2016-06-24T00:00:00"
+        }
+    ],
+    "group_by": []
+}

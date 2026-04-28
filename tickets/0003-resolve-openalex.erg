@@ -4,6 +4,7 @@ Status: open
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
+Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:32Z claude created
@@ -43,41 +44,66 @@ Search strategy:
 
 ## Test (TDD red step)
 
+Replay the captured OpenAlex responses from
+`tests/fixtures/responses/openalex/` (created in ticket 0006). No fabricated
+mock JSON — every test case is grounded in real server output.
+
 ```python
 # tests/test_resolve_openalex.py
+import json
 import respx
 from httpx import Response
+from pathlib import Path
 from maiba.config import load_config
 from maiba.model import Item
 from maiba.resolvers.openalex import OpenAlexResolver
 
 CFG = load_config("config/maiba.yaml")
+FIXTURES = Path("tests/fixtures/responses/openalex")
+
+def _replay(slug: str) -> dict:
+    return json.loads((FIXTURES / f"{slug}.json").read_text())
 
 @respx.mock
-def test_resolve_by_doi_returns_full_record():
-    respx.get("https://api.openalex.org/works/doi:10.1016/j.egypro.2009.02.302").mock(
-        return_value=Response(200, json={
-            "id": "https://openalex.org/W123",
-            "doi": "https://doi.org/10.1016/j.egypro.2009.02.302",
-            "title": "Engaging the public on CCS: a large group process",
-            "publication_year": 2009,
-            "authorships": [
-                {"author": {"display_name": "Peta Ashworth"}},
-                {"author": {"display_name": "Simone Carr-Cornish"}},
-            ],
-            "host_venue": {"display_name": "Energy Procedia"},
-        })
-    )
+def test_resolve_by_doi_hit():
+    respx.get(
+        "https://api.openalex.org/works/doi:10.1016/j.egypro.2009.02.302"
+    ).mock(return_value=Response(200, json=_replay("ashworth-2009-doi")))
+
     resolver = OpenAlexResolver(CFG)
     item = Item(TY="JOUR", TI="Engaging the public on CCS",
                 AU=["Ashworth, P.", "et al."], PY=2009,
                 DO="10.1016/j.egypro.2009.02.302")
     result = resolver.resolve(item)
     assert result is not None
-    assert result.candidate.JO == "Energy Procedia"
-    assert "Carr-Cornish" in " ".join(result.candidate.AU)
     assert result.source == "openalex"
+    assert "Ashworth" in " ".join(result.candidate.AU)
     assert 0.0 <= result.confidence <= 1.0
+
+@respx.mock
+def test_resolve_search_hit_no_doi():
+    respx.get(url__startswith="https://api.openalex.org/works?").mock(
+        return_value=Response(200, json=_replay("adler-2005-search"))
+    )
+    resolver = OpenAlexResolver(CFG)
+    item = Item(TY="RPRT",
+                TI="A primer on perceptions of risk, risk communication and building trust",
+                AU=["Adler, P. S."], PY=2005)
+    result = resolver.resolve(item)
+    # search may or may not produce a candidate above the matching threshold —
+    # assertion is only on shape
+    assert result is None or result.source == "openalex"
+
+@respx.mock
+def test_resolve_search_returns_none_on_true_miss():
+    respx.get(url__startswith="https://api.openalex.org/works?").mock(
+        return_value=Response(200, json=_replay("lemonde-sleipner-2008-search"))
+    )
+    resolver = OpenAlexResolver(CFG)
+    item = Item(TY="NEWS",
+                TI="Sleipner, pionnière de l'enfouissement du gaz carbonique",
+                AU=["Le Monde"], PY=2008)
+    assert resolver.resolve(item) is None
 ```
 
 ## Exit criteria

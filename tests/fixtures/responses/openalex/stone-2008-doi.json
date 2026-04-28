@@ -1,0 +1,1182 @@
+{
+    "id": "https://openalex.org/W1992428550",
+    "doi": "https://doi.org/10.1039/b807747a",
+    "title": "The impact of carbon capture and storage on climate",
+    "display_name": "The impact of carbon capture and storage on climate",
+    "publication_year": 2008,
+    "publication_date": "2008-11-28",
+    "ids": {
+        "openalex": "https://openalex.org/W1992428550",
+        "doi": "https://doi.org/10.1039/b807747a",
+        "mag": "1992428550"
+    },
+    "language": "en",
+    "primary_location": {
+        "id": "doi:10.1039/b807747a",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.1039/b807747a",
+        "pdf_url": null,
+        "source": {
+            "id": "https://openalex.org/S117082959",
+            "display_name": "Energy & Environmental Science",
+            "issn_l": "1754-5692",
+            "issn": [
+                "1754-5692",
+                "1754-5706"
+            ],
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": true,
+            "host_organization": "https://openalex.org/P4310320556",
+            "host_organization_name": "Royal Society of Chemistry",
+            "host_organization_lineage": [
+                "https://openalex.org/P4310320556"
+            ],
+            "host_organization_lineage_names": [
+                "Royal Society of Chemistry"
+            ],
+            "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Energy Environ. Sci.",
+        "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+        "crossref"
+    ],
+    "open_access": {
+        "is_oa": false,
+        "oa_status": "closed",
+        "oa_url": null,
+        "any_repository_has_fulltext": false
+    },
+    "authorships": [
+        {
+            "author_position": "first",
+            "author": {
+                "id": "https://openalex.org/A5087744837",
+                "display_name": "E. J. Stone",
+                "orcid": "https://orcid.org/0000-0002-8633-8074"
+            },
+            "institutions": [
+                {
+                    "id": "https://openalex.org/I36234482",
+                    "display_name": "University of Bristol",
+                    "ror": "https://ror.org/0524sp257",
+                    "country_code": "GB",
+                    "type": "education",
+                    "lineage": [
+                        "https://openalex.org/I36234482"
+                    ]
+                }
+            ],
+            "countries": [
+                "GB"
+            ],
+            "is_corresponding": false,
+            "raw_author_name": "Emma J. Stone",
+            "raw_affiliation_strings": [
+                "School of Geographical Sciences, University of Bristol, Bristol, UK"
+            ],
+            "affiliations": [
+                {
+                    "raw_affiliation_string": "School of Geographical Sciences, University of Bristol, Bristol, UK",
+                    "institution_ids": [
+                        "https://openalex.org/I36234482"
+                    ]
+                }
+            ]
+        },
+        {
+            "author_position": "middle",
+            "author": {
+                "id": "https://openalex.org/A5044759836",
+                "display_name": "Jason Lowe",
+                "orcid": "https://orcid.org/0000-0002-8201-3926"
+            },
+            "institutions": [
+                {
+                    "id": "https://openalex.org/I1293035123",
+                    "display_name": "Met Office",
+                    "ror": "https://ror.org/01ch2yn61",
+                    "country_code": "GB",
+                    "type": "funder",
+                    "lineage": [
+                        "https://openalex.org/I1293035123"
+                    ]
+                },
+                {
+                    "id": "https://openalex.org/I71052956",
+                    "display_name": "University of Reading",
+                    "ror": "https://ror.org/05v62cm79",
+                    "country_code": "GB",
+                    "type": "education",
+                    "lineage": [
+                        "https://openalex.org/I71052956"
+                    ]
+                }
+            ],
+            "countries": [
+                "GB"
+            ],
+            "is_corresponding": false,
+            "raw_author_name": "Jason A. Lowe",
+            "raw_affiliation_strings": [
+                "Met Office Hadley Centre Reading Unit, Meteorology Building, University of Reading, Reading, UK"
+            ],
+            "affiliations": [
+                {
+                    "raw_affiliation_string": "Met Office Hadley Centre Reading Unit, Meteorology Building, University of Reading, Reading, UK",
+                    "institution_ids": [
+                        "https://openalex.org/I1293035123",
+                        "https://openalex.org/I71052956"
+                    ]
+                }
+            ]
+        },
+        {
+            "author_position": "last",
+            "author": {
+                "id": "https://openalex.org/A5042509503",
+                "display_name": "Keith P. Shine",
+                "orcid": "https://orcid.org/0000-0003-2672-9978"
+            },
+            "institutions": [
+                {
+                    "id": "https://openalex.org/I71052956",
+                    "display_name": "University of Reading",
+                    "ror": "https://ror.org/05v62cm79",
+                    "country_code": "GB",
+                    "type": "education",
+                    "lineage": [
+                        "https://openalex.org/I71052956"
+                    ]
+                }
+            ],
+            "countries": [
+                "GB"
+            ],
+            "is_corresponding": true,
+            "raw_author_name": "Keith P. Shine",
+            "raw_affiliation_strings": [
+                "Department of Meteorology, University of Reading, Reading, UK",
+                "Department of Meteorology University of Reading Reading UK"
+            ],
+            "affiliations": [
+                {
+                    "raw_affiliation_string": "Department of Meteorology, University of Reading, Reading, UK",
+                    "institution_ids": [
+                        "https://openalex.org/I71052956"
+                    ]
+                },
+                {
+                    "raw_affiliation_string": "Department of Meteorology University of Reading Reading UK",
+                    "institution_ids": [
+                        "https://openalex.org/I71052956"
+                    ]
+                }
+            ]
+        }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 3,
+    "corresponding_author_ids": [
+        "https://openalex.org/A5042509503"
+    ],
+    "corresponding_institution_ids": [
+        "https://openalex.org/I71052956"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 8.0628,
+    "has_fulltext": false,
+    "cited_by_count": 62,
+    "citation_normalized_percentile": {
+        "value": 0.9730558,
+        "is_in_top_1_percent": false,
+        "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+        "min": 89,
+        "max": 99
+    },
+    "biblio": {
+        "volume": "2",
+        "issue": "1",
+        "first_page": "81",
+        "last_page": "91"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+        "id": "https://openalex.org/T10967",
+        "display_name": "Carbon Dioxide Capture Technologies",
+        "score": 0.9994000196456909,
+        "subfield": {
+            "id": "https://openalex.org/subfields/2210",
+            "display_name": "Mechanical Engineering"
+        },
+        "field": {
+            "id": "https://openalex.org/fields/22",
+            "display_name": "Engineering"
+        },
+        "domain": {
+            "id": "https://openalex.org/domains/3",
+            "display_name": "Physical Sciences"
+        }
+    },
+    "topics": [
+        {
+            "id": "https://openalex.org/T10967",
+            "display_name": "Carbon Dioxide Capture Technologies",
+            "score": 0.9994000196456909,
+            "subfield": {
+                "id": "https://openalex.org/subfields/2210",
+                "display_name": "Mechanical Engineering"
+            },
+            "field": {
+                "id": "https://openalex.org/fields/22",
+                "display_name": "Engineering"
+            },
+            "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+            }
+        },
+        {
+            "id": "https://openalex.org/T11588",
+            "display_name": "Atmospheric and Environmental Gas Dynamics",
+            "score": 0.9991000294685364,
+            "subfield": {
+                "id": "https://openalex.org/subfields/2306",
+                "display_name": "Global and Planetary Change"
+            },
+            "field": {
+                "id": "https://openalex.org/fields/23",
+                "display_name": "Environmental Science"
+            },
+            "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+            }
+        },
+        {
+            "id": "https://openalex.org/T11302",
+            "display_name": "CO2 Sequestration and Geologic Interactions",
+            "score": 0.9976000189781189,
+            "subfield": {
+                "id": "https://openalex.org/subfields/2305",
+                "display_name": "Environmental Engineering"
+            },
+            "field": {
+                "id": "https://openalex.org/fields/23",
+                "display_name": "Environmental Science"
+            },
+            "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+            }
+        }
+    ],
+    "keywords": [
+        {
+            "id": "https://openalex.org/keywords/carbon-capture-and-storage",
+            "display_name": "Carbon capture and storage (timeline)",
+            "score": 0.7412140369415283
+        },
+        {
+            "id": "https://openalex.org/keywords/limiting",
+            "display_name": "Limiting",
+            "score": 0.7126708030700684
+        },
+        {
+            "id": "https://openalex.org/keywords/fossil-fuel",
+            "display_name": "Fossil fuel",
+            "score": 0.6783300638198853
+        },
+        {
+            "id": "https://openalex.org/keywords/electricity",
+            "display_name": "Electricity",
+            "score": 0.6382684707641602
+        },
+        {
+            "id": "https://openalex.org/keywords/greenhouse-gas",
+            "display_name": "Greenhouse gas",
+            "score": 0.620081901550293
+        },
+        {
+            "id": "https://openalex.org/keywords/environmental-science",
+            "display_name": "Environmental science",
+            "score": 0.5976608395576477
+        },
+        {
+            "id": "https://openalex.org/keywords/atmosphere",
+            "display_name": "Atmosphere (unit)",
+            "score": 0.5763936638832092
+        },
+        {
+            "id": "https://openalex.org/keywords/climate-change-mitigation",
+            "display_name": "Climate change mitigation",
+            "score": 0.48796170949935913
+        },
+        {
+            "id": "https://openalex.org/keywords/carbon-sequestration",
+            "display_name": "Carbon sequestration",
+            "score": 0.4656655788421631
+        },
+        {
+            "id": "https://openalex.org/keywords/carbon-fibers",
+            "display_name": "Carbon fibers",
+            "score": 0.448550820350647
+        },
+        {
+            "id": "https://openalex.org/keywords/carbon-dioxide",
+            "display_name": "Carbon dioxide",
+            "score": 0.44203731417655945
+        },
+        {
+            "id": "https://openalex.org/keywords/energy-storage",
+            "display_name": "Energy storage",
+            "score": 0.42973455786705017
+        },
+        {
+            "id": "https://openalex.org/keywords/electricity-generation",
+            "display_name": "Electricity generation",
+            "score": 0.41807520389556885
+        },
+        {
+            "id": "https://openalex.org/keywords/bio-energy-with-carbon-capture-and-storage",
+            "display_name": "Bio-energy with carbon capture and storage",
+            "score": 0.41568759083747864
+        },
+        {
+            "id": "https://openalex.org/keywords/environmental-economics",
+            "display_name": "Environmental economics",
+            "score": 0.410855770111084
+        },
+        {
+            "id": "https://openalex.org/keywords/climate-change",
+            "display_name": "Climate change",
+            "score": 0.40927359461784363
+        },
+        {
+            "id": "https://openalex.org/keywords/process-engineering",
+            "display_name": "Process engineering",
+            "score": 0.3741741478443146
+        },
+        {
+            "id": "https://openalex.org/keywords/waste-management",
+            "display_name": "Waste management",
+            "score": 0.36413872241973877
+        },
+        {
+            "id": "https://openalex.org/keywords/power",
+            "display_name": "Power (physics)",
+            "score": 0.3491876423358917
+        },
+        {
+            "id": "https://openalex.org/keywords/computer-science",
+            "display_name": "Computer science",
+            "score": 0.3145864009857178
+        },
+        {
+            "id": "https://openalex.org/keywords/engineering",
+            "display_name": "Engineering",
+            "score": 0.22714659571647644
+        },
+        {
+            "id": "https://openalex.org/keywords/meteorology",
+            "display_name": "Meteorology",
+            "score": 0.16742727160453796
+        },
+        {
+            "id": "https://openalex.org/keywords/chemistry",
+            "display_name": "Chemistry",
+            "score": 0.11975038051605225
+        },
+        {
+            "id": "https://openalex.org/keywords/geology",
+            "display_name": "Geology",
+            "score": 0.08707526326179504
+        },
+        {
+            "id": "https://openalex.org/keywords/electrical-engineering",
+            "display_name": "Electrical engineering",
+            "score": 0.08182170987129211
+        }
+    ],
+    "concepts": [
+        {
+            "id": "https://openalex.org/C2778379663",
+            "wikidata": "https://www.wikidata.org/wiki/Q5037942",
+            "display_name": "Carbon capture and storage (timeline)",
+            "level": 3,
+            "score": 0.7412140369415283
+        },
+        {
+            "id": "https://openalex.org/C188198153",
+            "wikidata": "https://www.wikidata.org/wiki/Q1613840",
+            "display_name": "Limiting",
+            "level": 2,
+            "score": 0.7126708030700684
+        },
+        {
+            "id": "https://openalex.org/C68189081",
+            "wikidata": "https://www.wikidata.org/wiki/Q12748",
+            "display_name": "Fossil fuel",
+            "level": 2,
+            "score": 0.6783300638198853
+        },
+        {
+            "id": "https://openalex.org/C206658404",
+            "wikidata": "https://www.wikidata.org/wiki/Q12725",
+            "display_name": "Electricity",
+            "level": 2,
+            "score": 0.6382684707641602
+        },
+        {
+            "id": "https://openalex.org/C47737302",
+            "wikidata": "https://www.wikidata.org/wiki/Q167336",
+            "display_name": "Greenhouse gas",
+            "level": 2,
+            "score": 0.620081901550293
+        },
+        {
+            "id": "https://openalex.org/C39432304",
+            "wikidata": "https://www.wikidata.org/wiki/Q188847",
+            "display_name": "Environmental science",
+            "level": 0,
+            "score": 0.5976608395576477
+        },
+        {
+            "id": "https://openalex.org/C65440619",
+            "wikidata": "https://www.wikidata.org/wiki/Q177974",
+            "display_name": "Atmosphere (unit)",
+            "level": 2,
+            "score": 0.5763936638832092
+        },
+        {
+            "id": "https://openalex.org/C509746633",
+            "wikidata": "https://www.wikidata.org/wiki/Q898653",
+            "display_name": "Climate change mitigation",
+            "level": 3,
+            "score": 0.48796170949935913
+        },
+        {
+            "id": "https://openalex.org/C22884784",
+            "wikidata": "https://www.wikidata.org/wiki/Q15305550",
+            "display_name": "Carbon sequestration",
+            "level": 3,
+            "score": 0.4656655788421631
+        },
+        {
+            "id": "https://openalex.org/C140205800",
+            "wikidata": "https://www.wikidata.org/wiki/Q5860",
+            "display_name": "Carbon fibers",
+            "level": 3,
+            "score": 0.448550820350647
+        },
+        {
+            "id": "https://openalex.org/C530467964",
+            "wikidata": "https://www.wikidata.org/wiki/Q1997",
+            "display_name": "Carbon dioxide",
+            "level": 2,
+            "score": 0.44203731417655945
+        },
+        {
+            "id": "https://openalex.org/C73916439",
+            "wikidata": "https://www.wikidata.org/wiki/Q837718",
+            "display_name": "Energy storage",
+            "level": 3,
+            "score": 0.42973455786705017
+        },
+        {
+            "id": "https://openalex.org/C423512",
+            "wikidata": "https://www.wikidata.org/wiki/Q383973",
+            "display_name": "Electricity generation",
+            "level": 3,
+            "score": 0.41807520389556885
+        },
+        {
+            "id": "https://openalex.org/C16921312",
+            "wikidata": "https://www.wikidata.org/wiki/Q2577671",
+            "display_name": "Bio-energy with carbon capture and storage",
+            "level": 4,
+            "score": 0.41568759083747864
+        },
+        {
+            "id": "https://openalex.org/C134560507",
+            "wikidata": "https://www.wikidata.org/wiki/Q753291",
+            "display_name": "Environmental economics",
+            "level": 1,
+            "score": 0.410855770111084
+        },
+        {
+            "id": "https://openalex.org/C132651083",
+            "wikidata": "https://www.wikidata.org/wiki/Q7942",
+            "display_name": "Climate change",
+            "level": 2,
+            "score": 0.40927359461784363
+        },
+        {
+            "id": "https://openalex.org/C21880701",
+            "wikidata": "https://www.wikidata.org/wiki/Q2144042",
+            "display_name": "Process engineering",
+            "level": 1,
+            "score": 0.3741741478443146
+        },
+        {
+            "id": "https://openalex.org/C548081761",
+            "wikidata": "https://www.wikidata.org/wiki/Q180388",
+            "display_name": "Waste management",
+            "level": 1,
+            "score": 0.36413872241973877
+        },
+        {
+            "id": "https://openalex.org/C163258240",
+            "wikidata": "https://www.wikidata.org/wiki/Q25342",
+            "display_name": "Power (physics)",
+            "level": 2,
+            "score": 0.3491876423358917
+        },
+        {
+            "id": "https://openalex.org/C41008148",
+            "wikidata": "https://www.wikidata.org/wiki/Q21198",
+            "display_name": "Computer science",
+            "level": 0,
+            "score": 0.3145864009857178
+        },
+        {
+            "id": "https://openalex.org/C127413603",
+            "wikidata": "https://www.wikidata.org/wiki/Q11023",
+            "display_name": "Engineering",
+            "level": 0,
+            "score": 0.22714659571647644
+        },
+        {
+            "id": "https://openalex.org/C153294291",
+            "wikidata": "https://www.wikidata.org/wiki/Q25261",
+            "display_name": "Meteorology",
+            "level": 1,
+            "score": 0.16742727160453796
+        },
+        {
+            "id": "https://openalex.org/C185592680",
+            "wikidata": "https://www.wikidata.org/wiki/Q2329",
+            "display_name": "Chemistry",
+            "level": 0,
+            "score": 0.11975038051605225
+        },
+        {
+            "id": "https://openalex.org/C127313418",
+            "wikidata": "https://www.wikidata.org/wiki/Q1069",
+            "display_name": "Geology",
+            "level": 0,
+            "score": 0.08707526326179504
+        },
+        {
+            "id": "https://openalex.org/C119599485",
+            "wikidata": "https://www.wikidata.org/wiki/Q43035",
+            "display_name": "Electrical engineering",
+            "level": 1,
+            "score": 0.08182170987129211
+        },
+        {
+            "id": "https://openalex.org/C121332964",
+            "wikidata": "https://www.wikidata.org/wiki/Q413",
+            "display_name": "Physics",
+            "level": 0,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C178790620",
+            "wikidata": "https://www.wikidata.org/wiki/Q11351",
+            "display_name": "Organic chemistry",
+            "level": 1,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C78519656",
+            "wikidata": "https://www.wikidata.org/wiki/Q101333",
+            "display_name": "Mechanical engineering",
+            "level": 1,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C104779481",
+            "wikidata": "https://www.wikidata.org/wiki/Q50707",
+            "display_name": "Composite number",
+            "level": 2,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C111368507",
+            "wikidata": "https://www.wikidata.org/wiki/Q43518",
+            "display_name": "Oceanography",
+            "level": 1,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C162324750",
+            "wikidata": "https://www.wikidata.org/wiki/Q8134",
+            "display_name": "Economics",
+            "level": 0,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C62520636",
+            "wikidata": "https://www.wikidata.org/wiki/Q944",
+            "display_name": "Quantum mechanics",
+            "level": 1,
+            "score": 0.0
+        },
+        {
+            "id": "https://openalex.org/C11413529",
+            "wikidata": "https://www.wikidata.org/wiki/Q8366",
+            "display_name": "Algorithm",
+            "level": 1,
+            "score": 0.0
+        }
+    ],
+    "mesh": [],
+    "locations_count": 4,
+    "locations": [
+        {
+            "id": "doi:10.1039/b807747a",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1039/b807747a",
+            "pdf_url": null,
+            "source": {
+                "id": "https://openalex.org/S117082959",
+                "display_name": "Energy & Environmental Science",
+                "issn_l": "1754-5692",
+                "issn": [
+                    "1754-5692",
+                    "1754-5706"
+                ],
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": true,
+                "host_organization": "https://openalex.org/P4310320556",
+                "host_organization_name": "Royal Society of Chemistry",
+                "host_organization_lineage": [
+                    "https://openalex.org/P4310320556"
+                ],
+                "host_organization_lineage_names": [
+                    "Royal Society of Chemistry"
+                ],
+                "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Energy Environ. Sci.",
+            "raw_type": "journal-article"
+        },
+        {
+            "id": "pmh:oai:centaur.reading.ac.uk:1504",
+            "is_oa": false,
+            "landing_page_url": "https://centaur.reading.ac.uk/1504/",
+            "pdf_url": null,
+            "source": {
+                "id": "https://openalex.org/S4306402273",
+                "display_name": "CentAUR (University of Reading)",
+                "issn_l": null,
+                "issn": null,
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": "https://openalex.org/I71052956",
+                "host_organization_name": "University of Reading",
+                "host_organization_lineage": [
+                    "https://openalex.org/I71052956"
+                ],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": null,
+            "raw_type": "PeerReviewed"
+        },
+        {
+            "id": "pmh:oai:research-information.bris.ac.uk:openaire_cris_publications/6c8807ca-21f3-45ce-aaab-9d9cda27b97f",
+            "is_oa": false,
+            "landing_page_url": "https://hdl.handle.net/1983/6c8807ca-21f3-45ce-aaab-9d9cda27b97f",
+            "pdf_url": null,
+            "source": {
+                "id": "https://openalex.org/S4306400895",
+                "display_name": "Bristol Research (University of Bristol)",
+                "issn_l": null,
+                "issn": null,
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": "https://openalex.org/I36234482",
+                "host_organization_name": "University of Bristol",
+                "host_organization_lineage": [
+                    "https://openalex.org/I36234482"
+                ],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": "Stone, EJ, Lowe, J A & Shine, KP 2009, 'The impact of carbon capture and storage on climate', Energy & Environmental Science, vol. 2, pp. 81 - 91. https://doi.org/10.1039/b807747a",
+            "raw_type": "info:eu-repo/semantics/publishedVersion"
+        },
+        {
+            "id": "pmh:oai:research-information.bris.ac.uk:publications/6c8807ca-21f3-45ce-aaab-9d9cda27b97f",
+            "is_oa": false,
+            "landing_page_url": "https://research-information.bris.ac.uk/en/publications/6c8807ca-21f3-45ce-aaab-9d9cda27b97f",
+            "pdf_url": null,
+            "source": {
+                "id": "https://openalex.org/S7407055359",
+                "display_name": "Explore Bristol Research",
+                "issn_l": null,
+                "issn": null,
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": null,
+                "host_organization_name": null,
+                "host_organization_lineage": [],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": "Stone, EJ, Lowe, J A & Shine, KP 2009, 'The impact of carbon capture and storage on climate', Energy & Environmental Science, vol. 2, pp. 81 - 91. https://doi.org/10.1039/b807747a",
+            "raw_type": "info:eu-repo/semantics/publishedVersion"
+        }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [
+        {
+            "id": "https://metadata.un.org/sdg/13",
+            "display_name": "Climate action",
+            "score": 0.6800000071525574
+        }
+    ],
+    "awards": [],
+    "funders": [
+        {
+            "id": "https://openalex.org/F4320319995",
+            "display_name": "Department for Environment, Food and Rural Affairs, UK Government",
+            "ror": "https://ror.org/00tnppw48"
+        }
+    ],
+    "has_content": {
+        "grobid_xml": false,
+        "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 20,
+    "referenced_works": [
+        "https://openalex.org/W576717606",
+        "https://openalex.org/W1522296012",
+        "https://openalex.org/W1575707379",
+        "https://openalex.org/W1624407290",
+        "https://openalex.org/W1988567868",
+        "https://openalex.org/W2028854686",
+        "https://openalex.org/W2036809546",
+        "https://openalex.org/W2041123590",
+        "https://openalex.org/W2054983164",
+        "https://openalex.org/W2062667641",
+        "https://openalex.org/W2063018768",
+        "https://openalex.org/W2078199397",
+        "https://openalex.org/W2106176530",
+        "https://openalex.org/W2107122533",
+        "https://openalex.org/W2147306380",
+        "https://openalex.org/W2151328940",
+        "https://openalex.org/W2165294865",
+        "https://openalex.org/W2907110490",
+        "https://openalex.org/W4232162190",
+        "https://openalex.org/W6600162570"
+    ],
+    "related_works": [
+        "https://openalex.org/W2883043439",
+        "https://openalex.org/W4200426483",
+        "https://openalex.org/W2561818076",
+        "https://openalex.org/W4254614939",
+        "https://openalex.org/W1982516221",
+        "https://openalex.org/W2748270136",
+        "https://openalex.org/W4247356673",
+        "https://openalex.org/W3124450067",
+        "https://openalex.org/W3125742662",
+        "https://openalex.org/W2267079230"
+    ],
+    "abstract_inverted_index": {
+        "Carbon": [
+            0
+        ],
+        "capture": [
+            1
+        ],
+        "and": [
+            2,
+            42
+        ],
+        "storage": [
+            3,
+            100
+        ],
+        "(CCS)": [
+            4
+        ],
+        "is": [
+            5,
+            83,
+            93,
+            107
+        ],
+        "being": [
+            6
+        ],
+        "widely": [
+            7
+        ],
+        "discussed": [
+            8
+        ],
+        "as": [
+            9
+        ],
+        "a": [
+            10,
+            36,
+            75,
+            80
+        ],
+        "possible": [
+            11
+        ],
+        "mitigation": [
+            12
+        ],
+        "option": [
+            13
+        ],
+        "for": [
+            14,
+            74,
+            97
+        ],
+        "limiting": [
+            15
+        ],
+        "the": [
+            16,
+            33,
+            48,
+            53,
+            67,
+            86,
+            113
+        ],
+        "emissions": [
+            17
+        ],
+        "of": [
+            18,
+            30,
+            35,
+            38,
+            50,
+            55,
+            59,
+            78
+        ],
+        "carbon": [
+            19
+        ],
+        "dioxide": [
+            20
+        ],
+        "(CO2)": [
+            21
+        ],
+        "from": [
+            22,
+            52,
+            102
+        ],
+        "fossil": [
+            23
+        ],
+        "fuel": [
+            24
+        ],
+        "burning": [
+            25
+        ],
+        "power": [
+            26,
+            62
+        ],
+        "plants.": [
+            27
+        ],
+        "The": [
+            28,
+            90
+        ],
+        "implementation": [
+            29
+        ],
+        "CCS": [
+            31,
+            51,
+            60
+        ],
+        "requires": [
+            32
+        ],
+        "resolution": [
+            34
+        ],
+        "number": [
+            37
+        ],
+        "difficult": [
+            39
+        ],
+        "policy,": [
+            40
+        ],
+        "engineering": [
+            41
+        ],
+        "economic": [
+            43
+        ],
+        "issues.": [
+            44
+        ],
+        "Here": [
+            45
+        ],
+        "we": [
+            46
+        ],
+        "address": [
+            47
+        ],
+        "efficacy": [
+            49
+        ],
+        "perspective": [
+            54
+        ],
+        "climate": [
+            56
+        ],
+        "science.": [
+            57
+        ],
+        "Implementation": [
+            58
+        ],
+        "makes": [
+            61
+        ],
+        "stations": [
+            63
+        ],
+        "less": [
+            64
+        ],
+        "efficient,": [
+            65
+        ],
+        "in": [
+            66
+        ],
+        "sense": [
+            68
+        ],
+        "that": [
+            69
+        ],
+        "they": [
+            70
+        ],
+        "produce": [
+            71
+        ],
+        "more": [
+            72
+        ],
+        "CO2": [
+            73,
+            92
+        ],
+        "given": [
+            76
+        ],
+        "output": [
+            77
+        ],
+        "electricity,": [
+            79
+        ],
+        "feature": [
+            81
+        ],
+        "which": [
+            82,
+            103
+        ],
+        "characterised": [
+            84
+        ],
+        "by": [
+            85
+        ],
+        "so-called": [
+            87
+        ],
+        "energy": [
+            88
+        ],
+        "penalty.": [
+            89
+        ],
+        "captured": [
+            91
+        ],
+        "then": [
+            94
+        ],
+        "stored": [
+            95
+        ],
+        "in,": [
+            96
+        ],
+        "example,": [
+            98
+        ],
+        "geological": [
+            99
+        ],
+        "reservoirs,": [
+            101
+        ],
+        "some": [
+            104
+        ],
+        "small": [
+            105
+        ],
+        "fraction": [
+            106
+        ],
+        "expected": [
+            108
+        ],
+        "to": [
+            109
+        ],
+        "leak": [
+            110
+        ],
+        "back": [
+            111
+        ],
+        "into": [
+            112
+        ],
+        "atmosphere": [
+            114
+        ],
+        "each": [
+            115
+        ],
+        "year.": [
+            116
+        ]
+    },
+    "counts_by_year": [
+        {
+            "year": 2026,
+            "cited_by_count": 1
+        },
+        {
+            "year": 2025,
+            "cited_by_count": 1
+        },
+        {
+            "year": 2024,
+            "cited_by_count": 4
+        },
+        {
+            "year": 2023,
+            "cited_by_count": 1
+        },
+        {
+            "year": 2022,
+            "cited_by_count": 1
+        },
+        {
+            "year": 2021,
+            "cited_by_count": 4
+        },
+        {
+            "year": 2020,
+            "cited_by_count": 2
+        },
+        {
+            "year": 2019,
+            "cited_by_count": 4
+        },
+        {
+            "year": 2018,
+            "cited_by_count": 3
+        },
+        {
+            "year": 2017,
+            "cited_by_count": 1
+        },
+        {
+            "year": 2016,
+            "cited_by_count": 6
+        },
+        {
+            "year": 2015,
+            "cited_by_count": 5
+        },
+        {
+            "year": 2014,
+            "cited_by_count": 9
+        },
+        {
+            "year": 2013,
+            "cited_by_count": 5
+        },
+        {
+            "year": 2012,
+            "cited_by_count": 2
+        }
+    ],
+    "updated_date": "2026-03-08T08:50:53.379069",
+    "created_date": "2025-10-10T00:00:00"
+}

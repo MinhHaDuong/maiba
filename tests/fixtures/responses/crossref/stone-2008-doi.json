@@ -1,0 +1,337 @@
+{
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+        "indexed": {
+            "date-parts": [
+                [
+                    2026,
+                    2,
+                    12
+                ]
+            ],
+            "date-time": "2026-02-12T13:10:45Z",
+            "timestamp": 1770901845756,
+            "version": "3.50.1"
+        },
+        "reference-count": 20,
+        "publisher": "Royal Society of Chemistry (RSC)",
+        "issue": "1",
+        "content-domain": {
+            "domain": [],
+            "crossmark-restriction": false
+        },
+        "short-container-title": [
+            "Energy Environ. Sci."
+        ],
+        "DOI": "10.1039/b807747a",
+        "type": "journal-article",
+        "created": {
+            "date-parts": [
+                [
+                    2008,
+                    11,
+                    28
+                ]
+            ],
+            "date-time": "2008-11-28T14:00:14Z",
+            "timestamp": 1227880814000
+        },
+        "page": "81-91",
+        "source": "Crossref",
+        "is-referenced-by-count": 56,
+        "title": [
+            "The impact of carbon capture and storage on climate"
+        ],
+        "prefix": "10.1039",
+        "volume": "2",
+        "author": [
+            {
+                "given": "Emma J.",
+                "family": "Stone",
+                "sequence": "first",
+                "affiliation": []
+            },
+            {
+                "given": "Jason A.",
+                "family": "Lowe",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Keith P.",
+                "family": "Shine",
+                "sequence": "additional",
+                "affiliation": []
+            }
+        ],
+        "member": "292",
+        "published-online": {
+            "date-parts": [
+                [
+                    2009
+                ]
+            ]
+        },
+        "reference": [
+            {
+                "key": "B807747A-(cit1)/*[position()=1]",
+                "volume-title": "The Physical Science Basis. Contribution of Working Group I to the Fourth Assessment Report of the Intergovernmental Panel on Climate Change",
+                "author": "IPCC, Climate Change",
+                "year": "2007",
+                "unstructured": "IPCC, Climate Change 2007, The Physical Science Basis. Contribution of Working Group I to the Fourth Assessment Report of the Intergovernmental Panel on Climate Change, ed. S. Solomon, D. Qin, M. Manning, Z. Chen, M. Marquis, K. B. Avery, M. Tignor and H. L. Miller, Cambridge University Press, Cambridge, United Kingdom and New York, NY, USA, 2007"
+            },
+            {
+                "key": "B807747A-(cit2)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "968",
+                "DOI": "10.1126/science.1100103",
+                "volume": "305",
+                "author": "Pacala",
+                "year": "2004",
+                "journal-title": "Science"
+            },
+            {
+                "key": "B807747A-(cit3)/*[position()=1]",
+                "first-page": "443",
+                "volume-title": "Special Report on CO2 Capture and Storage",
+                "author": "IPCC",
+                "year": "2005",
+                "unstructured": "IPCC , Special Report on CO2 Capture and Storage, ed. B. Metz, O. R. Davidson, H. de Coninck, L. M. Meyer, Cambridge University Press, Cambridge, 2005, p. 443"
+            },
+            {
+                "key": "B807747A-(cit4)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "181",
+                "DOI": "10.1007/s10098-003-0213-z",
+                "volume": "5",
+                "author": "Ha-Duong",
+                "year": "2003",
+                "journal-title": "Clean Technol. Environ. Policy"
+            },
+            {
+                "key": "B807747A-(cit5)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "293",
+                "DOI": "10.1023/A:1024801618900",
+                "volume": "59",
+                "author": "Herzog",
+                "year": "2003",
+                "journal-title": "Clim. Change"
+            },
+            {
+                "key": "B807747A-(cit6)/*[position()=1]",
+                "doi-asserted-by": "publisher",
+                "DOI": "10.1007/s10666-007-9125-3 (online first)",
+                "author": "van der Zwaan",
+                "year": "2007",
+                "journal-title": "Environ. Modell. Assess."
+            },
+            {
+                "key": "B807747A-(cit7)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "L18202",
+                "DOI": "10.1029/2004GL020295",
+                "volume": "31",
+                "author": "Haugan",
+                "year": "2004",
+                "journal-title": "Geophys. Res. Lett."
+            },
+            {
+                "key": "B807747A-(cit8)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "540",
+                "DOI": "10.1016/j.energy.2006.07.027",
+                "volume": "32",
+                "author": "Teng",
+                "year": "2007",
+                "journal-title": "Energy"
+            },
+            {
+                "key": "B807747A-(cit9)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "632",
+                "DOI": "10.1016/j.eneco.2006.05.016",
+                "volume": "28",
+                "author": "McFarland",
+                "year": "2006",
+                "journal-title": "Energy Econ."
+            },
+            {
+                "issue": "2",
+                "key": "B807747A-(cit10)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "149",
+                "DOI": "10.1016/S0040-1625(00)00094-9",
+                "volume": "65",
+                "author": "Nakicenovic",
+                "year": "2000",
+                "journal-title": "Technol. Forecasting Social Change"
+            },
+            {
+                "key": "B807747A-(cit11)/*[position()=1]",
+                "first-page": "1766",
+                "volume": "29",
+                "author": "Caldeira",
+                "year": "2002",
+                "journal-title": "Geophys. Res. Lett."
+            },
+            {
+                "issue": "14",
+                "key": "B807747A-(cit12)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "3337",
+                "DOI": "10.1175/JCLI3800.1",
+                "volume": "19",
+                "author": "Friedlingstein",
+                "year": "2006",
+                "journal-title": "J. Clim."
+            },
+            {
+                "key": "B807747A-(cit13)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "397",
+                "DOI": "10.1034/j.1600-0889.1996.t01-2-00006.x",
+                "volume": "48B",
+                "author": "Joos",
+                "year": "1996",
+                "journal-title": "Tellus"
+            },
+            {
+                "key": "B807747A-(cit14)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "186",
+                "DOI": "10.3402/tellusb.v44i3.15441",
+                "volume": "44B",
+                "author": "Siegenthaler",
+                "year": "1992",
+                "journal-title": "Tellus"
+            },
+            {
+                "key": "B807747A-(cit15)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "281",
+                "DOI": "10.1007/s10584-005-1146-9",
+                "volume": "68",
+                "author": "Shine",
+                "year": "2005",
+                "journal-title": "Clim. Change"
+            },
+            {
+                "key": "B807747A-(cit16)/*[position()=1]",
+                "first-page": "892",
+                "volume-title": "Climate Change: The Scientific Basis. Contribution of Working Group I to the Third Assessment Report of the Intergovernmental Panel on Climate Change",
+                "author": "IPCC",
+                "year": "2001",
+                "unstructured": "IPCC , Climate Change: The Scientific Basis. Contribution of Working Group I to the Third Assessment Report of the Intergovernmental Panel on Climate Change, ed. J. T. Houghton, Y. Ding, D. J. Griggs, M. Noguer, P. J. van Der Linden, X. Dai, K. Maskell and C. A Johnson, Cambridge University Press, Cambridge, 2001, p. 892"
+            },
+            {
+                "key": "B807747A-(cit17)/*[position()=1]",
+                "volume-title": "Climate Change 2001: The Scientific Basis",
+                "author": "Ramaswamy",
+                "year": "2001",
+                "unstructured": "V. Ramaswamy , O.Boucher, J.Haigh, D.Hauglustaine, J.Haywood, G.Myhre, T.Nakajima, G. Y.Shi, S.Solomon, Radiative Forcing of Climate Change, in Climate Change 2001: The Scientific Basis, ed. J. T. Houghton, Y. Ding, D. J. Griggs, M. Noguer, P. J. van Der Linden, X. Dai, K. Maskell and C. A. Johnson, Cambridge University Press, Cambridge, 2001, pp. 349\u2013416"
+            },
+            {
+                "key": "B807747A-(cit18)/*[position()=1]",
+                "volume-title": "Trends: A Compendium of Data on Global Change. Carbon Dioxide Information Analysis Center",
+                "author": "Marland",
+                "year": "2006",
+                "unstructured": "G. Marland , T. A.Boden and R. J.Andres, Global, Regional, and National Fossil Fuel CO2 Emissions, in Trends: A Compendium of Data on Global Change. Carbon Dioxide Information Analysis Center, Oak Ridge National Laboratory, U.S. Department of Energy, Oak Ridge, TN, USA, 2006, http://cdiac.ornl.gov/trends/emis/tre_glob.html"
+            },
+            {
+                "key": "B807747A-(cit19)/*[position()=1]",
+                "first-page": "411",
+                "volume-title": "Global Physical Climatology",
+                "author": "Hartmann",
+                "year": "1994",
+                "unstructured": "D. L. Hartmann , Global Physical Climatology, Academic Press, San Diego, 1994, p. 411"
+            },
+            {
+                "key": "B807747A-(cit20)/*[position()=1]",
+                "doi-asserted-by": "crossref",
+                "first-page": "17931",
+                "DOI": "10.1073/pnas.0701598104",
+                "volume": "104",
+                "author": "den Elzen",
+                "year": "2007",
+                "journal-title": "Proc. Natl. Acad. Sci. U. S. A."
+            }
+        ],
+        "container-title": [
+            "Energy Environ. Sci."
+        ],
+        "original-title": [],
+        "language": "en",
+        "link": [
+            {
+                "URL": "http://pubs.rsc.org/en/content/articlepdf/2009/EE/B807747A",
+                "content-type": "unspecified",
+                "content-version": "vor",
+                "intended-application": "similarity-checking"
+            }
+        ],
+        "deposited": {
+            "date-parts": [
+                [
+                    2024,
+                    4,
+                    17
+                ]
+            ],
+            "date-time": "2024-04-17T09:22:45Z",
+            "timestamp": 1713345765000
+        },
+        "score": 1,
+        "resource": {
+            "primary": {
+                "URL": "https://xlink.rsc.org/?DOI=B807747A"
+            }
+        },
+        "subtitle": [],
+        "short-title": [],
+        "issued": {
+            "date-parts": [
+                [
+                    2009
+                ]
+            ]
+        },
+        "references-count": 20,
+        "journal-issue": {
+            "issue": "1",
+            "published-print": {
+                "date-parts": [
+                    [
+                        2009
+                    ]
+                ]
+            }
+        },
+        "URL": "https://doi.org/10.1039/b807747a",
+        "relation": {},
+        "ISSN": [
+            "1754-5692",
+            "1754-5706"
+        ],
+        "issn-type": [
+            {
+                "value": "1754-5692",
+                "type": "print"
+            },
+            {
+                "value": "1754-5706",
+                "type": "electronic"
+            }
+        ],
+        "subject": [],
+        "published": {
+            "date-parts": [
+                [
+                    2009
+                ]
+            ]
+        }
+    }
+}

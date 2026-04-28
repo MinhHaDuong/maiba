@@ -1,0 +1,2855 @@
+{
+    "meta": {
+        "count": 8436,
+        "db_response_time_ms": 591,
+        "page": 1,
+        "per_page": 3,
+        "groups_count": null,
+        "cost_usd": 0.001
+    },
+    "results": [
+        {
+            "id": "https://openalex.org/W95754823",
+            "doi": "https://doi.org/10.1016/b978-008044704-9/50092-6",
+            "title": "Role of CO2 sequestration by country for global warming mitigation after 2013",
+            "display_name": "Role of CO2 sequestration by country for global warming mitigation after 2013",
+            "relevance_score": 1588.3356,
+            "publication_year": 2005,
+            "publication_date": "2005-01-01",
+            "ids": {
+                "openalex": "https://openalex.org/W95754823",
+                "doi": "https://doi.org/10.1016/b978-008044704-9/50092-6",
+                "mag": "95754823"
+            },
+            "language": "en",
+            "primary_location": {
+                "id": "doi:10.1016/b978-008044704-9/50092-6",
+                "is_oa": false,
+                "landing_page_url": "https://doi.org/10.1016/b978-008044704-9/50092-6",
+                "pdf_url": null,
+                "source": {
+                    "id": "https://openalex.org/S4306463230",
+                    "display_name": "Elsevier eBooks",
+                    "issn_l": null,
+                    "issn": null,
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": false,
+                    "host_organization": "https://openalex.org/P4310320990",
+                    "host_organization_name": "Elsevier BV",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310320990"
+                    ],
+                    "host_organization_lineage_names": [
+                        "Elsevier BV"
+                    ],
+                    "type": "ebook platform"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Greenhouse Gas Control Technologies 7",
+                "raw_type": "book-chapter"
+            },
+            "type": "book-chapter",
+            "indexed_in": [
+                "crossref"
+            ],
+            "open_access": {
+                "is_oa": false,
+                "oa_status": "closed",
+                "oa_url": null,
+                "any_repository_has_fulltext": false
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": "https://openalex.org/A5110332027",
+                        "display_name": "Keigo Akimoto",
+                        "orcid": "https://orcid.org/0009-0007-4849-0984"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210145897",
+                            "display_name": "Research Institute of Innovative Technology for the Earth",
+                            "ror": "https://ror.org/04p00tq71",
+                            "country_code": "JP",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": true,
+                    "raw_author_name": "K AKIMOTO",
+                    "raw_affiliation_strings": [
+                        "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5028754358",
+                        "display_name": "Takahiro Homma",
+                        "orcid": "https://orcid.org/0000-0001-5117-5570"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210145897",
+                            "display_name": "Research Institute of Innovative Technology for the Earth",
+                            "ror": "https://ror.org/04p00tq71",
+                            "country_code": "JP",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "T HOMMA",
+                    "raw_affiliation_strings": [
+                        "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5005769146",
+                        "display_name": "Takanobu Kosugi",
+                        "orcid": "https://orcid.org/0000-0001-8445-201X"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I135768898",
+                            "display_name": "Ritsumeikan University",
+                            "ror": "https://ror.org/0197nmd03",
+                            "country_code": "JP",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I135768898",
+                                "https://openalex.org/I4390039241"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "T KOSUGI",
+                    "raw_affiliation_strings": [
+                        "Ritsumeikan University, Kyoto-shi, Kyoto, JAPAN"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Ritsumeikan University, Kyoto-shi, Kyoto, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I135768898"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5100413891",
+                        "display_name": "Xiaochun Li",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210145897",
+                            "display_name": "Research Institute of Innovative Technology for the Earth",
+                            "ror": "https://ror.org/04p00tq71",
+                            "country_code": "JP",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "X LI",
+                    "raw_affiliation_strings": [
+                        "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5057238652",
+                        "display_name": "Toshimasa Tomoda",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210145897",
+                            "display_name": "Research Institute of Innovative Technology for the Earth",
+                            "ror": "https://ror.org/04p00tq71",
+                            "country_code": "JP",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "T TOMODA",
+                    "raw_affiliation_strings": [
+                        "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Research Institute of Innovative Technology for the Earth (RITE), Kizu-cho, Kyoto, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I4210145897"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "last",
+                    "author": {
+                        "id": "https://openalex.org/A5091687095",
+                        "display_name": "Yasumasa Fujii",
+                        "orcid": null
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I74801974",
+                            "display_name": "The University of Tokyo",
+                            "ror": "https://ror.org/057zh3y96",
+                            "country_code": "JP",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I74801974"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "JP"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Y FUJII",
+                    "raw_affiliation_strings": [
+                        "University of Tokyo, Bunkyo-ku, Tokyo, JAPAN",
+                        "University of Tokyo Bunkyo-ku Tokyo Japan"
+                    ],
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "University of Tokyo, Bunkyo-ku, Tokyo, JAPAN",
+                            "institution_ids": [
+                                "https://openalex.org/I74801974"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "University of Tokyo Bunkyo-ku Tokyo Japan",
+                            "institution_ids": [
+                                "https://openalex.org/I74801974"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 1,
+            "institutions_distinct_count": 6,
+            "corresponding_author_ids": [
+                "https://openalex.org/A5110332027"
+            ],
+            "corresponding_institution_ids": [
+                "https://openalex.org/I4210145897"
+            ],
+            "apc_list": null,
+            "apc_paid": null,
+            "fwci": 4.9837,
+            "has_fulltext": false,
+            "cited_by_count": 24,
+            "citation_normalized_percentile": {
+                "value": 0.98876404,
+                "is_in_top_1_percent": false,
+                "is_in_top_10_percent": true
+            },
+            "cited_by_percentile_year": {
+                "min": 89,
+                "max": 97
+            },
+            "biblio": {
+                "volume": null,
+                "issue": null,
+                "first_page": "911",
+                "last_page": "920"
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T11302",
+                "display_name": "CO2 Sequestration and Geologic Interactions",
+                "score": 0.9965999722480774,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/2305",
+                    "display_name": "Environmental Engineering"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/23",
+                    "display_name": "Environmental Science"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/3",
+                    "display_name": "Physical Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T11302",
+                    "display_name": "CO2 Sequestration and Geologic Interactions",
+                    "score": 0.9965999722480774,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2305",
+                        "display_name": "Environmental Engineering"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T10967",
+                    "display_name": "Carbon Dioxide Capture Technologies",
+                    "score": 0.9941999912261963,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2210",
+                        "display_name": "Mechanical Engineering"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/22",
+                        "display_name": "Engineering"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T11588",
+                    "display_name": "Atmospheric and Environmental Gas Dynamics",
+                    "score": 0.9937000274658203,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2306",
+                        "display_name": "Global and Planetary Change"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/carbon-sequestration",
+                    "display_name": "Carbon sequestration",
+                    "score": 0.9353997707366943
+                },
+                {
+                    "id": "https://openalex.org/keywords/environmental-science",
+                    "display_name": "Environmental science",
+                    "score": 0.5400742888450623
+                },
+                {
+                    "id": "https://openalex.org/keywords/global-warming",
+                    "display_name": "Global warming",
+                    "score": 0.5283463597297668
+                },
+                {
+                    "id": "https://openalex.org/keywords/aquifer",
+                    "display_name": "Aquifer",
+                    "score": 0.4386691749095917
+                },
+                {
+                    "id": "https://openalex.org/keywords/greenhouse-gas",
+                    "display_name": "Greenhouse gas",
+                    "score": 0.43412673473358154
+                },
+                {
+                    "id": "https://openalex.org/keywords/natural-resource-economics",
+                    "display_name": "Natural resource economics",
+                    "score": 0.41759616136550903
+                },
+                {
+                    "id": "https://openalex.org/keywords/climate-change",
+                    "display_name": "Climate change",
+                    "score": 0.33151698112487793
+                },
+                {
+                    "id": "https://openalex.org/keywords/engineering",
+                    "display_name": "Engineering",
+                    "score": 0.21787625551223755
+                },
+                {
+                    "id": "https://openalex.org/keywords/carbon-dioxide",
+                    "display_name": "Carbon dioxide",
+                    "score": 0.14942657947540283
+                },
+                {
+                    "id": "https://openalex.org/keywords/groundwater",
+                    "display_name": "Groundwater",
+                    "score": 0.13865196704864502
+                },
+                {
+                    "id": "https://openalex.org/keywords/geology",
+                    "display_name": "Geology",
+                    "score": 0.10766863822937012
+                },
+                {
+                    "id": "https://openalex.org/keywords/oceanography",
+                    "display_name": "Oceanography",
+                    "score": 0.10728958249092102
+                },
+                {
+                    "id": "https://openalex.org/keywords/economics",
+                    "display_name": "Economics",
+                    "score": 0.10704073309898376
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C22884784",
+                    "wikidata": "https://www.wikidata.org/wiki/Q15305550",
+                    "display_name": "Carbon sequestration",
+                    "level": 3,
+                    "score": 0.9353997707366943
+                },
+                {
+                    "id": "https://openalex.org/C39432304",
+                    "wikidata": "https://www.wikidata.org/wiki/Q188847",
+                    "display_name": "Environmental science",
+                    "level": 0,
+                    "score": 0.5400742888450623
+                },
+                {
+                    "id": "https://openalex.org/C115343472",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7942",
+                    "display_name": "Global warming",
+                    "level": 3,
+                    "score": 0.5283463597297668
+                },
+                {
+                    "id": "https://openalex.org/C75622301",
+                    "wikidata": "https://www.wikidata.org/wiki/Q208791",
+                    "display_name": "Aquifer",
+                    "level": 3,
+                    "score": 0.4386691749095917
+                },
+                {
+                    "id": "https://openalex.org/C47737302",
+                    "wikidata": "https://www.wikidata.org/wiki/Q167336",
+                    "display_name": "Greenhouse gas",
+                    "level": 2,
+                    "score": 0.43412673473358154
+                },
+                {
+                    "id": "https://openalex.org/C175605778",
+                    "wikidata": "https://www.wikidata.org/wiki/Q3299701",
+                    "display_name": "Natural resource economics",
+                    "level": 1,
+                    "score": 0.41759616136550903
+                },
+                {
+                    "id": "https://openalex.org/C132651083",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7942",
+                    "display_name": "Climate change",
+                    "level": 2,
+                    "score": 0.33151698112487793
+                },
+                {
+                    "id": "https://openalex.org/C127413603",
+                    "wikidata": "https://www.wikidata.org/wiki/Q11023",
+                    "display_name": "Engineering",
+                    "level": 0,
+                    "score": 0.21787625551223755
+                },
+                {
+                    "id": "https://openalex.org/C530467964",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1997",
+                    "display_name": "Carbon dioxide",
+                    "level": 2,
+                    "score": 0.14942657947540283
+                },
+                {
+                    "id": "https://openalex.org/C76177295",
+                    "wikidata": "https://www.wikidata.org/wiki/Q161598",
+                    "display_name": "Groundwater",
+                    "level": 2,
+                    "score": 0.13865196704864502
+                },
+                {
+                    "id": "https://openalex.org/C127313418",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1069",
+                    "display_name": "Geology",
+                    "level": 0,
+                    "score": 0.10766863822937012
+                },
+                {
+                    "id": "https://openalex.org/C111368507",
+                    "wikidata": "https://www.wikidata.org/wiki/Q43518",
+                    "display_name": "Oceanography",
+                    "level": 1,
+                    "score": 0.10728958249092102
+                },
+                {
+                    "id": "https://openalex.org/C162324750",
+                    "wikidata": "https://www.wikidata.org/wiki/Q8134",
+                    "display_name": "Economics",
+                    "level": 0,
+                    "score": 0.10704073309898376
+                },
+                {
+                    "id": "https://openalex.org/C18903297",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7150",
+                    "display_name": "Ecology",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C86803240",
+                    "wikidata": "https://www.wikidata.org/wiki/Q420",
+                    "display_name": "Biology",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C187320778",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1349130",
+                    "display_name": "Geotechnical engineering",
+                    "level": 1,
+                    "score": 0.0
+                }
+            ],
+            "mesh": [],
+            "locations_count": 1,
+            "locations": [
+                {
+                    "id": "doi:10.1016/b978-008044704-9/50092-6",
+                    "is_oa": false,
+                    "landing_page_url": "https://doi.org/10.1016/b978-008044704-9/50092-6",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306463230",
+                        "display_name": "Elsevier eBooks",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/P4310320990",
+                        "host_organization_name": "Elsevier BV",
+                        "host_organization_lineage": [
+                            "https://openalex.org/P4310320990"
+                        ],
+                        "host_organization_lineage_names": [
+                            "Elsevier BV"
+                        ],
+                        "type": "ebook platform"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Greenhouse Gas Control Technologies 7",
+                    "raw_type": "book-chapter"
+                }
+            ],
+            "best_oa_location": null,
+            "sustainable_development_goals": [
+                {
+                    "score": 0.5600000023841858,
+                    "id": "https://metadata.un.org/sdg/14",
+                    "display_name": "Life below water"
+                }
+            ],
+            "awards": [],
+            "funders": [
+                {
+                    "id": "https://openalex.org/F4320322832",
+                    "display_name": "University of Tokyo",
+                    "ror": "https://ror.org/057zh3y96"
+                }
+            ],
+            "has_content": {
+                "pdf": false,
+                "grobid_xml": false
+            },
+            "content_urls": null,
+            "referenced_works_count": 5,
+            "referenced_works": [
+                "https://openalex.org/W2019829740",
+                "https://openalex.org/W2024871497",
+                "https://openalex.org/W2131499768",
+                "https://openalex.org/W2141727128",
+                "https://openalex.org/W3191216803"
+            ],
+            "related_works": [
+                "https://openalex.org/W985732587",
+                "https://openalex.org/W2350422742",
+                "https://openalex.org/W2922239277",
+                "https://openalex.org/W3036980091",
+                "https://openalex.org/W1608852890",
+                "https://openalex.org/W2007103879",
+                "https://openalex.org/W2034460869",
+                "https://openalex.org/W66448074",
+                "https://openalex.org/W3150458167",
+                "https://openalex.org/W2790595990"
+            ],
+            "abstract_inverted_index": null,
+            "counts_by_year": [
+                {
+                    "year": 2025,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2021,
+                    "cited_by_count": 1
+                },
+                {
+                    "year": 2013,
+                    "cited_by_count": 3
+                },
+                {
+                    "year": 2012,
+                    "cited_by_count": 1
+                }
+            ],
+            "updated_date": "2025-11-06T03:46:38.306776",
+            "created_date": "2025-10-10T00:00:00"
+        },
+        {
+            "id": "https://openalex.org/W2513922847",
+            "doi": "https://doi.org/10.59327/ipcc/ar5-9789291691432",
+            "title": "Climate Change 2014 - Synthesis Report",
+            "display_name": "Climate Change 2014 - Synthesis Report",
+            "relevance_score": 92.4023,
+            "publication_year": 2015,
+            "publication_date": "2015-04-30",
+            "ids": {
+                "openalex": "https://openalex.org/W2513922847",
+                "doi": "https://doi.org/10.59327/ipcc/ar5-9789291691432",
+                "mag": "2513922847"
+            },
+            "language": "en",
+            "primary_location": {
+                "id": "doi:10.59327/ipcc/ar5-9789291691432",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.59327/ipcc/ar5-9789291691432",
+                "pdf_url": "https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full.pdf",
+                "source": null,
+                "license": "cc-by",
+                "license_id": "https://openalex.org/licenses/cc-by",
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Intergovernmental Panel on Climate Change",
+                "raw_type": "report"
+            },
+            "type": "report",
+            "indexed_in": [
+                "crossref"
+            ],
+            "open_access": {
+                "is_oa": true,
+                "oa_status": "gold",
+                "oa_url": "https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full.pdf",
+                "any_repository_has_fulltext": true
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": null,
+                        "display_name": "Intergovernmental Panel on Climate Change",
+                        "orcid": null
+                    },
+                    "institutions": [],
+                    "countries": [],
+                    "is_corresponding": true,
+                    "raw_author_name": "Intergovernmental Panel on Climate Change",
+                    "raw_affiliation_strings": [],
+                    "raw_orcid": null,
+                    "affiliations": []
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 0,
+            "institutions_distinct_count": 1,
+            "corresponding_author_ids": [],
+            "corresponding_institution_ids": [],
+            "apc_list": null,
+            "apc_paid": null,
+            "fwci": null,
+            "has_fulltext": true,
+            "cited_by_count": 5306,
+            "citation_normalized_percentile": null,
+            "cited_by_percentile_year": null,
+            "biblio": {
+                "volume": null,
+                "issue": null,
+                "first_page": null,
+                "last_page": null
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T14296",
+                "display_name": "Climate Change and Sustainable Development",
+                "score": 0.15729999542236328,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/2306",
+                    "display_name": "Global and Planetary Change"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/23",
+                    "display_name": "Environmental Science"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/3",
+                    "display_name": "Physical Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T14296",
+                    "display_name": "Climate Change and Sustainable Development",
+                    "score": 0.15729999542236328,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2306",
+                        "display_name": "Global and Planetary Change"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/climate-change",
+                    "display_name": "Climate change",
+                    "score": 0.9089169502258301
+                },
+                {
+                    "id": "https://openalex.org/keywords/vulnerability",
+                    "display_name": "Vulnerability (computing)",
+                    "score": 0.7389432191848755
+                },
+                {
+                    "id": "https://openalex.org/keywords/environmental-resource-management",
+                    "display_name": "Environmental resource management",
+                    "score": 0.50227952003479
+                },
+                {
+                    "id": "https://openalex.org/keywords/environmental-science",
+                    "display_name": "Environmental science",
+                    "score": 0.5008227825164795
+                },
+                {
+                    "id": "https://openalex.org/keywords/adaptation",
+                    "display_name": "Adaptation (eye)",
+                    "score": 0.49678900837898254
+                },
+                {
+                    "id": "https://openalex.org/keywords/climatology",
+                    "display_name": "Climatology",
+                    "score": 0.49618321657180786
+                },
+                {
+                    "id": "https://openalex.org/keywords/political-economy-of-climate-change",
+                    "display_name": "Political economy of climate change",
+                    "score": 0.48289012908935547
+                },
+                {
+                    "id": "https://openalex.org/keywords/climate-change-mitigation",
+                    "display_name": "Climate change mitigation",
+                    "score": 0.44489094614982605
+                },
+                {
+                    "id": "https://openalex.org/keywords/geography",
+                    "display_name": "Geography",
+                    "score": 0.3784579932689667
+                },
+                {
+                    "id": "https://openalex.org/keywords/environmental-planning",
+                    "display_name": "Environmental planning",
+                    "score": 0.36551088094711304
+                },
+                {
+                    "id": "https://openalex.org/keywords/computer-science",
+                    "display_name": "Computer science",
+                    "score": 0.10875752568244934
+                },
+                {
+                    "id": "https://openalex.org/keywords/ecology",
+                    "display_name": "Ecology",
+                    "score": 0.06288507580757141
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C132651083",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7942",
+                    "display_name": "Climate change",
+                    "level": 2,
+                    "score": 0.9089169502258301
+                },
+                {
+                    "id": "https://openalex.org/C95713431",
+                    "wikidata": "https://www.wikidata.org/wiki/Q631425",
+                    "display_name": "Vulnerability (computing)",
+                    "level": 2,
+                    "score": 0.7389432191848755
+                },
+                {
+                    "id": "https://openalex.org/C107826830",
+                    "wikidata": "https://www.wikidata.org/wiki/Q929380",
+                    "display_name": "Environmental resource management",
+                    "level": 1,
+                    "score": 0.50227952003479
+                },
+                {
+                    "id": "https://openalex.org/C39432304",
+                    "wikidata": "https://www.wikidata.org/wiki/Q188847",
+                    "display_name": "Environmental science",
+                    "level": 0,
+                    "score": 0.5008227825164795
+                },
+                {
+                    "id": "https://openalex.org/C139807058",
+                    "wikidata": "https://www.wikidata.org/wiki/Q352374",
+                    "display_name": "Adaptation (eye)",
+                    "level": 2,
+                    "score": 0.49678900837898254
+                },
+                {
+                    "id": "https://openalex.org/C49204034",
+                    "wikidata": "https://www.wikidata.org/wiki/Q52139",
+                    "display_name": "Climatology",
+                    "level": 1,
+                    "score": 0.49618321657180786
+                },
+                {
+                    "id": "https://openalex.org/C189123395",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7210295",
+                    "display_name": "Political economy of climate change",
+                    "level": 3,
+                    "score": 0.48289012908935547
+                },
+                {
+                    "id": "https://openalex.org/C509746633",
+                    "wikidata": "https://www.wikidata.org/wiki/Q898653",
+                    "display_name": "Climate change mitigation",
+                    "level": 3,
+                    "score": 0.44489094614982605
+                },
+                {
+                    "id": "https://openalex.org/C205649164",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1071",
+                    "display_name": "Geography",
+                    "level": 0,
+                    "score": 0.3784579932689667
+                },
+                {
+                    "id": "https://openalex.org/C91375879",
+                    "wikidata": "https://www.wikidata.org/wiki/Q15473274",
+                    "display_name": "Environmental planning",
+                    "level": 1,
+                    "score": 0.36551088094711304
+                },
+                {
+                    "id": "https://openalex.org/C41008148",
+                    "wikidata": "https://www.wikidata.org/wiki/Q21198",
+                    "display_name": "Computer science",
+                    "level": 0,
+                    "score": 0.10875752568244934
+                },
+                {
+                    "id": "https://openalex.org/C18903297",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7150",
+                    "display_name": "Ecology",
+                    "level": 1,
+                    "score": 0.06288507580757141
+                },
+                {
+                    "id": "https://openalex.org/C86803240",
+                    "wikidata": "https://www.wikidata.org/wiki/Q420",
+                    "display_name": "Biology",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C120665830",
+                    "wikidata": "https://www.wikidata.org/wiki/Q14620",
+                    "display_name": "Optics",
+                    "level": 1,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C121332964",
+                    "wikidata": "https://www.wikidata.org/wiki/Q413",
+                    "display_name": "Physics",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C127313418",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1069",
+                    "display_name": "Geology",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C38652104",
+                    "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+                    "display_name": "Computer security",
+                    "level": 1,
+                    "score": 0.0
+                }
+            ],
+            "mesh": [],
+            "locations_count": 4,
+            "locations": [
+                {
+                    "id": "doi:10.59327/ipcc/ar5-9789291691432",
+                    "is_oa": true,
+                    "landing_page_url": "https://doi.org/10.59327/ipcc/ar5-9789291691432",
+                    "pdf_url": "https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full.pdf",
+                    "source": null,
+                    "license": "cc-by",
+                    "license_id": "https://openalex.org/licenses/cc-by",
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Intergovernmental Panel on Climate Change",
+                    "raw_type": "report"
+                },
+                {
+                    "id": "pmh:info:ark/67531/metadc29351",
+                    "is_oa": false,
+                    "landing_page_url": "https://digital.library.unt.edu/ark:/67531/metadc29351/",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306400792",
+                        "display_name": "University of North Texas Digital Library (University of North Texas)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I123534392",
+                        "host_organization_name": "University of North Texas",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I123534392"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": null,
+                    "raw_type": "Text"
+                },
+                {
+                    "id": "pmh:info:ark/67531/metadc949136",
+                    "is_oa": true,
+                    "landing_page_url": "https://digital.library.unt.edu/ark:/67531/metadc949136/",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306400792",
+                        "display_name": "University of North Texas Digital Library (University of North Texas)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I123534392",
+                        "host_organization_name": "University of North Texas",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I123534392"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": "public-domain",
+                    "license_id": "https://openalex.org/licenses/public-domain",
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "Text"
+                },
+                {
+                    "id": "pmh:oai:escidoc.org:escidoc:995494",
+                    "is_oa": false,
+                    "landing_page_url": "http://hdl.handle.net/11858/00-001M-0000-0012-0307-C",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S7407052962",
+                        "display_name": "Max Planck Digital Library",
+                        "issn_l": null,
+                        "issn": [],
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": null,
+                        "host_organization_name": null,
+                        "host_organization_lineage": [],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "info:eu-repo/semantics/book"
+                }
+            ],
+            "best_oa_location": {
+                "id": "doi:10.59327/ipcc/ar5-9789291691432",
+                "is_oa": true,
+                "landing_page_url": "https://doi.org/10.59327/ipcc/ar5-9789291691432",
+                "pdf_url": "https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full.pdf",
+                "source": null,
+                "license": "cc-by",
+                "license_id": "https://openalex.org/licenses/cc-by",
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Intergovernmental Panel on Climate Change",
+                "raw_type": "report"
+            },
+            "sustainable_development_goals": [
+                {
+                    "score": 0.7599999904632568,
+                    "id": "https://metadata.un.org/sdg/13",
+                    "display_name": "Climate action"
+                }
+            ],
+            "awards": [],
+            "funders": [
+                {
+                    "id": "https://openalex.org/F4320322072",
+                    "display_name": "Korea Energy Economics Institute",
+                    "ror": "https://ror.org/0113xme87"
+                },
+                {
+                    "id": "https://openalex.org/F4320337203",
+                    "display_name": "Planbureau voor de Leefomgeving",
+                    "ror": "https://ror.org/052x1hs80"
+                }
+            ],
+            "has_content": {
+                "pdf": true,
+                "grobid_xml": true
+            },
+            "content_urls": {
+                "pdf": "https://content.openalex.org/works/W2513922847.pdf",
+                "grobid_xml": "https://content.openalex.org/works/W2513922847.grobid-xml"
+            },
+            "referenced_works_count": 19,
+            "referenced_works": [
+                "https://openalex.org/W76116888",
+                "https://openalex.org/W169370418",
+                "https://openalex.org/W1520428197",
+                "https://openalex.org/W1550125296",
+                "https://openalex.org/W1557166578",
+                "https://openalex.org/W1759145845",
+                "https://openalex.org/W1991308688",
+                "https://openalex.org/W2005763135",
+                "https://openalex.org/W2026703119",
+                "https://openalex.org/W2054653365",
+                "https://openalex.org/W2062667641",
+                "https://openalex.org/W2319666486",
+                "https://openalex.org/W2338691933",
+                "https://openalex.org/W2345579360",
+                "https://openalex.org/W2345724976",
+                "https://openalex.org/W3205045519",
+                "https://openalex.org/W4213327538",
+                "https://openalex.org/W4246964676",
+                "https://openalex.org/W4254829900"
+            ],
+            "related_works": [
+                "https://openalex.org/W650174731",
+                "https://openalex.org/W1991192109",
+                "https://openalex.org/W2913392988",
+                "https://openalex.org/W2183659730",
+                "https://openalex.org/W1969121134",
+                "https://openalex.org/W2232666231",
+                "https://openalex.org/W2910205996",
+                "https://openalex.org/W3199821849",
+                "https://openalex.org/W2512658306",
+                "https://openalex.org/W2524759455"
+            ],
+            "abstract_inverted_index": {
+                "The": [
+                    0,
+                    45,
+                    64
+                ],
+                "Synthesis": [
+                    1
+                ],
+                "Report": [
+                    2,
+                    19
+                ],
+                "(SYR)": [
+                    3
+                ],
+                "distils": [
+                    4
+                ],
+                "and": [
+                    5,
+                    54,
+                    56,
+                    78,
+                    83,
+                    91
+                ],
+                "integrates": [
+                    6
+                ],
+                "the": [
+                    7,
+                    10,
+                    16,
+                    22,
+                    29,
+                    40,
+                    68,
+                    86
+                ],
+                "findings": [
+                    8,
+                    69
+                ],
+                "of": [
+                    9,
+                    21,
+                    33,
+                    61,
+                    70,
+                    88
+                ],
+                "three": [
+                    11
+                ],
+                "Working": [
+                    12
+                ],
+                "Group": [
+                    13
+                ],
+                "contributions": [
+                    14
+                ],
+                "to": [
+                    15,
+                    93
+                ],
+                "Fifth": [
+                    17
+                ],
+                "Assessment": [
+                    18
+                ],
+                "(AR5)": [
+                    20
+                ],
+                "Intergovernmental": [
+                    23
+                ],
+                "Panel": [
+                    24
+                ],
+                "on": [
+                    25,
+                    74,
+                    84
+                ],
+                "Climate": [
+                    26,
+                    42,
+                    49,
+                    57,
+                    62,
+                    79,
+                    95
+                ],
+                "Change": [
+                    27,
+                    43,
+                    50,
+                    58,
+                    80,
+                    96
+                ],
+                "(IPCC),": [
+                    28
+                ],
+                "most": [
+                    30
+                ],
+                "comprehensive": [
+                    31
+                ],
+                "assessment": [
+                    32
+                ],
+                "climate": [
+                    34
+                ],
+                "change": [
+                    35
+                ],
+                "undertaken": [
+                    36
+                ],
+                "thus": [
+                    37
+                ],
+                "far": [
+                    38
+                ],
+                "by": [
+                    39
+                ],
+                "IPCC:": [
+                    41
+                ],
+                "2013:": [
+                    44
+                ],
+                "Physical": [
+                    46
+                ],
+                "Science": [
+                    47
+                ],
+                "Basis;": [
+                    48
+                ],
+                "2014:": [
+                    51,
+                    59
+                ],
+                "Impacts,": [
+                    52
+                ],
+                "Adaptation,": [
+                    53
+                ],
+                "Vulnerability;": [
+                    55
+                ],
+                "Mitigation": [
+                    60,
+                    81
+                ],
+                "Change.": [
+                    63
+                ],
+                "SYR": [
+                    65
+                ],
+                "also": [
+                    66
+                ],
+                "incorporates": [
+                    67
+                ],
+                "two": [
+                    71
+                ],
+                "Special": [
+                    72
+                ],
+                "Reports": [
+                    73
+                ],
+                "Renewable": [
+                    75
+                ],
+                "Energy": [
+                    76
+                ],
+                "Sources": [
+                    77
+                ],
+                "(2011)": [
+                    82
+                ],
+                "Managing": [
+                    85
+                ],
+                "Risks": [
+                    87
+                ],
+                "Extreme": [
+                    89
+                ],
+                "Events": [
+                    90
+                ],
+                "Disasters": [
+                    92
+                ],
+                "Advance": [
+                    94
+                ],
+                "Adaptation": [
+                    97
+                ],
+                "(2011).": [
+                    98
+                ]
+            },
+            "counts_by_year": [
+                {
+                    "year": 2026,
+                    "cited_by_count": 11
+                },
+                {
+                    "year": 2025,
+                    "cited_by_count": 135
+                },
+                {
+                    "year": 2024,
+                    "cited_by_count": 262
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 271
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 320
+                },
+                {
+                    "year": 2021,
+                    "cited_by_count": 778
+                },
+                {
+                    "year": 2020,
+                    "cited_by_count": 686
+                },
+                {
+                    "year": 2019,
+                    "cited_by_count": 601
+                },
+                {
+                    "year": 2018,
+                    "cited_by_count": 624
+                },
+                {
+                    "year": 2017,
+                    "cited_by_count": 537
+                },
+                {
+                    "year": 2016,
+                    "cited_by_count": 442
+                },
+                {
+                    "year": 2015,
+                    "cited_by_count": 261
+                },
+                {
+                    "year": 2014,
+                    "cited_by_count": 82
+                },
+                {
+                    "year": 2013,
+                    "cited_by_count": 69
+                },
+                {
+                    "year": 2012,
+                    "cited_by_count": 63
+                }
+            ],
+            "updated_date": "2026-04-26T08:31:28.666265",
+            "created_date": "2025-10-10T00:00:00"
+        },
+        {
+            "id": "https://openalex.org/W2461419449",
+            "doi": "https://doi.org/10.1038/nature18307",
+            "title": "Paris Agreement climate proposals need a boost to keep warming well below 2\u2009\u00b0C",
+            "display_name": "Paris Agreement climate proposals need a boost to keep warming well below 2\u2009\u00b0C",
+            "relevance_score": 89.693405,
+            "publication_year": 2016,
+            "publication_date": "2016-06-29",
+            "ids": {
+                "openalex": "https://openalex.org/W2461419449",
+                "doi": "https://doi.org/10.1038/nature18307",
+                "mag": "2461419449",
+                "pmid": "https://pubmed.ncbi.nlm.nih.gov/27357792"
+            },
+            "language": "en",
+            "primary_location": {
+                "id": "doi:10.1038/nature18307",
+                "is_oa": false,
+                "landing_page_url": "https://doi.org/10.1038/nature18307",
+                "pdf_url": null,
+                "source": {
+                    "id": "https://openalex.org/S137773608",
+                    "display_name": "Nature",
+                    "issn_l": "0028-0836",
+                    "issn": [
+                        "0028-0836",
+                        "1476-4687"
+                    ],
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": true,
+                    "host_organization": "https://openalex.org/P4310319908",
+                    "host_organization_name": "Nature Portfolio",
+                    "host_organization_lineage": [
+                        "https://openalex.org/P4310319908",
+                        "https://openalex.org/P4310319965"
+                    ],
+                    "host_organization_lineage_names": [
+                        "Nature Portfolio",
+                        "Springer Nature"
+                    ],
+                    "type": "journal"
+                },
+                "license": null,
+                "license_id": null,
+                "version": "publishedVersion",
+                "is_accepted": true,
+                "is_published": true,
+                "raw_source_name": "Nature",
+                "raw_type": "journal-article"
+            },
+            "type": "article",
+            "indexed_in": [
+                "crossref",
+                "pubmed"
+            ],
+            "open_access": {
+                "is_oa": true,
+                "oa_status": "green",
+                "oa_url": "http://pure.iiasa.ac.at/id/eprint/13307/1/nature18307_proof1.pdf",
+                "any_repository_has_fulltext": true
+            },
+            "authorships": [
+                {
+                    "author_position": "first",
+                    "author": {
+                        "id": "https://openalex.org/A5017820045",
+                        "display_name": "Joeri Rogelj",
+                        "orcid": "https://orcid.org/0000-0003-2056-9061"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1317774081",
+                            "display_name": "International Institute for Applied Systems Analysis",
+                            "ror": "https://ror.org/02wfhk785",
+                            "country_code": "AT",
+                            "type": "funder",
+                            "lineage": [
+                                "https://openalex.org/I1317774081"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I35440088",
+                            "display_name": "ETH Zurich",
+                            "ror": "https://ror.org/05a28rw58",
+                            "country_code": "CH",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I2799323385",
+                                "https://openalex.org/I35440088"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "AT",
+                        "CH"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Joeri Rogelj",
+                    "raw_affiliation_strings": [
+                        "ENE Program, International Institute for Applied Systems Analysis (IIASA), Laxenburg, Austria",
+                        "Institute for Atmospheric and Climate Science, ETH Zurich, Zurich, Switzerland"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "ENE Program, International Institute for Applied Systems Analysis (IIASA), Laxenburg, Austria",
+                            "institution_ids": [
+                                "https://openalex.org/I1317774081"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "Institute for Atmospheric and Climate Science, ETH Zurich, Zurich, Switzerland",
+                            "institution_ids": [
+                                "https://openalex.org/I35440088"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5008129630",
+                        "display_name": "Michel den Elzen",
+                        "orcid": "https://orcid.org/0000-0002-5128-8150"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1326018075",
+                            "display_name": "Netherlands Environmental Assessment Agency",
+                            "ror": "https://ror.org/052x1hs80",
+                            "country_code": "NL",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I1326018075",
+                                "https://openalex.org/I331567899",
+                                "https://openalex.org/I4210140876"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "NL"
+                    ],
+                    "is_corresponding": true,
+                    "raw_author_name": "Michel den Elzen",
+                    "raw_affiliation_strings": [
+                        "PBL Netherlands Environmental Assessment Agency, Bilthoven, The Netherlands"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "PBL Netherlands Environmental Assessment Agency, Bilthoven, The Netherlands",
+                            "institution_ids": [
+                                "https://openalex.org/I1326018075"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5044294824",
+                        "display_name": "Niklas H\u00f6hne",
+                        "orcid": "https://orcid.org/0000-0001-9246-8759"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210132597",
+                            "display_name": "NewClimate Institute",
+                            "ror": "https://ror.org/03e7w2h22",
+                            "country_code": "DE",
+                            "type": "other",
+                            "lineage": [
+                                "https://openalex.org/I4210132597"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I913481162",
+                            "display_name": "Wageningen University & Research",
+                            "ror": "https://ror.org/04qw24q55",
+                            "country_code": "NL",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I913481162"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "DE",
+                        "NL"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Niklas H\u00f6hne",
+                    "raw_affiliation_strings": [
+                        "Environmental Systems Analysis Group, Wageningen University, Wageningen, The Netherlands",
+                        "NewClimate Institute, Cologne, Germany"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Environmental Systems Analysis Group, Wageningen University, Wageningen, The Netherlands",
+                            "institution_ids": [
+                                "https://openalex.org/I913481162"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "NewClimate Institute, Cologne, Germany",
+                            "institution_ids": [
+                                "https://openalex.org/I4210132597"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5014724619",
+                        "display_name": "Taryn Fransen",
+                        "orcid": "https://orcid.org/0000-0002-2921-4411"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I1331321872",
+                            "display_name": "World Resources Institute",
+                            "ror": "https://ror.org/047ktk903",
+                            "country_code": "US",
+                            "type": "nonprofit",
+                            "lineage": [
+                                "https://openalex.org/I1331321872"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "US"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Taryn Fransen",
+                    "raw_affiliation_strings": [
+                        "World Resources Institute, Washington DC, USA"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "World Resources Institute, Washington DC, USA",
+                            "institution_ids": [
+                                "https://openalex.org/I1331321872"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5080257199",
+                        "display_name": "Hanna Fekete",
+                        "orcid": "https://orcid.org/0000-0002-5273-9347"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210132597",
+                            "display_name": "NewClimate Institute",
+                            "ror": "https://ror.org/03e7w2h22",
+                            "country_code": "DE",
+                            "type": "other",
+                            "lineage": [
+                                "https://openalex.org/I4210132597"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "DE"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Hanna Fekete",
+                    "raw_affiliation_strings": [
+                        "NewClimate Institute, Cologne, Germany"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "NewClimate Institute, Cologne, Germany",
+                            "institution_ids": [
+                                "https://openalex.org/I4210132597"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5086213049",
+                        "display_name": "Harald Winkler",
+                        "orcid": "https://orcid.org/0000-0002-5826-4071"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I157614274",
+                            "display_name": "University of Cape Town",
+                            "ror": "https://ror.org/03p74gp79",
+                            "country_code": "ZA",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I157614274"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "ZA"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Harald Winkler",
+                    "raw_affiliation_strings": [
+                        "Energy Research Center, University of Cape Town, Cape Town, South Africa"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Energy Research Center, University of Cape Town, Cape Town, South Africa",
+                            "institution_ids": [
+                                "https://openalex.org/I157614274"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5032681268",
+                        "display_name": "Roberto Schaeffer",
+                        "orcid": "https://orcid.org/0000-0002-3709-7323"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I122140584",
+                            "display_name": "Universidade Federal do Rio de Janeiro",
+                            "ror": "https://ror.org/03490as77",
+                            "country_code": "BR",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I122140584"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "BR"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Roberto Schaeffer",
+                    "raw_affiliation_strings": [
+                        "Universidade Federal do Rio de Janeiro (COPPE/UFRJ), Rio de Janeiro, Brazil"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Universidade Federal do Rio de Janeiro (COPPE/UFRJ), Rio de Janeiro, Brazil",
+                            "institution_ids": [
+                                "https://openalex.org/I122140584"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5048369787",
+                        "display_name": "Fu Sha",
+                        "orcid": "https://orcid.org/0000-0002-8061-0348"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4210137309",
+                            "display_name": "National Center for Climate Change Strategy and International Cooperation",
+                            "ror": "https://ror.org/03mxyqx84",
+                            "country_code": "CN",
+                            "type": "government",
+                            "lineage": [
+                                "https://openalex.org/I204710742",
+                                "https://openalex.org/I4210137309"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "CN"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Fu Sha",
+                    "raw_affiliation_strings": [
+                        "National Center for Climate Change Strategy and International Cooperation, Beijing, China"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "National Center for Climate Change Strategy and International Cooperation, Beijing, China",
+                            "institution_ids": [
+                                "https://openalex.org/I4210137309"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "middle",
+                    "author": {
+                        "id": "https://openalex.org/A5035238849",
+                        "display_name": "Keywan Riahi",
+                        "orcid": "https://orcid.org/0000-0001-7193-3498"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I4092182",
+                            "display_name": "Graz University of Technology",
+                            "ror": "https://ror.org/00d7xrm67",
+                            "country_code": "AT",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I4092182"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I1317774081",
+                            "display_name": "International Institute for Applied Systems Analysis",
+                            "ror": "https://ror.org/02wfhk785",
+                            "country_code": "AT",
+                            "type": "funder",
+                            "lineage": [
+                                "https://openalex.org/I1317774081"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "AT"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Keywan Riahi",
+                    "raw_affiliation_strings": [
+                        "ENE Program, International Institute for Applied Systems Analysis (IIASA), Laxenburg, Austria",
+                        "Graz University of Technology, Graz, Austria"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "ENE Program, International Institute for Applied Systems Analysis (IIASA), Laxenburg, Austria",
+                            "institution_ids": [
+                                "https://openalex.org/I1317774081"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "Graz University of Technology, Graz, Austria",
+                            "institution_ids": [
+                                "https://openalex.org/I4092182"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "author_position": "last",
+                    "author": {
+                        "id": "https://openalex.org/A5008924658",
+                        "display_name": "Malte Meinshausen",
+                        "orcid": "https://orcid.org/0000-0003-4048-3521"
+                    },
+                    "institutions": [
+                        {
+                            "id": "https://openalex.org/I60200437",
+                            "display_name": "Potsdam Institute for Climate Impact Research",
+                            "ror": "https://ror.org/03e8s1d88",
+                            "country_code": "DE",
+                            "type": "facility",
+                            "lineage": [
+                                "https://openalex.org/I315704651",
+                                "https://openalex.org/I60200437"
+                            ]
+                        },
+                        {
+                            "id": "https://openalex.org/I165779595",
+                            "display_name": "University of Melbourne",
+                            "ror": "https://ror.org/01ej9dk98",
+                            "country_code": "AU",
+                            "type": "education",
+                            "lineage": [
+                                "https://openalex.org/I165779595"
+                            ]
+                        }
+                    ],
+                    "countries": [
+                        "AU",
+                        "DE"
+                    ],
+                    "is_corresponding": false,
+                    "raw_author_name": "Malte Meinshausen",
+                    "raw_affiliation_strings": [
+                        "Australian-German Climate and Energy College, School of Earth Sciences, The University of Melbourne, Melbourne, Victoria, Australia",
+                        "PRIMAP Group, Potsdam Institute for Climate Impact Research (PIK), Potsdam, Germany"
+                    ],
+                    "raw_orcid": null,
+                    "affiliations": [
+                        {
+                            "raw_affiliation_string": "Australian-German Climate and Energy College, School of Earth Sciences, The University of Melbourne, Melbourne, Victoria, Australia",
+                            "institution_ids": [
+                                "https://openalex.org/I165779595"
+                            ]
+                        },
+                        {
+                            "raw_affiliation_string": "PRIMAP Group, Potsdam Institute for Climate Impact Research (PIK), Potsdam, Germany",
+                            "institution_ids": [
+                                "https://openalex.org/I60200437"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "institutions": [],
+            "countries_distinct_count": 9,
+            "institutions_distinct_count": 10,
+            "corresponding_author_ids": [
+                "https://openalex.org/A5008129630"
+            ],
+            "corresponding_institution_ids": [
+                "https://openalex.org/I1326018075"
+            ],
+            "apc_list": {
+                "value": 9750,
+                "currency": "EUR",
+                "value_usd": 11690
+            },
+            "apc_paid": null,
+            "fwci": 1283.0249,
+            "has_fulltext": true,
+            "cited_by_count": 3335,
+            "citation_normalized_percentile": {
+                "value": 0.99998931,
+                "is_in_top_1_percent": true,
+                "is_in_top_10_percent": true
+            },
+            "cited_by_percentile_year": {
+                "min": 99,
+                "max": 100
+            },
+            "biblio": {
+                "volume": "534",
+                "issue": "7609",
+                "first_page": "631",
+                "last_page": "639"
+            },
+            "is_retracted": false,
+            "is_paratext": false,
+            "is_xpac": false,
+            "primary_topic": {
+                "id": "https://openalex.org/T10471",
+                "display_name": "Climate Change Policy and Economics",
+                "score": 0.9991999864578247,
+                "subfield": {
+                    "id": "https://openalex.org/subfields/2002",
+                    "display_name": "Economics and Econometrics"
+                },
+                "field": {
+                    "id": "https://openalex.org/fields/20",
+                    "display_name": "Economics, Econometrics and Finance"
+                },
+                "domain": {
+                    "id": "https://openalex.org/domains/2",
+                    "display_name": "Social Sciences"
+                }
+            },
+            "topics": [
+                {
+                    "id": "https://openalex.org/T10471",
+                    "display_name": "Climate Change Policy and Economics",
+                    "score": 0.9991999864578247,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2002",
+                        "display_name": "Economics and Econometrics"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/20",
+                        "display_name": "Economics, Econometrics and Finance"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/2",
+                        "display_name": "Social Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T11588",
+                    "display_name": "Atmospheric and Environmental Gas Dynamics",
+                    "score": 0.9905999898910522,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2306",
+                        "display_name": "Global and Planetary Change"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                },
+                {
+                    "id": "https://openalex.org/T10435",
+                    "display_name": "Environmental Impact and Sustainability",
+                    "score": 0.9851999878883362,
+                    "subfield": {
+                        "id": "https://openalex.org/subfields/2305",
+                        "display_name": "Environmental Engineering"
+                    },
+                    "field": {
+                        "id": "https://openalex.org/fields/23",
+                        "display_name": "Environmental Science"
+                    },
+                    "domain": {
+                        "id": "https://openalex.org/domains/3",
+                        "display_name": "Physical Sciences"
+                    }
+                }
+            ],
+            "keywords": [
+                {
+                    "id": "https://openalex.org/keywords/degree-celsius",
+                    "display_name": "Degree Celsius",
+                    "score": 0.7173362970352173
+                },
+                {
+                    "id": "https://openalex.org/keywords/greenhouse-gas",
+                    "display_name": "Greenhouse gas",
+                    "score": 0.7147153615951538
+                },
+                {
+                    "id": "https://openalex.org/keywords/global-warming",
+                    "display_name": "Global warming",
+                    "score": 0.6305991411209106
+                },
+                {
+                    "id": "https://openalex.org/keywords/scope",
+                    "display_name": "Scope (computer science)",
+                    "score": 0.623004674911499
+                },
+                {
+                    "id": "https://openalex.org/keywords/climate-change",
+                    "display_name": "Climate change",
+                    "score": 0.5019619464874268
+                },
+                {
+                    "id": "https://openalex.org/keywords/natural-resource-economics",
+                    "display_name": "Natural resource economics",
+                    "score": 0.42792871594429016
+                },
+                {
+                    "id": "https://openalex.org/keywords/environmental-science",
+                    "display_name": "Environmental science",
+                    "score": 0.4120030701160431
+                },
+                {
+                    "id": "https://openalex.org/keywords/economics",
+                    "display_name": "Economics",
+                    "score": 0.23254886269569397
+                },
+                {
+                    "id": "https://openalex.org/keywords/physics",
+                    "display_name": "Physics",
+                    "score": 0.07394915819168091
+                },
+                {
+                    "id": "https://openalex.org/keywords/computer-science",
+                    "display_name": "Computer science",
+                    "score": 0.07116606831550598
+                },
+                {
+                    "id": "https://openalex.org/keywords/thermodynamics",
+                    "display_name": "Thermodynamics",
+                    "score": 0.0675114095211029
+                },
+                {
+                    "id": "https://openalex.org/keywords/ecology",
+                    "display_name": "Ecology",
+                    "score": 0.06426692008972168
+                }
+            ],
+            "concepts": [
+                {
+                    "id": "https://openalex.org/C6425155",
+                    "wikidata": "https://www.wikidata.org/wiki/Q25267",
+                    "display_name": "Degree Celsius",
+                    "level": 2,
+                    "score": 0.7173362970352173
+                },
+                {
+                    "id": "https://openalex.org/C47737302",
+                    "wikidata": "https://www.wikidata.org/wiki/Q167336",
+                    "display_name": "Greenhouse gas",
+                    "level": 2,
+                    "score": 0.7147153615951538
+                },
+                {
+                    "id": "https://openalex.org/C115343472",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7942",
+                    "display_name": "Global warming",
+                    "level": 3,
+                    "score": 0.6305991411209106
+                },
+                {
+                    "id": "https://openalex.org/C2778012447",
+                    "wikidata": "https://www.wikidata.org/wiki/Q1034415",
+                    "display_name": "Scope (computer science)",
+                    "level": 2,
+                    "score": 0.623004674911499
+                },
+                {
+                    "id": "https://openalex.org/C132651083",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7942",
+                    "display_name": "Climate change",
+                    "level": 2,
+                    "score": 0.5019619464874268
+                },
+                {
+                    "id": "https://openalex.org/C175605778",
+                    "wikidata": "https://www.wikidata.org/wiki/Q3299701",
+                    "display_name": "Natural resource economics",
+                    "level": 1,
+                    "score": 0.42792871594429016
+                },
+                {
+                    "id": "https://openalex.org/C39432304",
+                    "wikidata": "https://www.wikidata.org/wiki/Q188847",
+                    "display_name": "Environmental science",
+                    "level": 0,
+                    "score": 0.4120030701160431
+                },
+                {
+                    "id": "https://openalex.org/C162324750",
+                    "wikidata": "https://www.wikidata.org/wiki/Q8134",
+                    "display_name": "Economics",
+                    "level": 0,
+                    "score": 0.23254886269569397
+                },
+                {
+                    "id": "https://openalex.org/C121332964",
+                    "wikidata": "https://www.wikidata.org/wiki/Q413",
+                    "display_name": "Physics",
+                    "level": 0,
+                    "score": 0.07394915819168091
+                },
+                {
+                    "id": "https://openalex.org/C41008148",
+                    "wikidata": "https://www.wikidata.org/wiki/Q21198",
+                    "display_name": "Computer science",
+                    "level": 0,
+                    "score": 0.07116606831550598
+                },
+                {
+                    "id": "https://openalex.org/C97355855",
+                    "wikidata": "https://www.wikidata.org/wiki/Q11473",
+                    "display_name": "Thermodynamics",
+                    "level": 1,
+                    "score": 0.0675114095211029
+                },
+                {
+                    "id": "https://openalex.org/C18903297",
+                    "wikidata": "https://www.wikidata.org/wiki/Q7150",
+                    "display_name": "Ecology",
+                    "level": 1,
+                    "score": 0.06426692008972168
+                },
+                {
+                    "id": "https://openalex.org/C86803240",
+                    "wikidata": "https://www.wikidata.org/wiki/Q420",
+                    "display_name": "Biology",
+                    "level": 0,
+                    "score": 0.0
+                },
+                {
+                    "id": "https://openalex.org/C199360897",
+                    "wikidata": "https://www.wikidata.org/wiki/Q9143",
+                    "display_name": "Programming language",
+                    "level": 1,
+                    "score": 0.0
+                }
+            ],
+            "mesh": [
+                {
+                    "descriptor_ui": "D002245",
+                    "descriptor_name": "Carbon Dioxide",
+                    "qualifier_ui": "Q000032",
+                    "qualifier_name": "analysis",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D002245",
+                    "descriptor_name": "Carbon Dioxide",
+                    "qualifier_ui": "Q000032",
+                    "qualifier_name": "analysis",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D002245",
+                    "descriptor_name": "Carbon Dioxide",
+                    "qualifier_ui": "Q000032",
+                    "qualifier_name": "analysis",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D006040",
+                    "descriptor_name": "Goals",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D006040",
+                    "descriptor_name": "Goals",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D006040",
+                    "descriptor_name": "Goals",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D007391",
+                    "descriptor_name": "International Cooperation",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D007391",
+                    "descriptor_name": "International Cooperation",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D007391",
+                    "descriptor_name": "International Cooperation",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D010297",
+                    "descriptor_name": "Paris",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D010297",
+                    "descriptor_name": "Paris",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D010297",
+                    "descriptor_name": "Paris",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D013696",
+                    "descriptor_name": "Temperature",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D013696",
+                    "descriptor_name": "Temperature",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D013696",
+                    "descriptor_name": "Temperature",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": true
+                },
+                {
+                    "descriptor_ui": "D013997",
+                    "descriptor_name": "Time Factors",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D013997",
+                    "descriptor_name": "Time Factors",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D013997",
+                    "descriptor_name": "Time Factors",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D015986",
+                    "descriptor_name": "Confounding Factors, Epidemiologic",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D015986",
+                    "descriptor_name": "Confounding Factors, Epidemiologic",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D015986",
+                    "descriptor_name": "Confounding Factors, Epidemiologic",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D017752",
+                    "descriptor_name": "Greenhouse Effect",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D035501",
+                    "descriptor_name": "Uncertainty",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D035501",
+                    "descriptor_name": "Uncertainty",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D035501",
+                    "descriptor_name": "Uncertainty",
+                    "qualifier_ui": null,
+                    "qualifier_name": null,
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D057232",
+                    "descriptor_name": "Global Warming",
+                    "qualifier_ui": "Q000517",
+                    "qualifier_name": "prevention & control",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000331",
+                    "qualifier_name": "legislation & jurisprudence",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000639",
+                    "qualifier_name": "trends",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000639",
+                    "qualifier_name": "trends",
+                    "is_major_topic": false
+                },
+                {
+                    "descriptor_ui": "D058735",
+                    "descriptor_name": "Environmental Policy",
+                    "qualifier_ui": "Q000639",
+                    "qualifier_name": "trends",
+                    "is_major_topic": false
+                }
+            ],
+            "locations_count": 6,
+            "locations": [
+                {
+                    "id": "doi:10.1038/nature18307",
+                    "is_oa": false,
+                    "landing_page_url": "https://doi.org/10.1038/nature18307",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S137773608",
+                        "display_name": "Nature",
+                        "issn_l": "0028-0836",
+                        "issn": [
+                            "0028-0836",
+                            "1476-4687"
+                        ],
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": true,
+                        "host_organization": "https://openalex.org/P4310319908",
+                        "host_organization_name": "Nature Portfolio",
+                        "host_organization_lineage": [
+                            "https://openalex.org/P4310319908",
+                            "https://openalex.org/P4310319965"
+                        ],
+                        "host_organization_lineage_names": [
+                            "Nature Portfolio",
+                            "Springer Nature"
+                        ],
+                        "type": "journal"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Nature",
+                    "raw_type": "journal-article"
+                },
+                {
+                    "id": "pmid:27357792",
+                    "is_oa": false,
+                    "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/27357792",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306525036",
+                        "display_name": "PubMed",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I1299303238",
+                        "host_organization_name": "National Institutes of Health",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I1299303238"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "publishedVersion",
+                    "is_accepted": true,
+                    "is_published": true,
+                    "raw_source_name": "Nature",
+                    "raw_type": null
+                },
+                {
+                    "id": "pmh:oai:pure.iiasa.ac.at:13307",
+                    "is_oa": true,
+                    "landing_page_url": null,
+                    "pdf_url": "http://pure.iiasa.ac.at/id/eprint/13307/1/nature18307_proof1.pdf",
+                    "source": {
+                        "id": "https://openalex.org/S4306401423",
+                        "display_name": "IIASA PURE (International Institute of Applied Systems Analysis)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I1317774081",
+                        "host_organization_name": "International Institute for Applied Systems Analysis",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I1317774081"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": "cc-by",
+                    "license_id": "https://openalex.org/licenses/cc-by",
+                    "version": "acceptedVersion",
+                    "is_accepted": true,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "Article"
+                },
+                {
+                    "id": "pmh:oai:jupiter.its.unimelb.edu.au:11343/290558",
+                    "is_oa": false,
+                    "landing_page_url": "http://hdl.handle.net/11343/290558",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4377196259",
+                        "display_name": "Minerva Access (University of Melbourne)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I165779595",
+                        "host_organization_name": "The University of Melbourne",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I165779595"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "",
+                    "raw_type": "Journal Article"
+                },
+                {
+                    "id": "pmh:oai:research.vu.nl:openaire_cris_publications/0e28d1c0-524c-4678-a7f8-dab785346dd3",
+                    "is_oa": false,
+                    "landing_page_url": "https://research.vu.nl/en/publications/0e28d1c0-524c-4678-a7f8-dab785346dd3",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306401107",
+                        "display_name": "VU Research Portal",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I865915315",
+                        "host_organization_name": "Vrije Universiteit Amsterdam",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I865915315"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "Rogelj, J, den Elzen, M G J, H\u00f6hne, N, Fransen, T, Fekete, H, Winkler, H, Schaeffer, R, Sha, F, Riahi, K & Meinshausen, M 2016, 'Paris Agreement climate proposals need a boost to keep warming well below 2 \u00b0c', Nature, vol. 534, pp. 631\u2013639. https://doi.org/10.1038/nature18307",
+                    "raw_type": "article"
+                },
+                {
+                    "id": "pmh:wur:oai:library.wur.nl:wurpubs/508150",
+                    "is_oa": false,
+                    "landing_page_url": "https://research.wur.nl/en/publications/paris-agreement-climate-proposals-need-a-boost-to-keep-warming-we",
+                    "pdf_url": null,
+                    "source": {
+                        "id": "https://openalex.org/S4306401843",
+                        "display_name": "Data Archiving and Networked Services (DANS)",
+                        "issn_l": null,
+                        "issn": null,
+                        "is_oa": false,
+                        "is_in_doaj": false,
+                        "is_core": false,
+                        "host_organization": "https://openalex.org/I1322597698",
+                        "host_organization_name": "Royal Netherlands Academy of Arts and Sciences",
+                        "host_organization_lineage": [
+                            "https://openalex.org/I1322597698"
+                        ],
+                        "host_organization_lineage_names": [],
+                        "type": "repository"
+                    },
+                    "license": null,
+                    "license_id": null,
+                    "version": "submittedVersion",
+                    "is_accepted": false,
+                    "is_published": false,
+                    "raw_source_name": "Nature, 534(7609), 631 - 639",
+                    "raw_type": "info:eu-repo/semantics/article"
+                }
+            ],
+            "best_oa_location": {
+                "id": "pmh:oai:pure.iiasa.ac.at:13307",
+                "is_oa": true,
+                "landing_page_url": null,
+                "pdf_url": "http://pure.iiasa.ac.at/id/eprint/13307/1/nature18307_proof1.pdf",
+                "source": {
+                    "id": "https://openalex.org/S4306401423",
+                    "display_name": "IIASA PURE (International Institute of Applied Systems Analysis)",
+                    "issn_l": null,
+                    "issn": null,
+                    "is_oa": false,
+                    "is_in_doaj": false,
+                    "is_core": false,
+                    "host_organization": "https://openalex.org/I1317774081",
+                    "host_organization_name": "International Institute for Applied Systems Analysis",
+                    "host_organization_lineage": [
+                        "https://openalex.org/I1317774081"
+                    ],
+                    "host_organization_lineage_names": [],
+                    "type": "repository"
+                },
+                "license": "cc-by",
+                "license_id": "https://openalex.org/licenses/cc-by",
+                "version": "acceptedVersion",
+                "is_accepted": true,
+                "is_published": false,
+                "raw_source_name": "",
+                "raw_type": "Article"
+            },
+            "sustainable_development_goals": [
+                {
+                    "score": 0.6499999761581421,
+                    "id": "https://metadata.un.org/sdg/13",
+                    "display_name": "Climate action"
+                }
+            ],
+            "awards": [],
+            "funders": [],
+            "has_content": {
+                "pdf": true,
+                "grobid_xml": true
+            },
+            "content_urls": {
+                "pdf": "https://content.openalex.org/works/W2461419449.pdf",
+                "grobid_xml": "https://content.openalex.org/works/W2461419449.grobid-xml"
+            },
+            "referenced_works_count": 39,
+            "referenced_works": [
+                "https://openalex.org/W48900392",
+                "https://openalex.org/W1514819272",
+                "https://openalex.org/W1525458857",
+                "https://openalex.org/W1547355027",
+                "https://openalex.org/W1547639416",
+                "https://openalex.org/W1565707212",
+                "https://openalex.org/W1589635259",
+                "https://openalex.org/W1965632437",
+                "https://openalex.org/W1972146746",
+                "https://openalex.org/W1975248184",
+                "https://openalex.org/W2005178075",
+                "https://openalex.org/W2009271730",
+                "https://openalex.org/W2017900025",
+                "https://openalex.org/W2042711048",
+                "https://openalex.org/W2045653657",
+                "https://openalex.org/W2056149355",
+                "https://openalex.org/W2060852319",
+                "https://openalex.org/W2069964497",
+                "https://openalex.org/W2071857431",
+                "https://openalex.org/W2124685328",
+                "https://openalex.org/W2131086800",
+                "https://openalex.org/W2141150166",
+                "https://openalex.org/W2145660906",
+                "https://openalex.org/W2149679898",
+                "https://openalex.org/W2155193148",
+                "https://openalex.org/W2167917981",
+                "https://openalex.org/W2172866072",
+                "https://openalex.org/W2176598210",
+                "https://openalex.org/W2191677867",
+                "https://openalex.org/W2194425852",
+                "https://openalex.org/W2195453830",
+                "https://openalex.org/W2201312611",
+                "https://openalex.org/W2266015486",
+                "https://openalex.org/W2275912048",
+                "https://openalex.org/W2279552902",
+                "https://openalex.org/W2284020831",
+                "https://openalex.org/W2341202987",
+                "https://openalex.org/W2915309988",
+                "https://openalex.org/W4299359728"
+            ],
+            "related_works": [
+                "https://openalex.org/W1595625253",
+                "https://openalex.org/W4250924001",
+                "https://openalex.org/W3160599372",
+                "https://openalex.org/W1497709895",
+                "https://openalex.org/W2038477567",
+                "https://openalex.org/W2005181025",
+                "https://openalex.org/W66448074",
+                "https://openalex.org/W3150458167",
+                "https://openalex.org/W2790595990",
+                "https://openalex.org/W4378227607"
+            ],
+            "abstract_inverted_index": null,
+            "counts_by_year": [
+                {
+                    "year": 2026,
+                    "cited_by_count": 105
+                },
+                {
+                    "year": 2025,
+                    "cited_by_count": 351
+                },
+                {
+                    "year": 2024,
+                    "cited_by_count": 351
+                },
+                {
+                    "year": 2023,
+                    "cited_by_count": 383
+                },
+                {
+                    "year": 2022,
+                    "cited_by_count": 357
+                },
+                {
+                    "year": 2021,
+                    "cited_by_count": 376
+                },
+                {
+                    "year": 2020,
+                    "cited_by_count": 391
+                },
+                {
+                    "year": 2019,
+                    "cited_by_count": 379
+                },
+                {
+                    "year": 2018,
+                    "cited_by_count": 372
+                },
+                {
+                    "year": 2017,
+                    "cited_by_count": 227
+                },
+                {
+                    "year": 2016,
+                    "cited_by_count": 42
+                }
+            ],
+            "updated_date": "2026-04-25T08:17:42.794288",
+            "created_date": "2025-10-10T00:00:00"
+        }
+    ],
+    "group_by": []
+}

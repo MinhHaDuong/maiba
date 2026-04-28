@@ -1,0 +1,378 @@
+{
+    "status": "ok",
+    "message-type": "work-list",
+    "message-version": "1.0.0",
+    "message": {
+        "facets": {},
+        "total-results": 339,
+        "items": [
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2022,
+                            3,
+                            31
+                        ]
+                    ],
+                    "date-time": "2022-03-31T18:23:50Z",
+                    "timestamp": 1648751030284
+                },
+                "reference-count": 0,
+                "publisher": "Association scientifique et technique pour l'eau et l'environnement",
+                "issue": "5",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "short-container-title": [
+                    "TSM"
+                ],
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2007
+                        ]
+                    ]
+                },
+                "DOI": "10.1051/tsm/200705028",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2014,
+                            7,
+                            9
+                        ]
+                    ],
+                    "date-time": "2014-07-09T08:56:44Z",
+                    "timestamp": 1404896204000
+                },
+                "page": "28-34",
+                "source": "Crossref",
+                "is-referenced-by-count": 0,
+                "title": [
+                    "Le MBT avant enfouissement"
+                ],
+                "prefix": "10.36904",
+                "author": [
+                    {
+                        "given": "E.",
+                        "family": "Redon",
+                        "sequence": "first",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "Th.",
+                        "family": "Lagier",
+                        "sequence": "additional",
+                        "affiliation": []
+                    }
+                ],
+                "member": "22938",
+                "published-online": {
+                    "date-parts": [
+                        [
+                            2014,
+                            7,
+                            8
+                        ]
+                    ]
+                },
+                "container-title": [
+                    "Techniques Sciences M\u00e9thodes"
+                ],
+                "link": [
+                    {
+                        "URL": "http://tsm.astee.org/10.1051/tsm/200705028/pdf",
+                        "content-type": "unspecified",
+                        "content-version": "vor",
+                        "intended-application": "similarity-checking"
+                    }
+                ],
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2019,
+                            11,
+                            14
+                        ]
+                    ],
+                    "date-time": "2019-11-14T13:58:14Z",
+                    "timestamp": 1573739894000
+                },
+                "score": 20.812653,
+                "resource": {
+                    "primary": {
+                        "URL": "https://astee-tsm.fr/10.1051/tsm/200705028"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2007
+                        ]
+                    ]
+                },
+                "references-count": 0,
+                "journal-issue": {
+                    "issue": "5"
+                },
+                "alternative-id": [
+                    "tsm200705p28"
+                ],
+                "URL": "https://doi.org/10.1051/tsm/200705028",
+                "ISSN": [
+                    "0299-7258"
+                ],
+                "issn-type": [
+                    {
+                        "value": "0299-7258",
+                        "type": "print"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            2007
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2022,
+                            12,
+                            15
+                        ]
+                    ],
+                    "date-time": "2022-12-15T05:55:49Z",
+                    "timestamp": 1671083749811
+                },
+                "reference-count": 0,
+                "publisher": "Editions Techniques de l Ingenieur",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "DOI": "10.51257/a-v1-d4225",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2021,
+                            10,
+                            25
+                        ]
+                    ],
+                    "date-time": "2021-10-25T10:33:32Z",
+                    "timestamp": 1635158012000
+                },
+                "source": "Crossref",
+                "is-referenced-by-count": 0,
+                "title": [
+                    "R\u00e9seaux de distribution - Enfouissement"
+                ],
+                "prefix": "10.51257",
+                "author": [
+                    {
+                        "given": "Alain",
+                        "family": "DOULET",
+                        "sequence": "first",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "Jean Paul",
+                        "family": "HORSON",
+                        "sequence": "additional",
+                        "affiliation": []
+                    }
+                ],
+                "member": "28401",
+                "published-online": {
+                    "date-parts": [
+                        [
+                            2008,
+                            2
+                        ]
+                    ]
+                },
+                "container-title": [
+                    "R\u00e9seaux \u00e9lectriques et applications"
+                ],
+                "language": "fr",
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2022,
+                            12,
+                            14
+                        ]
+                    ],
+                    "date-time": "2022-12-14T11:48:09Z",
+                    "timestamp": 1671018489000
+                },
+                "score": 20.696737,
+                "resource": {
+                    "primary": {
+                        "URL": "https://www.techniques-ingenieur.fr/doi/10.51257/a/v1/d4225"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2008,
+                            2
+                        ]
+                    ]
+                },
+                "references-count": 0,
+                "URL": "https://doi.org/10.51257/a-v1-d4225",
+                "published": {
+                    "date-parts": [
+                        [
+                            2008,
+                            2
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2025,
+                            7,
+                            30
+                        ]
+                    ],
+                    "date-time": "2025-07-30T15:40:05Z",
+                    "timestamp": 1753890005462,
+                    "version": "3.41.2"
+                },
+                "reference-count": 0,
+                "publisher": "ASM International",
+                "issue": "1",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2015,
+                            1,
+                            1
+                        ]
+                    ]
+                },
+                "abstract": "<jats:title>Abstract</jats:title>\n               <jats:p>Sleipner is an 8% Cr-steel. Its property profile has been carefully balanced, producing a versatile tool steel that overcomes the limitations of the 12% Cr-steels. This datasheet provides information on composition, physical properties, and elasticity. It also includes information on high temperature performance and wear resistance as well as forming, heat treating, machining, and joining. Filing Code: TS-728. Producer or source: B\u00f6hler-Uddeholm North America.</jats:p>",
+                "DOI": "10.31399/asm.ad.ts0728",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2020,
+                            10,
+                            20
+                        ]
+                    ],
+                    "date-time": "2020-10-20T00:18:43Z",
+                    "timestamp": 1603153123000
+                },
+                "source": "Crossref",
+                "is-referenced-by-count": 0,
+                "title": [
+                    "SLEIPNER"
+                ],
+                "prefix": "10.31399",
+                "volume": "64",
+                "member": "14553",
+                "container-title": [
+                    "Alloy Digest"
+                ],
+                "language": "en",
+                "link": [
+                    {
+                        "URL": "http://dl.asminternational.org/alloy-digest/article-pdf/doi/10.31399/asm.ad.ts0728/375076/ad_v64_01_ts-728.pdf",
+                        "content-type": "application/pdf",
+                        "content-version": "vor",
+                        "intended-application": "syndication"
+                    },
+                    {
+                        "URL": "http://dl.asminternational.org/alloy-digest/article-pdf/doi/10.31399/asm.ad.ts0728/375076/ad_v64_01_ts-728.pdf",
+                        "content-type": "unspecified",
+                        "content-version": "vor",
+                        "intended-application": "similarity-checking"
+                    }
+                ],
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2020,
+                            10,
+                            20
+                        ]
+                    ],
+                    "date-time": "2020-10-20T00:18:44Z",
+                    "timestamp": 1603153124000
+                },
+                "score": 20.472647,
+                "resource": {
+                    "primary": {
+                        "URL": "https://dl.asminternational.org/alloy-digest/article/doi/10.31399/asm.ad.ts0728/7719/SLEIPNERCold-Work-Tool-Steel"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2015,
+                            1,
+                            1
+                        ]
+                    ]
+                },
+                "references-count": 0,
+                "journal-issue": {
+                    "issue": "1",
+                    "published-print": {
+                        "date-parts": [
+                            [
+                                2015,
+                                1,
+                                1
+                            ]
+                        ]
+                    }
+                },
+                "URL": "https://doi.org/10.31399/asm.ad.ts0728",
+                "ISSN": [
+                    "0002-614X"
+                ],
+                "issn-type": [
+                    {
+                        "type": "print",
+                        "value": "0002-614X"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            2015,
+                            1,
+                            1
+                        ]
+                    ]
+                },
+                "article-number": "TS-728"
+            }
+        ],
+        "items-per-page": 3,
+        "query": {
+            "start-index": 0,
+            "search-terms": null
+        }
+    }
+}

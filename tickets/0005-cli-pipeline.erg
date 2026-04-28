@@ -7,6 +7,7 @@ Blocked-by: 0001
 Blocked-by: 0002
 Blocked-by: 0003
 Blocked-by: 0004
+Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:34Z claude created
@@ -87,9 +88,8 @@ def test_end_to_end_on_archiveccs_subset(tmp_path):
     assert "Carr-Cornish" in text
 ```
 
-A small helper script `scripts/record_fixture_responses.py` (also in this
-ticket) populates `tests/fixtures/responses/` by hitting the live APIs once,
-so the test stays offline-runnable forever after.
+All HTTP responses come from `tests/fixtures/responses/{openalex,crossref}/`,
+already captured in ticket 0006. No re-recording, no live API calls in tests.
 
 ## Exit criteria
 

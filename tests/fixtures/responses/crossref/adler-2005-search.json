@@ -1,0 +1,1201 @@
+{
+    "status": "ok",
+    "message-type": "work-list",
+    "message-version": "1.0.0",
+    "message": {
+        "facets": {},
+        "total-results": 926,
+        "items": [
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2025,
+                            9,
+                            20
+                        ]
+                    ],
+                    "date-time": "2025-09-20T19:41:39Z",
+                    "timestamp": 1758397299115
+                },
+                "reference-count": 0,
+                "publisher": "Elsevier BV",
+                "issue": "2",
+                "license": [
+                    {
+                        "start": {
+                            "date-parts": [
+                                [
+                                    1980,
+                                    4,
+                                    1
+                                ]
+                            ],
+                            "date-time": "1980-04-01T00:00:00Z",
+                            "timestamp": 323395200000
+                        },
+                        "content-version": "tdm",
+                        "delay-in-days": 0,
+                        "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+                    }
+                ],
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "short-container-title": [
+                    "Business Horizons"
+                ],
+                "published-print": {
+                    "date-parts": [
+                        [
+                            1980,
+                            4
+                        ]
+                    ]
+                },
+                "DOI": "10.1016/0007-6813(80)90004-x",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2004,
+                            12,
+                            16
+                        ]
+                    ],
+                    "date-time": "2004-12-16T13:07:07Z",
+                    "timestamp": 1103202427000
+                },
+                "page": "11-14",
+                "source": "Crossref",
+                "is-referenced-by-count": 9,
+                "title": [
+                    "Risk-making management"
+                ],
+                "prefix": "10.1016",
+                "volume": "23",
+                "author": [
+                    {
+                        "given": "Stanley",
+                        "family": "Adler",
+                        "sequence": "first",
+                        "affiliation": []
+                    }
+                ],
+                "member": "78",
+                "container-title": [
+                    "Business Horizons"
+                ],
+                "language": "en",
+                "link": [
+                    {
+                        "URL": "https://api.elsevier.com/content/article/PII:000768138090004X?httpAccept=text/xml",
+                        "content-type": "text/xml",
+                        "content-version": "vor",
+                        "intended-application": "text-mining"
+                    },
+                    {
+                        "URL": "https://api.elsevier.com/content/article/PII:000768138090004X?httpAccept=text/plain",
+                        "content-type": "text/plain",
+                        "content-version": "vor",
+                        "intended-application": "text-mining"
+                    }
+                ],
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2019,
+                            1,
+                            31
+                        ]
+                    ],
+                    "date-time": "2019-01-31T06:20:58Z",
+                    "timestamp": 1548915658000
+                },
+                "score": 25.425755,
+                "resource": {
+                    "primary": {
+                        "URL": "https://linkinghub.elsevier.com/retrieve/pii/000768138090004X"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            1980,
+                            4
+                        ]
+                    ]
+                },
+                "references-count": 0,
+                "journal-issue": {
+                    "issue": "2",
+                    "published-print": {
+                        "date-parts": [
+                            [
+                                1980,
+                                4
+                            ]
+                        ]
+                    }
+                },
+                "alternative-id": [
+                    "000768138090004X"
+                ],
+                "URL": "https://doi.org/10.1016/0007-6813(80)90004-x",
+                "ISSN": [
+                    "0007-6813"
+                ],
+                "issn-type": [
+                    {
+                        "value": "0007-6813",
+                        "type": "print"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            1980,
+                            4
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2025,
+                            12,
+                            29
+                        ]
+                    ],
+                    "date-time": "2025-12-29T18:49:20Z",
+                    "timestamp": 1767034160799
+                },
+                "reference-count": 0,
+                "publisher": "JSTOR",
+                "issue": "4",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2005,
+                            3,
+                            1
+                        ]
+                    ]
+                },
+                "DOI": "10.2307/4150613",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2010,
+                            5,
+                            4
+                        ]
+                    ],
+                    "date-time": "2010-05-04T17:40:12Z",
+                    "timestamp": 1272994812000
+                },
+                "page": "1121",
+                "source": "Crossref",
+                "is-referenced-by-count": 20,
+                "title": [
+                    "Against \"Individual Risk\": A Sympathetic Critique of Risk Assessment"
+                ],
+                "prefix": "10.2307",
+                "volume": "153",
+                "author": [
+                    {
+                        "given": "Matthew D.",
+                        "family": "Adler",
+                        "sequence": "first",
+                        "affiliation": []
+                    }
+                ],
+                "member": "1121",
+                "container-title": [
+                    "University of Pennsylvania Law Review"
+                ],
+                "language": "en",
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2018,
+                            5,
+                            3
+                        ]
+                    ],
+                    "date-time": "2018-05-03T15:37:15Z",
+                    "timestamp": 1525361835000
+                },
+                "score": 25.027733,
+                "resource": {
+                    "primary": {
+                        "URL": "https://www.jstor.org/stable/10.2307/4150613?origin=crossref"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2005,
+                            3,
+                            1
+                        ]
+                    ]
+                },
+                "references-count": 0,
+                "journal-issue": {
+                    "issue": "4",
+                    "published-print": {
+                        "date-parts": [
+                            [
+                                2005,
+                                3,
+                                1
+                            ]
+                        ]
+                    }
+                },
+                "URL": "https://doi.org/10.2307/4150613",
+                "ISSN": [
+                    "0041-9907"
+                ],
+                "issn-type": [
+                    {
+                        "value": "0041-9907",
+                        "type": "print"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            2005,
+                            3,
+                            1
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2025,
+                            1,
+                            3
+                        ]
+                    ],
+                    "date-time": "2025-01-03T10:47:39Z",
+                    "timestamp": 1735901259288,
+                    "version": "3.32.0"
+                },
+                "reference-count": 124,
+                "publisher": "Elsevier BV",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "short-container-title": [
+                    "SSRN Journal"
+                ],
+                "DOI": "10.2139/ssrn.487123",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2005,
+                            7,
+                            7
+                        ]
+                    ],
+                    "date-time": "2005-07-07T22:08:20Z",
+                    "timestamp": 1120774100000
+                },
+                "source": "Crossref",
+                "is-referenced-by-count": 0,
+                "title": [
+                    "Against 'Individual Risk': A Sympathetic Critique of Risk Assessment"
+                ],
+                "prefix": "10.2139",
+                "author": [
+                    {
+                        "given": "Matthew D.",
+                        "family": "Adler",
+                        "sequence": "first",
+                        "affiliation": []
+                    }
+                ],
+                "member": "78",
+                "reference": [
+                    {
+                        "key": "ref1",
+                        "first-page": "1251",
+                        "article-title": "National Emissions Standards for Coke Oven Batteries, 69 Fed",
+                        "volume": "124",
+                        "author": "Epa Risk",
+                        "year": "1999",
+                        "journal-title": "EPA has announced its intention to use the pre-1990 test. See OFFICE OF AIR & RADIATION"
+                    },
+                    {
+                        "key": "ref2",
+                        "first-page": "445",
+                        "volume": "66",
+                        "year": "2000",
+                        "journal-title": "See Revisions to the Methodology for Deriving Ambient Water Quality Criteria for the Protection of Human Health, 65 Fed. Reg. 66,444"
+                    },
+                    {
+                        "first-page": "1162",
+                        "author": "Rhomberg",
+                        "key": "ref3",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1212/wnl.53.5.1162-a"
+                    },
+                    {
+                        "volume": "88",
+                        "first-page": "309",
+                        "author": "Rosenthal",
+                        "key": "ref4"
+                    },
+                    {
+                        "author": "&amp; Sadowitz",
+                        "key": "ref5",
+                        "first-page": "26"
+                    },
+                    {
+                        "author": "Office See",
+                        "key": "ref6",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1021/es962117m"
+                    },
+                    {
+                        "key": "ref7",
+                        "volume": "106",
+                        "author": "Office See",
+                        "year": "2000",
+                        "journal-title": "at 2-6 to 2-7; Revisions to the Methodology for Deriving Ambient Water Quality Criteria for the Protection of Human Health, 65 Fed. Reg. at 66,449; Sadowitz & Graham, supra note 88"
+                    },
+                    {
+                        "journal-title": "See 3 LAW OF ENVIRONMENTAL PROTECTION, supra note 104, at \ufffd \ufffd 17.1-.24 (describing the Safe Drinking Water Act)",
+                        "key": "ref8"
+                    },
+                    {
+                        "first-page": "300",
+                        "year": "2000",
+                        "author": "U S C",
+                        "key": "ref9"
+                    },
+                    {
+                        "journal-title": "\ufffd \ufffd 300g-1(b)(4)",
+                        "year": "1994",
+                        "author": "U S C",
+                        "key": "ref10"
+                    },
+                    {
+                        "key": "ref11",
+                        "first-page": "1623",
+                        "article-title": "Safe Drinking Water Act Amendments of",
+                        "volume": "104",
+                        "year": "1996",
+                        "journal-title": "110 Stat. 1613"
+                    },
+                    {
+                        "volume": "19",
+                        "journal-title": "See National Primary Drinking Water Regulations, 67 Fed",
+                        "key": "ref12",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1002/j.1551-8833.1976.tb02352.x"
+                    },
+                    {
+                        "issue": "7",
+                        "key": "ref13",
+                        "first-page": "445",
+                        "article-title": "Revisions to the Methodology for Deriving Ambient Water Quality Criteria for the Protection of Human Health, 65 Fed",
+                        "volume": "66",
+                        "year": "2002",
+                        "journal-title": "Reg. at"
+                    },
+                    {
+                        "first-page": "1162",
+                        "author": "Rhomberg",
+                        "key": "ref14",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1212/wnl.53.5.1162-a"
+                    },
+                    {
+                        "volume": "88",
+                        "first-page": "309",
+                        "author": "Rosenthal",
+                        "key": "ref15"
+                    },
+                    {
+                        "key": "ref16",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1002/j.1551-8833.1976.tb02352.x",
+                        "volume": "27",
+                        "author": "&amp; Sadowitz",
+                        "journal-title": "But see National Primary Drinking Water Regulations"
+                    },
+                    {
+                        "key": "ref17",
+                        "first-page": "576",
+                        "volume": "49",
+                        "author": "Fed",
+                        "year": "2003",
+                        "journal-title": ") (proposing non-zero MCLG for chloroform after D.C. Circuit vacated zero MCLG)"
+                    },
+                    {
+                        "key": "ref18",
+                        "first-page": "885",
+                        "article-title": "See Bath Seats, 68 Fed",
+                        "volume": "74",
+                        "year": "2003",
+                        "journal-title": "Reg"
+                    },
+                    {
+                        "journal-title": "Dive Sticks",
+                        "key": "ref19"
+                    },
+                    {
+                        "key": "ref20",
+                        "first-page": "646",
+                        "volume": "13",
+                        "author": "Fed",
+                        "year": "2001"
+                    },
+                    {
+                        "volume": "64",
+                        "journal-title": "Safety Standard for Bunk Beds",
+                        "key": "ref21"
+                    },
+                    {
+                        "key": "ref22",
+                        "doi-asserted-by": "publisher",
+                        "first-page": "897",
+                        "DOI": "10.1111/j.1813-6982.2003.tb00100.x",
+                        "volume": "71",
+                        "author": "Reg",
+                        "year": "1999"
+                    },
+                    {
+                        "key": "ref23",
+                        "first-page": "864",
+                        "article-title": "Safety Standard for Multi-Purpose Lighters, 64 Fed",
+                        "volume": "71",
+                        "year": "1999",
+                        "journal-title": "Reg"
+                    },
+                    {
+                        "year": "2003",
+                        "author": "Ro Email",
+                        "key": "ref24",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1016/s0308-5961(03)00044-2"
+                    },
+                    {
+                        "key": "ref25",
+                        "first-page": "878",
+                        "article-title": "In a number of rulemaking analyses published in 2004, the agency did monetize life-saving or injury-avoidance. See Federal Motor Vehicle Safety Standards; Head Restraints, 69 Fed",
+                        "volume": "74",
+                        "year": "2004",
+                        "journal-title": "Reg"
+                    },
+                    {
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Occupant Crash Protection",
+                        "key": "ref26"
+                    },
+                    {
+                        "key": "ref27",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.2307/j.ctvc77dmn.72",
+                        "volume": "70",
+                        "author": "Fed",
+                        "year": "2004"
+                    },
+                    {
+                        "journal-title": "Federal Motor Vehicle Safety Standards",
+                        "key": "ref28"
+                    },
+                    {
+                        "key": "ref29",
+                        "first-page": "916",
+                        "article-title": "Tire Pressure Monitoring Systems, 69 Fed",
+                        "volume": "55",
+                        "year": "2004",
+                        "journal-title": "Reg"
+                    },
+                    {
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Side Impact Protection",
+                        "key": "ref30"
+                    },
+                    {
+                        "key": "ref31",
+                        "first-page": "13",
+                        "volume": "27",
+                        "author": "Fed",
+                        "year": "2004"
+                    },
+                    {
+                        "key": "ref32",
+                        "article-title": "Federal Motor Vehicle Safety Standards; Occupant Crash Protection, 68 Fed. Reg",
+                        "volume": "517",
+                        "year": "2004",
+                        "journal-title": "See Federal Motor Vehicle Safety Standards; Power-Operated Window, Partition, and Roof-Panel Systems, 69 Fed. Reg. 55"
+                    },
+                    {
+                        "key": "ref33",
+                        "article-title": "tire performance); Federal Motor Vehicle Safety Standards; Tire Pressure Monitoring Systems, 67 Fed",
+                        "volume": "116",
+                        "year": "2002",
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Tires, 68 Fed. Reg. 38"
+                    },
+                    {
+                        "volume": "49",
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Occupant Crash Protection, 63 Fed. Reg. 49,958",
+                        "year": "1998",
+                        "key": "ref34"
+                    },
+                    {
+                        "key": "ref35",
+                        "first-page": "796",
+                        "volume": "10",
+                        "year": "1999",
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Child Restraint Anchorage Systems, 64 Fed. Reg"
+                    },
+                    {
+                        "key": "ref36",
+                        "article-title": "Federal Motor Vehicle Safety Standards; Lamps, Reflective Devices and Associated Equipment",
+                        "volume": "41",
+                        "year": "1996",
+                        "journal-title": "Fed. Reg"
+                    },
+                    {
+                        "journal-title": "Federal Motor Vehicle Safety Standards",
+                        "key": "ref37"
+                    },
+                    {
+                        "year": "1996",
+                        "author": "Fed",
+                        "key": "ref38",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1093/ww/9780199540884.013.u177156"
+                    },
+                    {
+                        "volume": "75",
+                        "journal-title": "Federal Motor Vehicle Safety Standards; Door Locks and Door Retention Components, 69 Fed. Reg. 75,020",
+                        "year": "2004",
+                        "key": "ref39"
+                    },
+                    {
+                        "key": "ref40",
+                        "first-page": "132",
+                        "article-title": "Federal Motor Vehicle Safety Standards; Door Locks and Door Retention Components, 60 Fed",
+                        "volume": "50",
+                        "year": "1995",
+                        "journal-title": "Reg"
+                    },
+                    {
+                        "key": "ref41",
+                        "first-page": "47",
+                        "volume": "43",
+                        "year": "1995",
+                        "journal-title": "The very recent rulemakings in which NHTSA conducts a straightforward monetized cost-benefit analysis also calculate \"population risk"
+                    },
+                    {
+                        "key": "ref42",
+                        "doi-asserted-by": "publisher",
+                        "first-page": "171",
+                        "DOI": "10.1038/217220b0",
+                        "volume": "311",
+                        "author": "Cooke See"
+                    },
+                    {
+                        "volume": "326",
+                        "first-page": "133",
+                        "author": "Winterfeldt &amp; Edwards",
+                        "key": "ref43"
+                    },
+                    {
+                        "journal-title": "One important exception is EPA's use of expert subjective probabilities in regulating \"criteria\" air pollutants. See MORGAN & HENRION, supra note 311",
+                        "key": "ref44",
+                        "first-page": "154"
+                    },
+                    {
+                        "key": "ref45",
+                        "first-page": "207",
+                        "article-title": "The focus here, however, is exposure assessment rather than dose-response assessment. See CULLEN & FREY, supra note 58, at 2. And, in any event (oddly enough), it seems to be a widespread view among risk assessors that the probabilities quantifying uncertainty need not be Bayesian",
+                        "author": "I I See Supra Parts",
+                        "year": "1997",
+                        "journal-title": "The problem of \"uncertainty\" is now reasonably high on the agenda of governmental risk assessors. See"
+                    },
+                    {
+                        "volume": "58",
+                        "first-page": "15",
+                        "author": "Cullen &amp; Frey",
+                        "key": "ref46"
+                    },
+                    {
+                        "volume": "17",
+                        "first-page": "213",
+                        "author": "Covello &amp; See",
+                        "key": "ref47"
+                    },
+                    {
+                        "volume": "58",
+                        "first-page": "18",
+                        "author": "Cullen &amp; Frey",
+                        "key": "ref48"
+                    },
+                    {
+                        "key": "ref49",
+                        "doi-asserted-by": "publisher",
+                        "first-page": "535",
+                        "DOI": "10.1080/10807039891284415",
+                        "article-title": "Comparison of Approaches for Developing Distributions for Carcinogenic Slope Factors, 4 HUM",
+                        "volume": "527",
+                        "author": "Catherine Petito Boyce",
+                        "year": "1998",
+                        "journal-title": "& ECOLOGICAL RISK ASSESSMENT"
+                    },
+                    {
+                        "key": "ref50",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1080/10807030490280963",
+                        "author": "James D Englehardt",
+                        "year": "2004",
+                        "journal-title": "Predictive Bayesian Dose-Response Assessment for Appraising Absolute Health Risk from Available Information"
+                    },
+                    {
+                        "journal-title": "A Distributional Approach to Characterizing Low-Dose Cancer Risk, in LOW-DOSE EXTRAPOLATION OF CANCER RISKS, supra note 86",
+                        "author": "John S Evans",
+                        "key": "ref51"
+                    },
+                    {
+                        "key": "ref52",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1016/s0273-2300(05)80003-0",
+                        "article-title": "Use of Probabilistic Expert Judgment in Uncertainty Analysis of Carcinogenic Potency, 20 REG",
+                        "volume": "15",
+                        "author": "John S Evans",
+                        "year": "1994",
+                        "journal-title": "TOXICOLOGY & PHARMACOLOGY"
+                    },
+                    {
+                        "key": "ref53",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1111/j.1539-6924.1999.tb01129.x",
+                        "author": "William E Fayerweather",
+                        "year": "1999",
+                        "journal-title": "Quantifying Uncertainty in a Risk Assessment Using Human Data, 19 RISK ANALYSIS"
+                    },
+                    {
+                        "journal-title": "BAYESIAN BIOSTATISTICS",
+                        "article-title": "Dose-Response Analysis of Toxic Chemicals",
+                        "author": "Vic Hasselblad &amp; Annie",
+                        "key": "ref54"
+                    },
+                    {
+                        "key": "ref55",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1080/10807039609383641",
+                        "author": "Ryan A Hill",
+                        "year": "1996",
+                        "journal-title": "From Science to Decision-Making: The Applicability of Bayesian Methods to Risk Assessment, 2 HUM. & ECOLOGICAL RISK ASSESSMENT 636"
+                    },
+                    {
+                        "journal-title": "Measuring the Health Effects of Air Pollution: To What Extent Can We Really Say That People Are Dying from Bad Air",
+                        "year": "2004",
+                        "author": "Gary Koop &amp; Lise Tole",
+                        "key": "ref56"
+                    },
+                    {
+                        "journal-title": "BAYESIAN BIOSTA-TISTICS, supra note",
+                        "article-title": "Analyzing Rodent Tumorigenicity Experiments Using Expert Knowledge",
+                        "author": "Jane C Lindsey &amp; Louise",
+                        "key": "ref57"
+                    },
+                    {
+                        "author": "Morgan",
+                        "key": "ref58",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1142/9789813200838_0020"
+                    },
+                    {
+                        "journal-title": "Calculating and Describing Uncertainty in Risk Assessment: The Bayesian Approach, 7 HUM. & ECOLOGICAL RISK ASSESSMENT",
+                        "year": "2001",
+                        "author": "K Tapan",
+                        "key": "ref59"
+                    },
+                    {
+                        "journal-title": "Use of Expert Judgment on Cancer Dose-Response: Probabilistic Assessment and Plans for Application to Dieldrin, in LOW-DOSE EXTRAPOLATION OF CANCER RISKS, supra note 86",
+                        "author": "D",
+                        "key": "ref60"
+                    },
+                    {
+                        "key": "ref61",
+                        "article-title": "Uncertainty in Toxicological Predictions: The Bayesian Approach to Statistics",
+                        "author": "O&apos; Anthony",
+                        "year": "2001",
+                        "journal-title": "FORECASTING THE ENVIRONMENTAL FATE AND EFFECTS OF CHEMICALS 25"
+                    },
+                    {
+                        "key": "ref62",
+                        "first-page": "487",
+                        "article-title": "Consequential Evaluation and Practical Reason",
+                        "volume": "477",
+                        "author": "E G See",
+                        "year": "2000",
+                        "journal-title": "97 J. PHIL"
+                    },
+                    {
+                        "volume": "354",
+                        "journal-title": "at 92 (listing \"rights and liberties, opportunities and powers, income and wealth\" as well as self-respect-\"a sense of one's own worth",
+                        "author": "Rawls See",
+                        "key": "ref63"
+                    },
+                    {
+                        "journal-title": "For general discussions of risk-risk analysis, see LESTER B. LAVE, THE STRATEGY OF SOCIAL REGULATION: DECISION FRAMEWORKS FOR POLICY",
+                        "first-page": "15",
+                        "year": "1981",
+                        "key": "ref64"
+                    },
+                    {
+                        "journal-title": "When Environmental Regulations Kill: The Role of Health/Health Analysis",
+                        "year": "1995",
+                        "author": "B Frank",
+                        "key": "ref65"
+                    },
+                    {
+                        "journal-title": "Confronting Risk Tradeoffs",
+                        "year": "1995",
+                        "author": "John D Graham &amp; Jonathan Baert",
+                        "key": "ref66"
+                    },
+                    {
+                        "journal-title": "The Biases of Risk Tradeoff Analysis: Towards Parity in Environmental and Health-and-Safety Regulation",
+                        "year": "2002",
+                        "author": "J Samuel",
+                        "key": "ref67"
+                    },
+                    {
+                        "key": "ref68",
+                        "doi-asserted-by": "publisher",
+                        "first-page": "1538",
+                        "DOI": "10.2307/1600280",
+                        "author": "Cass R Sunstein",
+                        "year": "1996",
+                        "journal-title": "Health-Health Tradeoffs, 63 U. CHI. L. REV. 1533"
+                    },
+                    {
+                        "key": "ref69",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "5",
+                        "DOI": "10.1007/BF01064083",
+                        "article-title": "Risk-Risk Analysis",
+                        "volume": "8",
+                        "author": "W",
+                        "year": "1994",
+                        "journal-title": "J. RISK & UNCERTAINTY"
+                    },
+                    {
+                        "journal-title": "For overviews of the QALY (quality-adjusted life years) method for measuring health states",
+                        "year": "2003",
+                        "author": "Douglas Mcculloch",
+                        "key": "ref70"
+                    },
+                    {
+                        "year": "1999",
+                        "author": "Erik Nord",
+                        "key": "ref71",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1017/cbo9780511609145"
+                    },
+                    {
+                        "key": "ref72",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1016/s1574-0064(00)80045-1",
+                        "author": "Paul Dolan",
+                        "year": "2000",
+                        "journal-title": "The Measurement of Health-Related Quality of Life for Use in Resource Allocation Decisions in Health Care, in 1B HANDBOOK OF HEALTH ECONOMICS 1723"
+                    },
+                    {
+                        "journal-title": "The Qualy Approach",
+                        "year": "1994",
+                        "author": "Robert Fabian",
+                        "key": "ref73"
+                    },
+                    {
+                        "journal-title": "Utility Assessment for Estimating Quality-Adjusted Life Years, in VALUING HEALTH CARE: COSTS, BENEFITS, AND EFFECTIVENESS OF PHARMACEUTICALS AND OTHER MEDICAL TECHNOLOGIES 31",
+                        "year": "1995",
+                        "author": "Robert M Kaplan",
+                        "key": "ref74"
+                    },
+                    {
+                        "key": "ref75",
+                        "doi-asserted-by": "publisher",
+                        "first-page": "83",
+                        "DOI": "10.2307/1600132",
+                        "article-title": "Reinventing the Regulatory State, 62 U",
+                        "volume": "1",
+                        "author": "Cass R Pildes",
+                        "year": "1995",
+                        "journal-title": "CHI. L. REV"
+                    },
+                    {
+                        "volume": "282",
+                        "first-page": "244",
+                        "author": "Thomson See",
+                        "key": "ref76"
+                    },
+                    {
+                        "first-page": "107",
+                        "author": "Railton",
+                        "key": "ref77",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1017/9781316105672.007"
+                    },
+                    {
+                        "first-page": "212",
+                        "author": "See Mccarthy",
+                        "key": "ref78",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1080/00201747108601630"
+                    },
+                    {
+                        "journal-title": "at 210-12, 215-16, 218-19; see also David McCarthy, Liability and Risk",
+                        "author": "See Id",
+                        "key": "ref79"
+                    },
+                    {
+                        "volume": "238",
+                        "journal-title": "259 (1996) (arguing that \"if X performs an action that she knows or ought to know will impose a risk of harm to Y, then, roughly speaking",
+                        "author": "Phil",
+                        "key": "ref80"
+                    },
+                    {
+                        "key": "ref81",
+                        "first-page": "473",
+                        "article-title": "Corrective Justice and Liability for Increasing Risks",
+                        "volume": "439",
+                        "author": "Christopher H See Also",
+                        "year": "1990",
+                        "journal-title": "37 UCLA L. REV"
+                    },
+                    {
+                        "author": "Rawls See",
+                        "key": "ref82"
+                    },
+                    {
+                        "year": "1998",
+                        "author": "T M See",
+                        "key": "ref83"
+                    },
+                    {
+                        "volume": "258",
+                        "first-page": "243",
+                        "author": "Kagan See",
+                        "key": "ref84"
+                    },
+                    {
+                        "journal-title": "Adler, supra note 35, at 272-73 (summarizing Rawls's and Scanlon's specifications of the contracting scenario)",
+                        "key": "ref85"
+                    },
+                    {
+                        "volume": "258",
+                        "author": "Kagan See",
+                        "key": "ref86"
+                    },
+                    {
+                        "key": "ref87",
+                        "volume": "38",
+                        "author": "Daniel M See",
+                        "year": "1996",
+                        "journal-title": "ECONOMIC ANALYSIS & MORAL PHILOSOPHY"
+                    },
+                    {
+                        "journal-title": "See supra note 306",
+                        "key": "ref88"
+                    },
+                    {
+                        "key": "ref89",
+                        "article-title": "finding that individuals' perceived probabilities of cancer from Superfund sites are changed by EPA's release of information from its remedial investigations of the sites)",
+                        "volume": "439",
+                        "author": "Ted Gayer",
+                        "year": "2000",
+                        "journal-title": "Third-party and first-party Bayesian risks surely can differ. See"
+                    },
+                    {
+                        "key": "ref90",
+                        "article-title": "finding that the perceived risk of an accident during the transportation of high-level radioactive waste, among residents of Southern Nevada, is generally much higher than the Department of Energy's risk estimate). See generally HASTIE & DAWES",
+                        "volume": "435",
+                        "author": "Mary Riddel",
+                        "year": "2003",
+                        "journal-title": "J. REGIONAL SCI"
+                    },
+                    {
+                        "key": "ref91",
+                        "first-page": "195",
+                        "article-title": "The Genesis of a New Research Agenda?",
+                        "author": "Kevin J Cf",
+                        "year": "1999",
+                        "journal-title": "VALUING ENVIRONMENTAL PREFERENCES: THEORY AND PRACTICE OF THE CONTINGENT VALUATION METHOD IN THE US, EU, AND DEVELOPING COUNTRIES 183"
+                    },
+                    {
+                        "key": "ref92",
+                        "article-title": "Evaluating National Policy Proposals by Contingent Valuation",
+                        "author": "Alan Randall &amp; Warren Kriesel",
+                        "year": "1990",
+                        "journal-title": "ECONOMIC VALUATION OF NATURAL RESOURCES: ISSUES, THEORY, AND APPLICATIONS 153"
+                    },
+                    {
+                        "journal-title": "VALUING ENVIRONMENTAL PREFERENCES, supra note 412 (generally discussing the use of contingent-valuation surveys to determine individuals' monetary valuations of nonmarket goods",
+                        "author": "Cf",
+                        "key": "ref93"
+                    },
+                    {
+                        "journal-title": "On the premise that contractors are appropriately self-interested",
+                        "key": "ref94"
+                    },
+                    {
+                        "volume": "258",
+                        "author": "Kagan See",
+                        "key": "ref95",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.4135/9781452269917.n3"
+                    },
+                    {
+                        "volume": "354",
+                        "first-page": "60",
+                        "author": "Rawls See",
+                        "key": "ref96"
+                    },
+                    {
+                        "volume": "406",
+                        "first-page": "197",
+                        "author": "Scanlon See",
+                        "key": "ref97"
+                    },
+                    {
+                        "journal-title": "Whether Scanlon means, here, to suggest that contractors",
+                        "key": "ref98"
+                    },
+                    {
+                        "key": "ref99",
+                        "first-page": "1423",
+                        "volume": "20",
+                        "author": "Cf",
+                        "journal-title": "(discussing view, within risk-regulation scholarship"
+                    },
+                    {
+                        "volume": "354",
+                        "first-page": "109",
+                        "author": "Rawls See",
+                        "key": "ref100"
+                    },
+                    {
+                        "first-page": "136",
+                        "author": "See Id",
+                        "key": "ref101",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.3403/30090231"
+                    },
+                    {
+                        "journal-title": "See supra notes 272-90 and accompanying text",
+                        "key": "ref102"
+                    },
+                    {
+                        "volume": "406",
+                        "first-page": "213",
+                        "author": "Scanlon See",
+                        "key": "ref103"
+                    },
+                    {
+                        "journal-title": "See generally Oberdiek, supra note 273, at 91-193 (employing framework similar to Scanlon's to evaluate morality of risk imposition)",
+                        "key": "ref104"
+                    },
+                    {
+                        "author": "Supra Scanlon",
+                        "key": "ref105"
+                    },
+                    {
+                        "journal-title": "it is intuitively obvious that the likelihood that a form of behavior will lead to harm is an important factor in determining its permissibility\"). Is the responsiveness of administrative agencies appropriately direct, or mediated by statutes? Does the view care about responsiveness to majorities or supermajorities? 430 How are Arrow problems",
+                        "key": "ref106"
+                    },
+                    {
+                        "volume": "35",
+                        "first-page": "267",
+                        "author": "Adler See Generally",
+                        "key": "ref107"
+                    },
+                    {
+                        "journal-title": "See DELIBERA-TIVE DEMOCRACY: ESSAYS ON REASON AND POLITICS",
+                        "article-title": "Under the rubric of \"foundationally democratic\" accounts of governmental choice (including, presumably, risk regulation), I include recent scholarship on \"deliberative democracy\" and related scholarship on \"civic republicanism",
+                        "year": "1997",
+                        "key": "ref108"
+                    },
+                    {
+                        "year": "1996",
+                        "author": "Amy Gutmann &amp; Dennis Thompson",
+                        "key": "ref109",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1515/9781400826339-010"
+                    },
+                    {
+                        "journal-title": "The Unfortunate Revival of Civic Republicanism, 141 U. PA. L. REV. 801 (1993) (surveying civic-republican scholarship). For a deliberative-democratic view of risk regulation, see",
+                        "year": "1998",
+                        "author": "G Steven",
+                        "key": "ref110"
+                    },
+                    {
+                        "journal-title": "Contractualist Liberalism and Deliberative Democracy",
+                        "author": "See Paul",
+                        "key": "ref111"
+                    },
+                    {
+                        "key": "ref112",
+                        "first-page": "314",
+                        "volume": "314",
+                        "author": "&amp; Pub",
+                        "year": "1995"
+                    },
+                    {
+                        "journal-title": "See Introduction to DELIBERATIVE DEMOCRACY: ESSAYS ON REASON AND POLITICS, supra note 427, at x-xii (contrasting economic and pluralist models of democracy, which see citizens as advancing their interests, with deliberative-democratic views",
+                        "key": "ref113"
+                    },
+                    {
+                        "volume": "153",
+                        "journal-title": "THE SUPREME COURT AT THE BAR OF POLITICS 1-33 (1962) (defending a majoritarian conception of",
+                        "author": "Alexander Compare",
+                        "key": "ref114"
+                    },
+                    {
+                        "journal-title": "as a starting point in interpreting a wide range of statutes: the Clean Air Act, the Clean Water Act, the Safe Drinking Water Act, RCRA, CERCLA, FIFRA, the Toxic Substances Control Act, the Food, Drug and Cosmetic Act, the Occupational Safety and Health Act, the Atomic Energy Act, the Consumer Product Safety Act, the Federal Hazardous Substances Act, the motor vehicle safety laws, and others",
+                        "key": "ref115",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.5740/jaoacint.13-262"
+                    },
+                    {
+                        "journal-title": "468 By contrast, FIFRA instructs EPA to license pesticides that will not cause \"any unreasonable risk to man or the environment, taking into account the economic, social, and environmental costs and benefits\" 469 of the pesticides",
+                        "key": "ref116"
+                    },
+                    {
+                        "journal-title": "Yet \"population risk\" tests are no less legally permissible",
+                        "key": "ref117"
+                    },
+                    {
+                        "year": "1986",
+                        "author": "Ronald See Generally",
+                        "key": "ref118"
+                    },
+                    {
+                        "journal-title": "THE OXFORD HANDBOOK OF JURISPRUDENCE AND PHILOSOPHY OF",
+                        "year": "2002",
+                        "author": "Himma Kenneth Einer",
+                        "key": "ref119"
+                    },
+                    {
+                        "key": "ref120",
+                        "volume": "111",
+                        "author": "Cass R See",
+                        "year": "1990",
+                        "journal-title": "RECONCEIVING THE REGULATORY STATE"
+                    },
+                    {
+                        "journal-title": "Clean Water Act); 42 U.S.C. \ufffd \ufffd 300f to",
+                        "first-page": "300",
+                        "year": "2000",
+                        "key": "ref121"
+                    },
+                    {
+                        "key": "ref122",
+                        "first-page": "301",
+                        "article-title": "FIFRA); 15 U.S.C. \ufffd \ufffd",
+                        "year": "2000",
+                        "journal-title": "Toxic Substances Control Act"
+                    },
+                    {
+                        "issue": "21",
+                        "key": "ref123",
+                        "first-page": "2297",
+                        "article-title": "Federal Hazardous Substances Act); 49 U.S.C. \ufffd \ufffd 30101-30170 (2000) (motor vehicle safety provisions)",
+                        "volume": "467",
+                        "author": "C Us",
+                        "year": "2000",
+                        "journal-title": "Consumer Product Safety Act"
+                    },
+                    {
+                        "key": "ref124",
+                        "doi-asserted-by": "publisher",
+                        "DOI": "10.1159/000394657",
+                        "volume": "136",
+                        "author": "U S C",
+                        "year": "2000"
+                    }
+                ],
+                "container-title": [
+                    "SSRN Electronic Journal"
+                ],
+                "language": "en",
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2025,
+                            1,
+                            2
+                        ]
+                    ],
+                    "date-time": "2025-01-02T12:17:41Z",
+                    "timestamp": 1735820261000
+                },
+                "score": 24.93116,
+                "resource": {
+                    "primary": {
+                        "URL": "http://www.ssrn.com/abstract=487123"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2004
+                        ]
+                    ]
+                },
+                "references-count": 124,
+                "URL": "https://doi.org/10.2139/ssrn.487123",
+                "ISSN": [
+                    "1556-5068"
+                ],
+                "issn-type": [
+                    {
+                        "type": "electronic",
+                        "value": "1556-5068"
+                    }
+                ],
+                "published-other": {
+                    "date-parts": [
+                        [
+                            2004
+                        ]
+                    ]
+                },
+                "published": {
+                    "date-parts": [
+                        [
+                            2004
+                        ]
+                    ]
+                }
+            }
+        ],
+        "items-per-page": 3,
+        "query": {
+            "start-index": 0,
+            "search-terms": null
+        }
+    }
+}

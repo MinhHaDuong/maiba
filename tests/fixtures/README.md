@@ -11,7 +11,8 @@
 | `bad-malformed-tag.ris` | Tags with wrong separators (`AU -`, `T1:`, `PY  2009`, `DO=…`). Parser must raise. |
 | `bad-truncated-mid-record.ris` | File ends mid-record after the first ER. Parser must raise on the second record (the first must still parse). |
 | `bad-binaryfile.ris` | First 512 bytes of a real PDF, renamed to `.ris`. Realistic mistake. Parser must raise (non-UTF-8 bytes or no recognizable RIS structure), not hang or crash with a low-level decode trace. |
-| `responses/` | Recorded JSON HTTP responses for offline-replay of resolver tests. Populated by `scripts/record_fixture_responses.py`. |
+| `responses/openalex/*.json` | Real OpenAlex API responses captured 2026-04-28 (ticket 0006). Frozen test contract; replayed by `respx`. |
+| `responses/crossref/*.json` | Real Crossref API responses captured 2026-04-28 (ticket 0006). Frozen test contract; replayed by `respx`. |
 
 ## Adding a fixture
 

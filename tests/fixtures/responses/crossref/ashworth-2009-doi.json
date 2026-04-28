@@ -1,0 +1,439 @@
+{
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+        "indexed": {
+            "date-parts": [
+                [
+                    2025,
+                    11,
+                    7
+                ]
+            ],
+            "date-time": "2025-11-07T13:14:42Z",
+            "timestamp": 1762521282224,
+            "version": "build-2065373602"
+        },
+        "reference-count": 23,
+        "publisher": "Elsevier BV",
+        "issue": "1",
+        "license": [
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2009,
+                            2,
+                            1
+                        ]
+                    ],
+                    "date-time": "2009-02-01T00:00:00Z",
+                    "timestamp": 1233446400000
+                },
+                "content-version": "tdm",
+                "delay-in-days": 0,
+                "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+            },
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2009,
+                            2,
+                            1
+                        ]
+                    ],
+                    "date-time": "2009-02-01T00:00:00Z",
+                    "timestamp": 1233446400000
+                },
+                "content-version": "tdm",
+                "delay-in-days": 0,
+                "URL": "https://www.elsevier.com/legal/tdmrep-license"
+            },
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2013,
+                            7,
+                            25
+                        ]
+                    ],
+                    "date-time": "2013-07-25T00:00:00Z",
+                    "timestamp": 1374710400000
+                },
+                "content-version": "vor",
+                "delay-in-days": 1635,
+                "URL": "http://creativecommons.org/licenses/by-nc-nd/3.0/"
+            }
+        ],
+        "content-domain": {
+            "domain": [
+                "elsevier.com",
+                "sciencedirect.com"
+            ],
+            "crossmark-restriction": true
+        },
+        "short-container-title": [
+            "Energy Procedia"
+        ],
+        "published-print": {
+            "date-parts": [
+                [
+                    2009,
+                    2
+                ]
+            ]
+        },
+        "DOI": "10.1016/j.egypro.2009.02.302",
+        "type": "journal-article",
+        "created": {
+            "date-parts": [
+                [
+                    2009,
+                    4,
+                    9
+                ]
+            ],
+            "date-time": "2009-04-09T04:46:54Z",
+            "timestamp": 1239252414000
+        },
+        "page": "4765-4773",
+        "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+        "source": "Crossref",
+        "is-referenced-by-count": 33,
+        "title": [
+            "Engaging the public on carbon dioxide capture and storage: Does a large group process work?"
+        ],
+        "prefix": "10.1016",
+        "volume": "1",
+        "author": [
+            {
+                "given": "Peta",
+                "family": "Ashworth",
+                "sequence": "first",
+                "affiliation": []
+            },
+            {
+                "given": "Simone",
+                "family": "Carr-Cornish",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Naomi",
+                "family": "Boughen",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Kelly",
+                "family": "Thambimuthu",
+                "sequence": "additional",
+                "affiliation": []
+            }
+        ],
+        "member": "78",
+        "reference": [
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b1",
+                "unstructured": "L. Wilkins, A primer on risk: An interdisciplinary approach to thinking about public understanding of agbiotech, in: AgBioForum, 2001"
+            },
+            {
+                "issue": "1\u20133",
+                "key": "10.1016/j.egypro.2009.02.302_b2",
+                "doi-asserted-by": "crossref",
+                "first-page": "161",
+                "DOI": "10.1504/IJBT.2005.006452",
+                "article-title": "Sentiments and acts towards genetically modified foods",
+                "volume": "7",
+                "author": "Kalaitzandonakes",
+                "year": "2005",
+                "journal-title": "International Journal of Biotechnology"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b3",
+                "unstructured": "B. Fischhoff, B. Fischhoff, Public\u2019s opinions about biotechnologies, in: AgBioForum, 2001"
+            },
+            {
+                "issue": "2",
+                "key": "10.1016/j.egypro.2009.02.302_b4",
+                "doi-asserted-by": "crossref",
+                "first-page": "317",
+                "DOI": "10.1111/j.1745-6606.2003.tb00456.x",
+                "article-title": "Willingness to pay for non-biotech foods in the U.S. and U.K",
+                "volume": "37",
+                "author": "Moon",
+                "year": "2003",
+                "journal-title": "Journal of Consumer Affairs"
+            },
+            {
+                "year": "2002",
+                "series-title": "Risk Communication: A Mental Models Approach",
+                "author": "Morgan",
+                "key": "10.1016/j.egypro.2009.02.302_b5"
+            },
+            {
+                "year": "1993",
+                "series-title": "The Psychology of Attitudes",
+                "author": "Eagly",
+                "key": "10.1016/j.egypro.2009.02.302_b6"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b7",
+                "series-title": "Social Influence: Social Norms, Conformity, and Compliance",
+                "first-page": "151",
+                "volume": "vol. 2",
+                "author": "Cialdini",
+                "year": "1998"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b8",
+                "first-page": "553",
+                "article-title": "Beyond accuracy: Defense and impression motives in heuristic and systematic information processing",
+                "author": "Chaiken",
+                "year": "1996",
+                "journal-title": "The Psychology of Action: Linking Cognition and Motivation to Behavior"
+            },
+            {
+                "issue": "3",
+                "key": "10.1016/j.egypro.2009.02.302_b9",
+                "doi-asserted-by": "crossref",
+                "first-page": "375",
+                "DOI": "10.1037/0033-2909.107.3.375",
+                "article-title": "Involvement and persuasion: Types, traditions, and the evidence",
+                "volume": "107",
+                "author": "Johnson",
+                "year": "1990",
+                "journal-title": "Psychological Bulletin"
+            },
+            {
+                "year": "1957",
+                "series-title": "A Theory of Cognitive Dissonance",
+                "author": "Festinger",
+                "key": "10.1016/j.egypro.2009.02.302_b10"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b11",
+                "first-page": "203",
+                "article-title": "Cognitive consequences of forced compliance",
+                "volume": "21",
+                "author": "Festinger",
+                "year": "1959",
+                "journal-title": "Journal of Psychology"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b12",
+                "doi-asserted-by": "crossref",
+                "first-page": "318",
+                "DOI": "10.1037/0022-3514.69.2.318",
+                "article-title": "Preference for consistency: The development of valid measures and the discovery of surprising behavioral implications",
+                "volume": "63",
+                "author": "Cialdini",
+                "year": "1995",
+                "journal-title": "Journal of Personality & Social Psychology"
+            },
+            {
+                "year": "1990",
+                "series-title": "Cognitive Dissonance: Progress on a Pivotal Theory in Social Psychology",
+                "author": "Harmon-Jones",
+                "key": "10.1016/j.egypro.2009.02.302_b13"
+            },
+            {
+                "issue": "1",
+                "key": "10.1016/j.egypro.2009.02.302_b14",
+                "doi-asserted-by": "crossref",
+                "first-page": "29",
+                "DOI": "10.1080/00224549909598359",
+                "article-title": "Group discussion and changes in attitudes and representations",
+                "volume": "139",
+                "author": "Echabe",
+                "year": "1999",
+                "journal-title": "The Journal of Social Psychology"
+            },
+            {
+                "year": "1986",
+                "series-title": "Communication and Persuasion. Central and Peripheral Routes to Attitude Change",
+                "author": "Petty",
+                "key": "10.1016/j.egypro.2009.02.302_b15"
+            },
+            {
+                "year": "1996",
+                "series-title": "Understanding Risk: Informing Decisions in a Democratic Society",
+                "key": "10.1016/j.egypro.2009.02.302_b16"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b17",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1111/j.1539-6924.1993.tb01329.x",
+                "article-title": "Perceived risk, trust and democracry",
+                "volume": "13",
+                "author": "Slovic",
+                "year": "1993",
+                "journal-title": "Risk Analysis"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b18",
+                "unstructured": "L. Marks, et al., Designing food supply chains to enhance public acceptance of agricultural biotechnology: Understanding the consumer, Final Report of the IMBA project. 2004, University of Missouri"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b19",
+                "unstructured": "P. Ashworth, J. Gardner, Final Report: Understanding and incorporating stakeholder perspectives to low emission technologies in New South Wales, Centre for Low Emission Technology, Pullenvale, 2006"
+            },
+            {
+                "key": "10.1016/j.egypro.2009.02.302_b20",
+                "unstructured": "P. Ashworth, A. Pisarski, A. Littleboy, Final report: Understanding and incorporating stakeholder perspectives to low emission technologies in Queensland, Centre for Low Emission Technology, Pullenvale, 2006"
+            },
+            {
+                "issue": "2",
+                "key": "10.1016/j.egypro.2009.02.302_b21",
+                "doi-asserted-by": "crossref",
+                "first-page": "471",
+                "DOI": "10.1111/j.1540-6237.2007.00467.x",
+                "article-title": "Validating a comprehensive model of environmental concern cross-nationally: A US Canadian comparison",
+                "volume": "88",
+                "author": "Xiao",
+                "year": "2007",
+                "journal-title": "Social Science Quarterly"
+            },
+            {
+                "issue": "3",
+                "key": "10.1016/j.egypro.2009.02.302_b22",
+                "doi-asserted-by": "crossref",
+                "first-page": "425",
+                "DOI": "10.1111/0022-4537.00176",
+                "article-title": "Measuring endorsement of the new ecological paradigm: A revised NEP scale",
+                "volume": "56",
+                "author": "Dunlap",
+                "year": "2000",
+                "journal-title": "Journal of Social Issues"
+            },
+            {
+                "issue": "3",
+                "key": "10.1016/j.egypro.2009.02.302_b23",
+                "doi-asserted-by": "crossref",
+                "first-page": "237",
+                "DOI": "10.1111/j.1470-6431.2006.00528.x",
+                "article-title": "Explaining consumers\u2019 willingness to be environmentally friendly",
+                "volume": "31",
+                "author": "Abdul-Muhmin",
+                "year": "2006",
+                "journal-title": "International Journal of Consumer Studies"
+            }
+        ],
+        "container-title": [
+            "Energy Procedia"
+        ],
+        "original-title": [],
+        "language": "en",
+        "link": [
+            {
+                "URL": "https://api.elsevier.com/content/article/PII:S187661020900945X?httpAccept=text/xml",
+                "content-type": "text/xml",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            },
+            {
+                "URL": "https://api.elsevier.com/content/article/PII:S187661020900945X?httpAccept=text/plain",
+                "content-type": "text/plain",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            }
+        ],
+        "deposited": {
+            "date-parts": [
+                [
+                    2025,
+                    10,
+                    29
+                ]
+            ],
+            "date-time": "2025-10-29T17:27:49Z",
+            "timestamp": 1761758869000
+        },
+        "score": 1,
+        "resource": {
+            "primary": {
+                "URL": "https://linkinghub.elsevier.com/retrieve/pii/S187661020900945X"
+            }
+        },
+        "subtitle": [],
+        "short-title": [],
+        "issued": {
+            "date-parts": [
+                [
+                    2009,
+                    2
+                ]
+            ]
+        },
+        "references-count": 23,
+        "journal-issue": {
+            "issue": "1",
+            "published-print": {
+                "date-parts": [
+                    [
+                        2009,
+                        2
+                    ]
+                ]
+            }
+        },
+        "alternative-id": [
+            "S187661020900945X"
+        ],
+        "URL": "https://doi.org/10.1016/j.egypro.2009.02.302",
+        "relation": {},
+        "ISSN": [
+            "1876-6102"
+        ],
+        "issn-type": [
+            {
+                "type": "print",
+                "value": "1876-6102"
+            }
+        ],
+        "subject": [],
+        "published": {
+            "date-parts": [
+                [
+                    2009,
+                    2
+                ]
+            ]
+        },
+        "assertion": [
+            {
+                "value": "Elsevier",
+                "name": "publisher",
+                "label": "This article is maintained by"
+            },
+            {
+                "value": "Engaging the public on carbon dioxide capture and storage: Does a large group process work?",
+                "name": "articletitle",
+                "label": "Article Title"
+            },
+            {
+                "value": "Energy Procedia",
+                "name": "journaltitle",
+                "label": "Journal Title"
+            },
+            {
+                "value": "https://doi.org/10.1016/j.egypro.2009.02.302",
+                "name": "articlelink",
+                "label": "CrossRef DOI link to publisher maintained version"
+            },
+            {
+                "value": "article",
+                "name": "content_type",
+                "label": "Content Type"
+            },
+            {
+                "value": "Copyright \u00a9 2009 Elsevier Ltd.",
+                "name": "copyright",
+                "label": "Copyright"
+            }
+        ]
+    }
+}

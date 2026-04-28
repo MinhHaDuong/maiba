@@ -1,0 +1,693 @@
+{
+    "status": "ok",
+    "message-type": "work-list",
+    "message-version": "1.0.0",
+    "message": {
+        "facets": {},
+        "total-results": 214,
+        "items": [
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2026,
+                            3,
+                            14
+                        ]
+                    ],
+                    "date-time": "2026-03-14T15:00:13Z",
+                    "timestamp": 1773500413036,
+                    "version": "3.50.1"
+                },
+                "reference-count": 0,
+                "publisher": "Elsevier",
+                "isbn-type": [
+                    {
+                        "value": "9780080447049",
+                        "type": "print"
+                    }
+                ],
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2005
+                        ]
+                    ]
+                },
+                "DOI": "10.1016/b978-008044704-9/50092-6",
+                "type": "book-chapter",
+                "created": {
+                    "date-parts": [
+                        [
+                            2007,
+                            8,
+                            3
+                        ]
+                    ],
+                    "date-time": "2007-08-03T11:17:44Z",
+                    "timestamp": 1186139864000
+                },
+                "page": "911-920",
+                "source": "Crossref",
+                "is-referenced-by-count": 13,
+                "title": [
+                    "Role of CO2 sequestration by country for global warming mitigation after 2013"
+                ],
+                "prefix": "10.1016",
+                "author": [
+                    {
+                        "given": "K",
+                        "family": "AKIMOTO",
+                        "sequence": "first",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "T",
+                        "family": "HOMMA",
+                        "sequence": "additional",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "T",
+                        "family": "KOSUGI",
+                        "sequence": "additional",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "X",
+                        "family": "LI",
+                        "sequence": "additional",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "T",
+                        "family": "TOMODA",
+                        "sequence": "additional",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "Y",
+                        "family": "FUJII",
+                        "sequence": "additional",
+                        "affiliation": []
+                    }
+                ],
+                "member": "78",
+                "container-title": [
+                    "Greenhouse Gas Control Technologies 7"
+                ],
+                "language": "en",
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2019,
+                            1,
+                            5
+                        ]
+                    ],
+                    "date-time": "2019-01-05T13:24:19Z",
+                    "timestamp": 1546694659000
+                },
+                "score": 55.81718,
+                "resource": {
+                    "primary": {
+                        "URL": "https://linkinghub.elsevier.com/retrieve/pii/B9780080447049500926"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2005
+                        ]
+                    ]
+                },
+                "ISBN": [
+                    "9780080447049"
+                ],
+                "references-count": 0,
+                "URL": "https://doi.org/10.1016/b978-008044704-9/50092-6",
+                "published": {
+                    "date-parts": [
+                        [
+                            2005
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2022,
+                            3,
+                            29
+                        ]
+                    ],
+                    "date-time": "2022-03-29T18:00:52Z",
+                    "timestamp": 1648576852372
+                },
+                "reference-count": 2,
+                "publisher": "Atomic Energy Society of Japan",
+                "issue": "10",
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "short-container-title": [
+                    "atomos",
+                    "atomo\u03a3"
+                ],
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2010
+                        ]
+                    ]
+                },
+                "DOI": "10.3327/jaesjb.52.10_652",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2019,
+                            9,
+                            5
+                        ]
+                    ],
+                    "date-time": "2019-09-05T22:03:38Z",
+                    "timestamp": 1567721018000
+                },
+                "page": "652-656",
+                "source": "Crossref",
+                "is-referenced-by-count": 0,
+                "title": [
+                    "Overview of Global Warming Mitigation Measures and Role of Nuclear Power"
+                ],
+                "prefix": "10.3327",
+                "volume": "52",
+                "author": [
+                    {
+                        "given": "Keigo",
+                        "family": "AKIMOTO",
+                        "sequence": "first",
+                        "affiliation": []
+                    }
+                ],
+                "member": "1860",
+                "reference": [
+                    {
+                        "key": "1",
+                        "unstructured": "\uff11\uff09\u798f\u4e95\u4fca\u5f66\uff08\u7de8\uff09\uff0c\u5730\u7403\u6e29\u6696\u5316\u5bfe\u7b56\u4e2d\u671f\u76ee\u6a19\u306e\u89e3\u8aac\uff0c\u304e\u3087\u3046\u305b\u3044\uff0c\uff082009\uff09\uff0e"
+                    },
+                    {
+                        "key": "2",
+                        "unstructured": "\uff12\uff09\u8305\u967d\u4e00\uff08\u76e3\u4fee\uff09\uff0cCO<sub>2</sub>\u524a\u6e1b\u306f\u3069\u3053\u307e\u3067\u53ef\u80fd\u304b\u2015\u6e29\u6696\u5316\u30ac\u30b9\uff0d25\uff05\u306e\u691c\u8a3c\uff0c\u30a8\u30cd\u30eb\u30ae\u30fc\u30d5\u30a9\u30fc\u30e9\u30e0\uff0c\uff082009\uff09\uff0e"
+                    }
+                ],
+                "container-title": [
+                    "Journal of the Atomic Energy Society of Japan"
+                ],
+                "language": "en",
+                "link": [
+                    {
+                        "URL": "https://www.jstage.jst.go.jp/article/jaesjb/52/10/52_652/_pdf",
+                        "content-type": "unspecified",
+                        "content-version": "vor",
+                        "intended-application": "similarity-checking"
+                    }
+                ],
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2021,
+                            6,
+                            11
+                        ]
+                    ],
+                    "date-time": "2021-06-11T09:32:11Z",
+                    "timestamp": 1623403931000
+                },
+                "score": 40.206013,
+                "resource": {
+                    "primary": {
+                        "URL": "https://www.jstage.jst.go.jp/article/jaesjb/52/10/52_652/_article/-char/ja/"
+                    }
+                },
+                "subtitle": [
+                    "Toward Sustainable Measures Responding to Global Warming"
+                ],
+                "issued": {
+                    "date-parts": [
+                        [
+                            2010
+                        ]
+                    ]
+                },
+                "references-count": 2,
+                "journal-issue": {
+                    "issue": "10",
+                    "published-print": {
+                        "date-parts": [
+                            [
+                                2010
+                            ]
+                        ]
+                    }
+                },
+                "URL": "https://doi.org/10.3327/jaesjb.52.10_652",
+                "ISSN": [
+                    "1882-2606",
+                    "2433-7285"
+                ],
+                "issn-type": [
+                    {
+                        "value": "1882-2606",
+                        "type": "print"
+                    },
+                    {
+                        "value": "2433-7285",
+                        "type": "electronic"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            2010
+                        ]
+                    ]
+                }
+            },
+            {
+                "indexed": {
+                    "date-parts": [
+                        [
+                            2026,
+                            3,
+                            26
+                        ]
+                    ],
+                    "date-time": "2026-03-26T08:11:31Z",
+                    "timestamp": 1774512691008,
+                    "version": "3.50.1"
+                },
+                "reference-count": 26,
+                "publisher": "Springer Science and Business Media LLC",
+                "issue": "7",
+                "license": [
+                    {
+                        "start": {
+                            "date-parts": [
+                                [
+                                    2006,
+                                    10,
+                                    10
+                                ]
+                            ],
+                            "date-time": "2006-10-10T00:00:00Z",
+                            "timestamp": 1160438400000
+                        },
+                        "content-version": "tdm",
+                        "delay-in-days": 0,
+                        "URL": "http://www.springer.com/tdm"
+                    }
+                ],
+                "content-domain": {
+                    "domain": [],
+                    "crossmark-restriction": false
+                },
+                "short-container-title": [
+                    "Mitig Adapt Strat Glob Change"
+                ],
+                "published-print": {
+                    "date-parts": [
+                        [
+                            2007,
+                            7,
+                            17
+                        ]
+                    ]
+                },
+                "DOI": "10.1007/s11027-006-9037-6",
+                "type": "journal-article",
+                "created": {
+                    "date-parts": [
+                        [
+                            2006,
+                            10,
+                            9
+                        ]
+                    ],
+                    "date-time": "2006-10-09T04:13:34Z",
+                    "timestamp": 1160367214000
+                },
+                "page": "1237-1251",
+                "source": "Crossref",
+                "is-referenced-by-count": 41,
+                "title": [
+                    "Public acceptance and risk-benefit perception of CO2 geological storage for global warming mitigation in Japan"
+                ],
+                "prefix": "10.1007",
+                "volume": "12",
+                "author": [
+                    {
+                        "given": "Kohko",
+                        "family": "Tokushige",
+                        "sequence": "first",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "Keigo",
+                        "family": "Akimoto",
+                        "sequence": "additional",
+                        "affiliation": []
+                    },
+                    {
+                        "given": "Toshimasa",
+                        "family": "Tomoda",
+                        "sequence": "additional",
+                        "affiliation": []
+                    }
+                ],
+                "member": "297",
+                "published-online": {
+                    "date-parts": [
+                        [
+                            2006,
+                            10,
+                            10
+                        ]
+                    ]
+                },
+                "reference": [
+                    {
+                        "issue": "4",
+                        "key": "9037_CR1",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "635",
+                        "DOI": "10.1016/j.eneco.2004.04.021",
+                        "volume": "26",
+                        "author": "K Akimoto",
+                        "year": "2004",
+                        "unstructured": "Akimoto K, Tomoda T, Fujii Y, Yamaji K (2004) Assessment of global warming mitigation options with integrated assessment model DNE21. Energy Economics 26(4): 635\u2013653",
+                        "journal-title": "Energy Economics"
+                    },
+                    {
+                        "key": "9037_CR2",
+                        "unstructured": "Benson S et al. (2005) Chapter 5: Underground geological storage. In Metz, B. et al (Eds), IPCC Special report on carbon dioxide capture and storage. Cambridge University press"
+                    },
+                    {
+                        "key": "9037_CR3",
+                        "doi-asserted-by": "crossref",
+                        "unstructured": "Curry T, Reiner DM, Ansolabehere S, Herzog HJ (2004) How aware is the public of carbon capture and storage? in Proceedings of the 7th International Conference on Greenhouse Gas Control Technologies (GHGT-7), Vancouver, Canada, September 5\u20139, 2004",
+                        "DOI": "10.1016/B978-008044704-9/50101-4"
+                    },
+                    {
+                        "issue": "4",
+                        "key": "9037_CR4",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "517",
+                        "DOI": "10.1016/j.eneco.2004.04.025",
+                        "volume": "26",
+                        "author": "J Edmonds",
+                        "year": "2004",
+                        "unstructured": "Edmonds J, Clarke J, Dooley J, Kim SH, Smith SJ (2004) Stabilization of CO2 in a B2 world: insights on the roles of carbon capture and disposal, hydrogen, and transportation technologies. Energy Economics 26(4):517\u2013537",
+                        "journal-title": "Energy Economics"
+                    },
+                    {
+                        "issue": "3",
+                        "key": "9037_CR5",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "259",
+                        "DOI": "10.1111/j.1539-6924.1993.tb01077.x",
+                        "volume": "13",
+                        "author": "R Gregory",
+                        "year": "1993",
+                        "unstructured": "Gregory R (1993) Perceived Risk, Dread, and Benefits. Risk Analysis 13(3): 259\u2013264",
+                        "journal-title": "Risk Analysis"
+                    },
+                    {
+                        "key": "9037_CR6",
+                        "unstructured": "IEA GHG (2000) Barriers to overcome in implementation of CO2 capture and storage (1) storage in disused oil and gas fields. Report PH3/22, IEA Greenhouse Gas R&D Programme"
+                    },
+                    {
+                        "key": "9037_CR7",
+                        "unstructured": "Itaoka K, Saito A, Akai M (2004) Public acceptance of CO2 capture and storagetechnology: a survey of public opinion to explore influential factors. In Proceedings of the 7th International Conference on Greenhouse Gas Control Technologies (GHGT-7), Vancouver, Canada, September 5\u20139, 2004"
+                    },
+                    {
+                        "key": "9037_CR8",
+                        "unstructured": "Kikuta K, Hongo S, Tanase D, Ohsumi T (2004) Field test of CO2 injection in Nagaoka, Japan. in Proceedings of the 7th International Conference on Greenhouse Gas Control Technologies (GHGT-7), Vancouver, Canada, September 5\u20139, 2004"
+                    },
+                    {
+                        "key": "9037_CR9",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "11",
+                        "DOI": "10.1177/0022022191221004",
+                        "volume": "22",
+                        "author": "R Kleinhesselink",
+                        "year": "1991",
+                        "unstructured": "Kleinhesselink R, Rosa EA (1991) Cognitive representation of risk perception: A comparison of Japan and the United States. Journal of Cross-Cultural Psychology 22: 11\u201328",
+                        "journal-title": "Journal of Cross-Cultural Psychology"
+                    },
+                    {
+                        "key": "9037_CR10",
+                        "unstructured": "Metz B et al. (2005) IPCC Special report on carbon dioxide capture and storage. Cambridge University Press"
+                    },
+                    {
+                        "key": "9037_CR11",
+                        "doi-asserted-by": "crossref",
+                        "unstructured": "Moberg R, Stewart DB, Stachniak D (2003) The IEA Weyburn CO2 Monitoring and Storage Project. In J. Gale, Y. Kaya (Eds.), in Proceedings of the 6th International Conference on Greenhouse Gas Control Technologies (GHGT-6), 1\u20134 October 2002, Kyoto, Japan, pp. 219\u2013224",
+                        "DOI": "10.1016/B978-008044276-1/50035-0"
+                    },
+                    {
+                        "key": "9037_CR12",
+                        "unstructured": "OECD/IEA (2004) Prospects for CO2 capture and storage Paris, OECD/IEA"
+                    },
+                    {
+                        "key": "9037_CR13",
+                        "unstructured": "OECD/IEA (2005) Legal Aspects of Storing CO2. Paris, OECD/IEA"
+                    },
+                    {
+                        "issue": "2",
+                        "key": "9037_CR14",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "221",
+                        "DOI": "10.1007/s11027-005-6138-6",
+                        "volume": "10",
+                        "author": "M Ohe",
+                        "year": "2005",
+                        "unstructured": "Ohe M, Ikeda S (2005) Global warming: risk perception and risk-mitigating behavior in Japan. Mitigation & Adaptation Strategies for Global Warming 10(2): 221\u2013236",
+                        "journal-title": "Mitigation & Adaptation Strategies for Global Warming"
+                    },
+                    {
+                        "key": "9037_CR15",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "1561",
+                        "DOI": "10.1016/j.energy.2004.03.093",
+                        "volume": "29",
+                        "author": "DM Reiner",
+                        "year": "2004",
+                        "unstructured": "Reiner DM, Howard JH (2004) Developing a set of regulatory analogs for carbon sequestration. Energy 29: 1561\u20131570",
+                        "journal-title": "Energy"
+                    },
+                    {
+                        "key": "9037_CR16",
+                        "unstructured": "Rubin E et al (2005) Technical summary. In Metz, B. et al (Eds), IPCC Special report on carbon dioxide capture and storage. Cambridge University Press"
+                    },
+                    {
+                        "issue": "10",
+                        "key": "9037_CR17",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "2093",
+                        "DOI": "10.1111/j.1559-1816.1999.tb02297.x",
+                        "volume": "29",
+                        "author": "M Siegrist",
+                        "year": "1999",
+                        "unstructured": "Siegrist M (1999) A causal model explaining the perception and acceptance of gene technology. Journal of Applied Social Psychology 29(10): 2093\u20132106",
+                        "journal-title": "Journal of Applied Social Psychology"
+                    },
+                    {
+                        "issue": "2",
+                        "key": "9037_CR18",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "195",
+                        "DOI": "10.1111/0272-4332.202020",
+                        "volume": "20",
+                        "author": "M Siegrist",
+                        "year": "2000",
+                        "unstructured": "Siegrist M (2000) The influence of trust and perceptions of risks and benefits on the acceptance of gene technology. Risk-Analysis 20(2): 195\u2013203",
+                        "journal-title": "Risk-Analysis"
+                    },
+                    {
+                        "key": "9037_CR19",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "280",
+                        "DOI": "10.1126/science.3563507",
+                        "volume": "236",
+                        "author": "P Slovic",
+                        "year": "1987",
+                        "unstructured": "Slovic P (1987) Perception of risk. Science 236, 280\u2013285",
+                        "journal-title": "Science"
+                    },
+                    {
+                        "key": "9037_CR20",
+                        "unstructured": "Slovic P. et al (1985) Characterizing perceived risk. In R. Kates, et al (Eds), Perilous progress: Managing the hazards of technology, Westview"
+                    },
+                    {
+                        "key": "9037_CR21",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "1232",
+                        "DOI": "10.1126/science.165.3899.1232",
+                        "volume": "165",
+                        "author": "C Starr",
+                        "year": "1969",
+                        "unstructured": "Starr C (1969) Social benefit versus technological risk. Science 165: 1232\u20131238",
+                        "journal-title": "Science"
+                    },
+                    {
+                        "key": "9037_CR22",
+                        "unstructured": "Tanaka Y (2003) The factor influencing on acceptance of gene technology. In Proceedings of the 44th Conference of the Japanese Society Psychology, 442\u2013443 (in Japanese)"
+                    },
+                    {
+                        "issue": "6",
+                        "key": "9037_CR23",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "1575",
+                        "DOI": "10.1111/j.0272-4332.2004.00551.x",
+                        "volume": "24",
+                        "author": "Y Tanaka",
+                        "year": "2004",
+                        "unstructured": "Tanaka Y (2004) Major psychological factors affecting acceptance of gene-recombination technology. Risk analysis 24(6):1575-1583",
+                        "journal-title": "Risk analysis"
+                    },
+                    {
+                        "key": "9037_CR24",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "111",
+                        "DOI": "10.1002/bdm.3960010205",
+                        "volume": "1",
+                        "author": "KH Teigen",
+                        "year": "1988",
+                        "unstructured": "Teigen KH, Brun W, Slovic P 1988, Societal Risks as Seen by a Norwegian Public. Journal of Behavioral Decision Making 1: 111\u2013130",
+                        "journal-title": "Journal of Behavioral Decision Making"
+                    },
+                    {
+                        "key": "9037_CR25",
+                        "doi-asserted-by": "crossref",
+                        "unstructured": "Torp TA, Gale J (2003) Demonstrating storage of CO2 in geological reservoirs: the sleipner and SACS projects. in J. Gale, Y. Kaya (Eds.), Proceedings of the 6th International Conference on Greenhouse Gas Control Technologies, 1\u20134 October 2002, Kyoto, Japan, pp 311\u2013316",
+                        "DOI": "10.1016/B978-008044276-1/50050-7"
+                    },
+                    {
+                        "key": "9037_CR26",
+                        "doi-asserted-by": "crossref",
+                        "first-page": "1159",
+                        "DOI": "10.1016/S0301-4215(03)00079-X",
+                        "volume": "32",
+                        "author": "M Viklund",
+                        "year": "2004",
+                        "unstructured": "Viklund M (2004) Energy policy options \u2014 from the perspective of public attitudes and risk perceptions. Energy Policy 32: 1159\u20131171",
+                        "journal-title": "Energy Policy"
+                    }
+                ],
+                "container-title": [
+                    "Mitigation and Adaptation Strategies for Global Change"
+                ],
+                "language": "en",
+                "link": [
+                    {
+                        "URL": "http://link.springer.com/content/pdf/10.1007/s11027-006-9037-6.pdf",
+                        "content-type": "application/pdf",
+                        "content-version": "vor",
+                        "intended-application": "text-mining"
+                    },
+                    {
+                        "URL": "http://link.springer.com/article/10.1007/s11027-006-9037-6/fulltext.html",
+                        "content-type": "text/html",
+                        "content-version": "vor",
+                        "intended-application": "text-mining"
+                    },
+                    {
+                        "URL": "http://link.springer.com/content/pdf/10.1007/s11027-006-9037-6",
+                        "content-type": "unspecified",
+                        "content-version": "vor",
+                        "intended-application": "similarity-checking"
+                    }
+                ],
+                "deposited": {
+                    "date-parts": [
+                        [
+                            2019,
+                            5,
+                            31
+                        ]
+                    ],
+                    "date-time": "2019-05-31T22:49:00Z",
+                    "timestamp": 1559342940000
+                },
+                "score": 34.947792,
+                "resource": {
+                    "primary": {
+                        "URL": "http://link.springer.com/10.1007/s11027-006-9037-6"
+                    }
+                },
+                "issued": {
+                    "date-parts": [
+                        [
+                            2006,
+                            10,
+                            10
+                        ]
+                    ]
+                },
+                "references-count": 26,
+                "journal-issue": {
+                    "issue": "7",
+                    "published-print": {
+                        "date-parts": [
+                            [
+                                2007,
+                                7,
+                                17
+                            ]
+                        ]
+                    }
+                },
+                "alternative-id": [
+                    "9037"
+                ],
+                "URL": "https://doi.org/10.1007/s11027-006-9037-6",
+                "ISSN": [
+                    "1381-2386",
+                    "1573-1596"
+                ],
+                "issn-type": [
+                    {
+                        "value": "1381-2386",
+                        "type": "print"
+                    },
+                    {
+                        "value": "1573-1596",
+                        "type": "electronic"
+                    }
+                ],
+                "published": {
+                    "date-parts": [
+                        [
+                            2006,
+                            10,
+                            10
+                        ]
+                    ]
+                }
+            }
+        ],
+        "items-per-page": 3,
+        "query": {
+            "start-index": 0,
+            "search-terms": null
+        }
+    }
+}
