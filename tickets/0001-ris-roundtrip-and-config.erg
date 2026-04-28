@@ -38,41 +38,82 @@ together because they are too small to split and too coupled to merge separately
 
 ## Test (TDD red step)
 
+Eight fixtures, see `tests/fixtures/README.md` for the table:
+
+- `ArchiveCCS.ris` — real 223-entry corpus
+- `good.ris` — 3-record hand-written sample
+- `empty.ris` — zero bytes
+- `bad-notaris.ris`, `bad-no-er.ris`, `bad-no-ty.ris`,
+  `bad-malformed-tag.ris`, `bad-truncated-mid-record.ris`
+
 ```python
 # tests/test_ris_roundtrip.py
+import pytest
 from pathlib import Path
-from maiba.ris import read_ris, write_ris
+from maiba.ris import read_ris, write_ris, RisParseError
 
-FIXTURE = Path("tests/fixtures/ArchiveCCS.ris")
+F = Path("tests/fixtures")
+
+# --- happy path ---
+
+def test_good_parses_three_records():
+    items = list(read_ris(F / "good.ris"))
+    assert len(items) == 3
+    assert {it.TY for it in items} == {"JOUR", "RPRT", "NEWS"}
+
+def test_good_roundtrip_is_stable(tmp_path):
+    items = list(read_ris(F / "good.ris"))
+    out = tmp_path / "out.ris"
+    write_ris(items, out)
+    assert list(read_ris(out)) == items
 
 def test_archiveccs_parses_to_223_items():
-    items = list(read_ris(FIXTURE))
+    items = list(read_ris(F / "ArchiveCCS.ris"))
     assert len(items) == 223
 
 def test_archiveccs_roundtrip_is_stable(tmp_path):
-    items = list(read_ris(FIXTURE))
+    items = list(read_ris(F / "ArchiveCCS.ris"))
     out = tmp_path / "out.ris"
     write_ris(items, out)
-    items2 = list(read_ris(out))
-    assert items == items2  # pydantic equality on the parsed model
+    assert list(read_ris(out)) == items
 
-def test_known_record_has_expected_fields():
-    items = {it.id: it for it in read_ris(FIXTURE) if it.id}
-    # Ashworth.ea-2009-EngagingThePublic... has a DOI on page 1
-    ash = next(it for it in items.values()
+def test_archiveccs_known_doi_record_has_expected_fields():
+    ash = next(it for it in read_ris(F / "ArchiveCCS.ris")
                if it.DO == "10.1016/j.egypro.2009.02.302")
     assert ash.TY == "JOUR"
     assert ash.JO == "Energy Procedia"
     assert "Ashworth" in " ".join(ash.AU)
+
+# --- empty file is valid (returns empty iterator) ---
+
+def test_empty_returns_no_items():
+    assert list(read_ris(F / "empty.ris")) == []
+
+# --- malformed inputs raise RisParseError ---
+
+@pytest.mark.parametrize("name", [
+    "bad-notaris.ris",
+    "bad-no-er.ris",
+    "bad-no-ty.ris",
+    "bad-malformed-tag.ris",
+    "bad-truncated-mid-record.ris",
+])
+def test_bad_inputs_raise(name):
+    with pytest.raises(RisParseError):
+        list(read_ris(F / name))
 ```
 
-`tests/fixtures/ArchiveCCS.ris` is the 223-entry RIS produced by the
-2026-04-27 indexing exercise. It is the canonical fixture for every layer
-of MAIBA — the same file flows through unit, integration, and smoke tests.
+The parser must define a `RisParseError` exception in `maiba.ris`.
+Empty file → empty iterator (no raise). Any structural defect → raise
+with a message that names the line number and the problem.
 
 ## Exit criteria
 
-- `make test` green (asserts 223 parsed items + roundtrip stability).
+- `make test` green: every fixture-driven test in the Test section passes.
+  - `good.ris` parses to 3 records and roundtrips losslessly.
+  - `ArchiveCCS.ris` parses to 223 records and roundtrips losslessly.
+  - `empty.ris` returns an empty iterator without raising.
+  - All `bad-*.ris` raise `RisParseError`.
 - `make lint` green.
 - `uv run python -c "from maiba.config import load_config; load_config('config/maiba.yaml')"` works.
 - No hardcoded API URLs, mailto, or thresholds anywhere in `src/maiba/`.

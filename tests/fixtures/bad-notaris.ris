@@ -1,0 +1,6 @@
+This is not a RIS file. It is plain prose that happens to live in a file
+ending in .ris. A correct parser should reject this with a clear error,
+not silently produce an empty iterator and not crash.
+
+We had quite a long meeting today about carbon capture and storage. The
+discussion ranged across many topics. Nothing here looks like a RIS tag.
