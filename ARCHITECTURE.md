@@ -447,6 +447,10 @@ provenance:
   scaffolding the user explicitly requests (precedent: ticket 0006). All
   changes under `src/maiba/` must execute through orchestrator TDD.
   See `AGENTS.md` "Retrospective tickets".
+- **2026-04-28 — HTTP cache (§2.3) → DECIDED: hishel (SQLite, deletable).**
+  Runtime on ArchiveCCS.ris crossed the ~30 s threshold. hishel 1.2
+  (`SyncCacheClient` wrapping `httpx.Client`) with `SyncSqliteStorage`.
+  `rm -rf cache_dir` restores fresh behavior. `--no-cache` bypasses.
 - **2026-04-28 — License → DECIDED: CeCILL-B v1.** CEA-CNRS-INRIA Logiciel
   Libre, BSD-equivalent, GPL-compatible, French-law jurisdiction. Chosen
   for institutional alignment with CNRS while keeping adoption friction at
