@@ -1,6 +1,6 @@
 %erg v1
 Title: Resolve item metadata via OpenAlex
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
@@ -8,6 +8,8 @@ Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:32Z claude created
+2026-04-28T09:45Z claude claimed
+2026-04-28T09:50Z claude status closed TDD complete, all tests green
 
 --- body ---
 ## Context
