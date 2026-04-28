@@ -39,13 +39,6 @@ class RisParseError(Exception):
 class _MaibaParser(RisParser):
     DEFAULT_LIST_TAGS = LIST_TYPE_TAGS + ["L1"]
 
-    def parse_line(self, line: str):
-        if line[2:5] == "  -" and line[:2].isupper() and line[0:1].isalpha():
-            return (line[0:2], line[6:].strip())
-        if line[2:4] == " -" and line[:2].isupper() and line[0:1].isalpha():
-            return (line[0:2], line[5:].strip())
-        return (None, line.strip())
-
 
 class _MaibaWriter(RisWriter):
     DEFAULT_LIST_TAGS = LIST_TYPE_TAGS + ["L1"]

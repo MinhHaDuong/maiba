@@ -20,18 +20,6 @@ def test_good_roundtrip_is_stable(tmp_path):
     assert list(read_ris(out)) == items
 
 
-def test_good_loose_whitespace_parses_and_normalizes(tmp_path):
-    """Single-space separator (`XX - `) is accepted on input.
-    Output is canonicalized to two-space form."""
-    items = list(read_ris(F / "good-loose-whitespace.ris"))
-    assert len(items) == 1
-    assert items[0].DO == "10.1016/j.egypro.2009.02.302"
-    out = tmp_path / "out.ris"
-    write_ris(items, out)
-    text = out.read_text(encoding="utf-8")
-    assert "TY  - JOUR" in text
-
-
 def test_archiveccs_parses_to_223_items():
     items = list(read_ris(F / "ArchiveCCS.ris"))
     assert len(items) == 223
