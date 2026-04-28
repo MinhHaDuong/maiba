@@ -104,3 +104,33 @@ def test_rate_limited_raises():
     resolver = OpenAlexResolver(CFG)
     with pytest.raises(ResolverRateLimitedError):
         resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+
+
+@respx.mock
+def test_openalex_per_page_uses_configured_search_rows():
+    captured: dict = {}
+
+    def callback(request):
+        captured["params"] = dict(request.url.params)
+        return Response(200, json={"results": []})
+
+    respx.get(url__startswith="https://api.openalex.org/works").mock(side_effect=callback)
+    resolver = OpenAlexResolver(CFG)
+    resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+    assert int(captured["params"].get("per_page", "0")) == CFG.resolvers.openalex.search_rows
+
+
+@respx.mock
+def test_openalex_filter_widens_year_window():
+    captured: dict = {}
+
+    def callback(request):
+        captured["params"] = dict(request.url.params)
+        return Response(200, json={"results": []})
+
+    respx.get(url__startswith="https://api.openalex.org/works").mock(side_effect=callback)
+    resolver = OpenAlexResolver(CFG)
+    resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2010))
+    f = captured["params"].get("filter", "")
+    # year_window=1 → 2009|2010|2011
+    assert "publication_year:2009|2010|2011" == f

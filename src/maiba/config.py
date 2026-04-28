@@ -23,6 +23,8 @@ class HttpConfig(BaseModel):
 
 class ResolverEndpoint(BaseModel):
     base_url: str
+    search_rows: int = 20
+    year_window: int = 1
 
 
 class ResolversConfig(BaseModel):

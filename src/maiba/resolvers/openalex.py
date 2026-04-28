@@ -129,13 +129,16 @@ class OpenAlexResolver:
         return ResolutionResult(candidate=candidate, confidence=1.0, source="openalex")
 
     def _resolve_by_search(self, item: Item) -> ResolutionResult | None:
+        cfg_oa = self._cfg.resolvers.openalex
         params: dict[str, str | int] = {
             "search": item.TI,
-            "per_page": 5,
+            "per_page": cfg_oa.search_rows,
             "mailto": self._mailto,
         }
         if item.PY:
-            params["filter"] = f"publication_year:{item.PY}"
+            window = cfg_oa.year_window
+            years = "|".join(str(y) for y in range(item.PY - window, item.PY + window + 1))
+            params["filter"] = f"publication_year:{years}"
 
         url = f"{self._base_url}/works"
         resp = self._client.get(url, params=params)
