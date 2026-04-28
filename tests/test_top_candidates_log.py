@@ -42,9 +42,9 @@ def test_select_best_candidate_logs_input_and_top3(
         resolver.resolve(item)
 
     messages = [r.getMessage() for r in caplog.records if r.name == "maiba.scoring"]
-    inputs = [m for m in messages if m.startswith("input  id=")]
+    inputs = [m for m in messages if m.startswith("INPUT  ")]
     tops = [m for m in messages if m.lstrip().startswith("top")]
-    assert len(inputs) == 1, f"expected 1 input log line, got {len(inputs)}: {messages}"
+    assert len(inputs) == 1, f"expected 1 INPUT log line, got {len(inputs)}: {messages}"
     assert sum(1 for m in tops if "top1 " in m) == 1
     assert sum(1 for m in tops if "top2 " in m) == 1
     assert sum(1 for m in tops if "top3 " in m) == 1
