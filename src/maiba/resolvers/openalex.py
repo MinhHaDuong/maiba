@@ -1,0 +1,168 @@
+"""OpenAlex metadata resolver."""
+
+from __future__ import annotations
+
+import httpx
+from rapidfuzz import fuzz
+
+from maiba.config import Config
+from maiba.model import Item
+from maiba.resolvers import ResolutionResult
+
+_OPENALEX_TYPE_TO_RIS: dict[str, str] = {
+    "article": "JOUR",
+    "book": "BOOK",
+    "book-chapter": "CHAP",
+    "dataset": "DATA",
+    "dissertation": "THES",
+    "editorial": "JOUR",
+    "erratum": "JOUR",
+    "letter": "JOUR",
+    "monograph": "BOOK",
+    "other": "GEN",
+    "paratext": "GEN",
+    "peer-review": "JOUR",
+    "preprint": "JOUR",
+    "reference-entry": "ENCYC",
+    "report": "RPRT",
+    "review": "JOUR",
+    "standard": "STAND",
+}
+
+
+def _extract_lastname(name: str) -> str:
+    """Extract a normalized lowercase lastname from various formats.
+
+    Handles "Last, First" and "First Last" conventions.
+    """
+    name = name.strip()
+    if "," in name:
+        return name.split(",")[0].strip().lower()
+    parts = name.split()
+    return parts[-1].lower() if parts else ""
+
+
+def _author_overlap(
+    input_authors: list[str], candidate_authors: list[str], forbidden: list[str]
+) -> float:
+    """Fraction of input authors (excluding forbidden) found in candidates."""
+    clean_input = [a for a in input_authors if a not in forbidden]
+    if not clean_input:
+        return 0.0
+
+    input_lastnames = {_extract_lastname(a) for a in clean_input}
+    candidate_lastnames = {_extract_lastname(a) for a in candidate_authors}
+
+    if not input_lastnames:
+        return 0.0
+
+    matches = input_lastnames & candidate_lastnames
+    return len(matches) / len(input_lastnames)
+
+
+def _work_to_item(work: dict) -> Item:
+    """Map an OpenAlex Work object to a MAIBA Item."""
+    authors = [
+        a["author"]["display_name"]
+        for a in work.get("authorships", [])
+        if a.get("author", {}).get("display_name")
+    ]
+
+    doi_raw = work.get("doi") or ""
+    doi = doi_raw.removeprefix("https://doi.org/") if doi_raw else None
+
+    source_name = None
+    primary_loc = work.get("primary_location") or {}
+    source = primary_loc.get("source") or {}
+    source_name = source.get("display_name")
+    if not source_name:
+        host_venue = work.get("host_venue") or {}
+        source_name = host_venue.get("display_name")
+
+    biblio = work.get("biblio") or {}
+
+    keywords = [kw["display_name"] for kw in work.get("keywords", []) if kw.get("display_name")]
+
+    oa_type = work.get("type", "other")
+    ris_type = _OPENALEX_TYPE_TO_RIS.get(oa_type, "GEN")
+
+    return Item(
+        TY=ris_type,
+        TI=work.get("title") or "",
+        AU=authors,
+        PY=work.get("publication_year"),
+        DA=work.get("publication_date"),
+        JO=source_name,
+        VL=biblio.get("volume"),
+        IS=biblio.get("issue"),
+        SP=biblio.get("first_page"),
+        EP=biblio.get("last_page"),
+        DO=doi if doi else None,
+        LA=work.get("language"),
+        KW=keywords,
+    )
+
+
+class OpenAlexResolver:
+    def __init__(self, cfg: Config) -> None:
+        self._cfg = cfg
+        self._base_url = cfg.resolvers.openalex.base_url
+        self._mailto = cfg.contact.mailto
+        self._client = httpx.Client(
+            headers={"User-Agent": f"MAIBA/0.0 (mailto:{self._mailto})"},
+            timeout=cfg.http.timeout_s,
+        )
+
+    def resolve(self, item: Item) -> ResolutionResult | None:
+        if item.DO:
+            return self._resolve_by_doi(item)
+        return self._resolve_by_search(item)
+
+    def _resolve_by_doi(self, item: Item) -> ResolutionResult | None:
+        url = f"{self._base_url}/works/doi:{item.DO}"
+        resp = self._client.get(url, params={"mailto": self._mailto})
+        if resp.status_code != 200:
+            return None
+        work = resp.json()
+        candidate = _work_to_item(work)
+        return ResolutionResult(candidate=candidate, confidence=1.0, source="openalex")
+
+    def _resolve_by_search(self, item: Item) -> ResolutionResult | None:
+        params: dict[str, str | int] = {
+            "search": item.TI,
+            "per_page": 5,
+            "mailto": self._mailto,
+        }
+        if item.PY:
+            params["filter"] = f"publication_year:{item.PY}"
+
+        url = f"{self._base_url}/works"
+        resp = self._client.get(url, params=params)
+        if resp.status_code != 200:
+            return None
+
+        data = resp.json()
+        results = data.get("results", [])
+        if not results:
+            return None
+
+        forbidden = self._cfg.gaps.forbidden_authors
+        title_min = self._cfg.matching.title_similarity_min
+        author_min = self._cfg.matching.author_overlap_min
+
+        best_result: ResolutionResult | None = None
+        best_confidence = 0.0
+
+        for work in results:
+            candidate = _work_to_item(work)
+            title_sim = fuzz.token_sort_ratio(item.TI, candidate.TI) / 100.0
+            overlap = _author_overlap(item.AU, candidate.AU, forbidden)
+            confidence = title_sim * 0.7 + overlap * 0.3
+
+            if confidence >= title_min and overlap >= author_min and confidence > best_confidence:
+                best_confidence = confidence
+                best_result = ResolutionResult(
+                    candidate=candidate, confidence=confidence, source="openalex"
+                )
+
+        return best_result
