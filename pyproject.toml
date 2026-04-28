@@ -36,7 +36,13 @@ target-version = "py311"
 line-length = 99
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W", "UP"]
+# E/F/I/N/W/UP — pyflakes, pep8, isort, naming, warnings, pyupgrade
+# B          — bugbear (common bug patterns)
+# RET        — return statement clarity
+# C901       — McCabe cyclomatic complexity (default threshold 10)
+# PLR0912    — too many branches per function (default 12)
+# PLR0915    — too many statements per function (default 50)
+select = ["E", "F", "I", "N", "W", "UP", "B", "RET", "C901", "PLR0912", "PLR0915"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

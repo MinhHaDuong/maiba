@@ -20,6 +20,9 @@ dist/
 .idea/
 .vscode/
 
+# Claude Code worktrees (created on demand by EnterWorktree / orchestrator)
+.claude/worktrees/
+
 # Local secrets
 .env
 .env.local
