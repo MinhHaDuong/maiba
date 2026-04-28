@@ -1,0 +1,84 @@
+%erg v1
+Title: Auto-load .env so OPENALEX_API_KEY actually reaches the CLI
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T14:30Z claude created
+2026-04-28T14:30Z claude claimed
+2026-04-28T14:50Z claude note find_dotenv default uses caller-file location, not cwd; switched to find_dotenv(usecwd=True) so monkeypatch.chdir works in tests
+2026-04-28T14:55Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+Smoke run on `tests/fixtures/ArchiveCCS.ris` returned a rate-limit
+abort on the very first DOI lookup, even though `OPENALEX_API_KEY`
+lived in the project-root `.env`:
+
+```
+openalex: rate limited — aborting remaining resolver calls (record 1/223).
+```
+
+Cause: ticket 0012 wired the Bearer header but assumed the env var
+was already in `os.environ`. Nothing in MAIBA reads `.env`. The
+README's "set OPENALEX_API_KEY in the environment **or** in a
+gitignored `.env`" is misleading — the `.env` half doesn't work
+without manual `source .env`.
+
+## Actions
+
+1. Add `python-dotenv>=1.0` to `pyproject.toml` runtime deps.
+2. In `src/maiba/cli.py`, call `load_dotenv()` at the top of `main()`
+   before any other env reads. python-dotenv's default behavior is
+   exactly what we want: walks up from cwd to find `.env`, sets vars
+   that are not already in `os.environ` (explicit shell exports win).
+3. Tighten the README "Configuration" section to state the actual
+   contract: `.env` in the project root is auto-loaded; explicit
+   `export` always wins.
+
+## Test (TDD red step)
+
+```python
+# tests/test_dotenv.py
+import os
+from pathlib import Path
+
+import pytest
+
+from maiba.cli import main
+
+
+def test_dotenv_is_loaded_from_cwd(tmp_path, monkeypatch, capsys):
+    """A .env file in cwd populates os.environ at CLI startup."""
+    monkeypatch.delenv("OPENALEX_API_KEY", raising=False)
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / ".env").write_text("OPENALEX_API_KEY=from-dotenv\n")
+    main([])  # no-args → prints help + exits 0
+    assert os.environ.get("OPENALEX_API_KEY") == "from-dotenv"
+
+
+def test_explicit_env_wins_over_dotenv(tmp_path, monkeypatch, capsys):
+    """Shell-exported env vars take precedence over .env values."""
+    monkeypatch.setenv("OPENALEX_API_KEY", "from-shell")
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / ".env").write_text("OPENALEX_API_KEY=from-dotenv\n")
+    main([])
+    assert os.environ.get("OPENALEX_API_KEY") == "from-shell"
+```
+
+## Exit criteria
+
+- `make test` green; both new tests pass.
+- `make lint` green.
+- After this lands, `uv run maiba scan -i tests/fixtures/ArchiveCCS.ris`
+  with `.env` containing a valid key produces a non-zero `Fixed:`
+  count (manual eyeball — not asserted).
+- README "Configuration" section reflects the new contract.
+
+## Out of scope
+
+- Path-walking parents to find `.env` (python-dotenv does this by
+  default; nothing else to ship).
+- Multiple `.env` files (`.env.local`, etc.). YAGNI.

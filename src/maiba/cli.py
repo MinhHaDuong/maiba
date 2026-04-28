@@ -8,6 +8,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from dotenv import find_dotenv, load_dotenv
+
 from maiba._logging import configure as configure_logging
 from maiba.config import load_config
 from maiba.pipeline import run
@@ -139,6 +141,9 @@ def _try_unlink(path: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Auto-load .env starting from cwd (not from this file's location)
+    # before any os.environ reads. Existing shell exports take precedence.
+    load_dotenv(find_dotenv(usecwd=True))
     parser = _build_parser()
     args = parser.parse_args(argv)
     configure_logging(args.verbose)
