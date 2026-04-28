@@ -30,8 +30,9 @@ def test_progress_glyph_per_record_on_tty(monkeypatch, tmp_path, capsys):
         apply=False,
     )
     err = capsys.readouterr().err
-    # Output is: announce line + glyphs + trailing newline.
+    # Output is: announce line + legend + glyphs + trailing newline.
     assert err.startswith("Scanning 3 records")
+    assert "Legend:" in err
     glyphs = err.splitlines()[-1]
     assert len(glyphs) == 3
     assert all(c in ".0*+" for c in glyphs)
