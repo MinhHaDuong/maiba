@@ -1,0 +1,130 @@
+%erg v1
+Title: Pre-flight cost estimate and interactive confirm for --llm-fallback
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0015
+
+--- log ---
+2026-04-28T13:50Z claude created
+
+--- body ---
+## Context
+
+When `--llm-fallback` is on, MAIBA can spend real money. Ticket 0015
+caps it via `cfg.llm.budget_usd`, but a hard cap is the *failure*
+boundary, not the *informed-consent* boundary. The user should see
+"this will cost about $0.26" *before* the run touches the API key.
+
+This ticket adds a one-line UX layer: count items that will hit the
+LLM (those the mechanical resolvers won't resolve), multiply by the
+configured per-call cost estimate, prompt for confirmation.
+
+## Actions
+
+1. **`src/maiba/budget.py`** (new, ~30 lines):
+   ```python
+   def estimate_llm_cost(items: list[Item], cfg: Config) -> tuple[int, float]:
+       """Return (count_expected_to_hit_llm, estimated_total_usd).
+
+       Heuristic: items with at least one gap from cfg.gaps.required_fields
+       AND not already resolvable by DOI lookup are *candidates* for the
+       LLM. Cost = count × cfg.llm.cost_per_call_estimate_usd.
+       """
+   ```
+   The heuristic is approximate — actual hit count depends on what
+   OpenAlex/Crossref return — but it gives an order-of-magnitude
+   estimate which is enough for the consent gate.
+
+2. **`config/maiba.yaml`** addition (per `cfg.llm.cost_per_call_estimate_usd`):
+   ```yaml
+   llm:
+     ...
+     cost_per_call_estimate_usd: 0.02   # used for pre-flight estimate only
+   ```
+   This is a config knob, not a hardcoded constant. It's the user's
+   responsibility to keep it roughly aligned with the model they
+   chose. Different models, different price tiers — no central price
+   table.
+
+3. **`src/maiba/cli.py`** — when `--llm-fallback` is set AND
+   `cfg.llm.estimate_first` is true:
+   ```
+   $ uv run maiba scan ArchiveCCS.ris --llm-fallback --apply
+   Estimated LLM activity:
+     Items likely to hit LLM:  13
+     Estimated cost:           $0.26 (model: openai/gpt-4o-mini)
+     Budget cap:               $1.00
+   Proceed? [y/N]
+   ```
+   - If `--no-confirm` is passed: skip the prompt (for cron / CI use).
+   - If stdin is not a TTY: skip the prompt and proceed (composes
+     with `--review-out` and pipe usage from ticket 0010). Document
+     this — silent proceed in non-interactive mode is a real footgun.
+   - If `--dry-run` is passed: print the estimate and exit without
+     making any API calls.
+
+4. **`config/maiba.yaml`** additions:
+   ```yaml
+   llm:
+     ...
+     estimate_first: true               # ask for confirmation when interactive
+   ```
+
+## Test (TDD red step)
+
+```python
+# tests/test_preflight.py
+from pathlib import Path
+import pytest
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.budget import estimate_llm_cost
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+def test_estimate_counts_only_gappy_items_without_doi():
+    items = [
+        Item(TY="JOUR", TI="A", AU=["X"], PY=2020),                       # complete → 0
+        Item(TY="JOUR", TI="B", AU=["X"], PY=2020, DO="10.1/x"),          # has DOI → 0 (mechanical hit)
+        Item(TY="RPRT", TI="C", AU=[], PY=2020),                          # gap → 1
+        Item(TY="NEWS", TI=None, AU=["Y"], PY=2020),                      # gap → 1
+    ]
+    count, cost = estimate_llm_cost(items, CFG)
+    assert count == 2
+    assert cost == 2 * CFG.llm.cost_per_call_estimate_usd
+
+
+def test_dry_run_makes_no_api_calls(monkeypatch, capsys, tmp_path):
+    # invoke CLI main() with --dry-run --llm-fallback on a fixture
+    # assert no httpx.Client() created, no env-var read for API key,
+    # only the estimate is printed
+    ...
+
+
+def test_no_confirm_skips_prompt(monkeypatch, capsys, tmp_path):
+    # invoke CLI with --no-confirm; assert input() never called
+    ...
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- Interactive run with `--llm-fallback` shows the estimate and waits
+  for y/N before any LLM call.
+- `--no-confirm` and `--dry-run` flags work as documented.
+- Non-TTY stdin auto-proceeds (logs that it did so, doesn't hang).
+- Estimate accuracy is acknowledged as approximate — the README says
+  so, the prompt itself says "estimated."
+
+## Out of scope
+
+- Live cost reporting during the run. End-of-run summary already
+  reports actual spend (ticket 0015's budget tracker). Mid-run dollar
+  display would compete with the progress bar — keep them separate.
+- Model price database. We'd need to track per-token prices for every
+  supported model and update them. The single config knob
+  (`cost_per_call_estimate_usd`) is sufficient for an order-of-magnitude
+  warning. If this becomes painful, separate ticket.

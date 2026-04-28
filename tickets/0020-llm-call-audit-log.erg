@@ -1,0 +1,128 @@
+%erg v1
+Title: Per-run JSONL audit log of every LLM call
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0015
+
+--- log ---
+2026-04-28T13:52Z claude created
+
+--- body ---
+## Context
+
+The LLM resolver is the only resolver in MAIBA whose output can change
+between runs (web-search models read the live web; even pure LLMs
+drift across model versions). The provenance lines in N1 record what
+was *applied*, but not what was *considered* — the cases where the
+LLM returned a low-confidence result that got routed to the review
+queue, or rejected entirely.
+
+When a fix later looks wrong ("why does this record say 2010 when the
+PDF clearly says 2009?"), today the only trail is the N1 line in the
+RIS. That's not enough. We want:
+
+- The full LLM response per item (so we can re-judge the call)
+- The exact cost per item (so we can reconcile with the OpenRouter
+  invoice)
+- The verified URL (if any) the model cited as evidence
+- A timestamp (so we can correlate with model version snapshots)
+
+This ticket adds a per-run JSONL audit log, written as a side effect
+of every LLM call regardless of outcome.
+
+## Actions
+
+1. **`src/maiba/audit.py`** (new, ~40 lines):
+   ```python
+   class LLMAuditLog:
+       def __init__(self, path: Path) -> None: ...
+       def record(self, *, item_id: str, model: str, cost_usd: float,
+                  confidence: float, verified_url: str | None,
+                  accepted: bool, raw_response: dict) -> None: ...
+   ```
+   Append-only JSONL. One line per LLM call. Lazy file open (don't
+   create the file if no LLM calls are made).
+
+2. **`src/maiba/resolvers/llm.py`** — after every API call, regardless
+   of the outcome (accepted / below threshold / malformed / budget
+   stop / timeout), call `audit.record(...)`. The audit log is
+   wired into the resolver via dependency injection in `__init__`.
+
+3. **`config/maiba.yaml`** addition:
+   ```yaml
+   llm:
+     ...
+     audit_log: "logs/llm-audit-{run_id}.jsonl"
+   ```
+   `{run_id}` substituted at run time (UTC ISO-8601 minute precision,
+   e.g. `2026-04-28T1432Z`). `logs/` gitignored.
+
+4. **`.gitignore`** — add `logs/` entry. Audit logs MUST NOT be
+   committed (they may contain bibliographic content from
+   first-pages, model responses, costs).
+
+5. **CLI override**: `--audit-log PATH` to override the config path
+   (e.g. for testing or to redirect to /dev/null).
+
+## Test (TDD red step)
+
+```python
+# tests/test_audit_log.py
+import json
+from pathlib import Path
+from maiba.audit import LLMAuditLog
+
+
+def test_audit_log_writes_one_line_per_call(tmp_path):
+    log = LLMAuditLog(tmp_path / "audit.jsonl")
+    log.record(item_id="a", model="x", cost_usd=0.001,
+               confidence=0.9, verified_url=None,
+               accepted=True, raw_response={"title": "A"})
+    log.record(item_id="b", model="x", cost_usd=0.002,
+               confidence=0.4, verified_url="https://example.com",
+               accepted=False, raw_response={"title": "B"})
+    lines = (tmp_path / "audit.jsonl").read_text().strip().splitlines()
+    assert len(lines) == 2
+    rec0 = json.loads(lines[0])
+    assert rec0["item_id"] == "a" and rec0["accepted"] is True
+    rec1 = json.loads(lines[1])
+    assert rec1["verified_url"] == "https://example.com"
+    assert rec1["accepted"] is False
+
+
+def test_audit_log_lazy_creation(tmp_path):
+    """No file is created if no calls are recorded."""
+    path = tmp_path / "audit.jsonl"
+    log = LLMAuditLog(path)
+    # ... no record() calls
+    assert not path.exists()
+
+
+def test_resolver_records_to_audit_for_every_outcome(monkeypatch, tmp_path):
+    """One JSONL line per LLM call: accepted, below-threshold, malformed."""
+    # exercise the LLMResolver three times with three mocked responses,
+    # assert three lines appear in the audit log
+    ...
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- After a run with `--llm-fallback`, the audit log file exists at
+  the configured path and contains one JSONL record per LLM call.
+- `logs/` directory is gitignored — audit logs never enter git.
+- `grep accepted=false logs/llm-audit-*.jsonl` is a viable workflow
+  for finding the cases that fell to the review queue.
+
+## Out of scope
+
+- **Long-term retention / log rotation.** The user owns the `logs/`
+  directory. They can `find logs/ -mtime +30 -delete` if they want.
+- **Structured search / SQLite indexing.** JSONL is plain text,
+  greppable. No database until that proves insufficient.
+- **PII / privacy review.** First-page text and bibliographic
+  metadata can include personal names. The audit log inherits the
+  same exposure as the source RIS. Documented; user decision whether
+  to share log files.

@@ -103,15 +103,34 @@ var.
      api_key_env: "OPENROUTER_API_KEY"
      max_tokens: 800
      temperature: 0.0            # deterministic
+     timeout_s: 30               # per-call wall-clock cap
      prompt_first_page_chars: 2000
+     budget_usd: 1.00            # halt LLM calls when run total reaches this
+     budget_action: "stop"       # or "warn-continue"
    ```
 
-7. **Pipeline integration**: when `--llm-fallback` is set, append
+7. **Per-run budget tracker.** The pipeline accumulates LLM cost as
+   each call returns; when `cumulative_cost_usd >= cfg.llm.budget_usd`,
+   the next call is short-circuited (returns None, item routed to
+   review queue per ticket 0016). The OpenAI SDK exposes per-response
+   usage; converting to USD uses the model's published per-token
+   prices (pull from a small `cfg.llm.pricing` table or accept that
+   the resolver records `cost_usd: 0` for models without a known
+   price and warns once).
+   - `--llm-budget USD` CLI flag overrides `cfg.llm.budget_usd` for
+     a single run.
+   - End-of-run summary reports cost spent and budget remaining
+     (composes with the progress bar from ticket 0008).
+   - When the cap halts, an explicit log line says so — silent
+     stops are forbidden (this is the same lesson as the OpenAlex
+     429 we just fixed).
+
+8. **Pipeline integration**: when `--llm-fallback` is set, append
    `LLMResolver(cfg)` to `cfg.resolvers.order`. Order matters:
    OpenAlex → Crossref → LLM. LLM only fires for items the
    mechanical resolvers couldn't match.
 
-8. **Adherence**: PAT-shape check from ticket 0012 covers
+9. **Adherence**: PAT-shape check from ticket 0012 covers
    `OPENROUTER_API_KEY` too — extend the regex if needed.
 
 ## Test (TDD red step)
