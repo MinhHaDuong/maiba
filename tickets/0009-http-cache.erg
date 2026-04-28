@@ -1,0 +1,125 @@
+%erg v1
+Title: HTTP response cache for OpenAlex/Crossref resolvers
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T08:30Z claude created split-off-from-0008
+
+--- body ---
+## Context
+
+Live `uv run maiba scan tests/fixtures/ArchiveCCS.ris` takes ~2–4 minutes
+on the 223-record corpus, and re-runs (which are common when iterating on
+gap rules or thresholds) pay the full network cost every time.
+
+ARCHITECTURE.md §2.3 anticipates this:
+> Add HTTP response cache only when a run takes more than ~30 seconds
+> end-to-end on `ArchiveCCS.ris`.
+
+That threshold has been crossed. The cache must be safe to `rm -rf`
+without breaking correctness — re-running with the cache wiped must
+produce the same fixed RIS as a fresh run.
+
+## Actions
+
+1. Add `hishel>=0.0.30` to `pyproject.toml` runtime deps. (HTTP-spec-
+   compliant cache for httpx; respects upstream `Cache-Control` headers
+   and ETags. MIT-licensed, CeCILL-B compatible.)
+2. In `src/maiba/resolvers/openalex.py` and `crossref.py`, replace
+   `httpx.Client(...)` construction with a `hishel.CacheClient(...)`
+   wrapping the same transport, configured with a filesystem storage
+   backend at a path derived from `Config`.
+3. Extend `config/maiba.yaml` `http` section:
+   ```yaml
+   http:
+     timeout_s: 10
+     ...
+     cache_dir: ~/.cache/maiba/http     # safe to rm -rf
+     cache_ttl_s: 2592000               # 30 days; resolver responses are stable
+   ```
+4. Extend `Config.HttpConfig` model in `src/maiba/config.py` with
+   `cache_dir: str` and `cache_ttl_s: int`.
+5. Expand `~` and create the cache dir on first use (do not fail if it
+   already exists).
+6. Add `--no-cache` to `maiba scan`. When set, instantiate resolvers
+   with caching disabled (still uses httpx, just no hishel wrapper).
+7. Add `maiba clear-cache` verb that removes `cache_dir`. Convenience
+   only; `rm -rf <cache_dir>` is equivalent.
+8. Append §9 entry to ARCHITECTURE.md:
+   `2026-04-28 — HTTP cache → DECIDED: hishel (filesystem, deletable).`
+   This formally relaxes the §2.3 "zero state" decision per the
+   "if runtime grows past ~30 s" escape hatch already documented there.
+
+## Test (TDD red step)
+
+```python
+# tests/test_cache.py
+from pathlib import Path
+
+import respx
+from httpx import Response
+
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.openalex import OpenAlexResolver
+
+
+@respx.mock
+def test_resolver_uses_cache_on_second_call(tmp_path):
+    cfg = load_config("config/maiba.yaml")
+    cfg.http.cache_dir = str(tmp_path / "cache")
+
+    route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
+        return_value=Response(
+            200,
+            headers={"cache-control": "max-age=86400"},
+            json={
+                "title": "X",
+                "publication_year": 2020,
+                "authorships": [],
+                "doi": "https://doi.org/10.1/x",
+            },
+        )
+    )
+    resolver = OpenAlexResolver(cfg)
+    item = Item(TY="JOUR", TI="X", DO="10.1/x")
+
+    resolver.resolve(item)
+    resolver.resolve(item)
+
+    assert route.call_count == 1, "second call should be served from cache"
+
+
+@respx.mock
+def test_no_cache_flag_bypasses_cache(tmp_path):
+    cfg = load_config("config/maiba.yaml")
+    cfg.http.cache_dir = str(tmp_path / "cache")
+
+    route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
+        return_value=Response(200, json={"title": "X", "publication_year": 2020,
+                                          "authorships": [], "doi": "https://doi.org/10.1/x"})
+    )
+    # Construct resolver in no-cache mode (API TBD — likely a kwarg on __init__).
+    resolver = OpenAlexResolver(cfg, use_cache=False)
+    item = Item(TY="JOUR", TI="X", DO="10.1/x")
+
+    resolver.resolve(item)
+    resolver.resolve(item)
+
+    assert route.call_count == 2, "no-cache mode should hit the network every time"
+```
+
+## Exit criteria
+
+- `make test` green; both cache tests pass.
+- `uv run maiba scan tests/fixtures/ArchiveCCS.ris` (live, dry-run)
+  populates `~/.cache/maiba/http`. A second invocation is at least
+  5× faster.
+- `rm -rf ~/.cache/maiba/http` between runs restores full network
+  behavior without breaking correctness.
+- `--no-cache` flag bypasses the cache.
+- `maiba clear-cache` removes `cache_dir`.
+- ARCHITECTURE.md §9 entry added.
+- `make lint` green.
