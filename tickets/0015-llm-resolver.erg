@@ -1,0 +1,207 @@
+%erg v1
+Title: LLM-based metadata resolver for grey literature
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0014
+
+--- log ---
+2026-04-28T12:32Z claude created
+
+--- body ---
+## Context
+
+Crossref/OpenAlex don't index NGO reports (Bellona, ADEME, IRSN), news
+clippings (Le Monde, Le Figaro), or meeting minutes (DGEC). These
+account for ~13 of 20 incomplete records in `ArchiveCCS.ris`. The
+mechanical resolvers can't help.
+
+LLMs have read these documents during training. Combined with local
+signal we already have — PDF first page (ticket 0014), filename, the
+partial Item — an LLM can fill missing TI/AU/PY for grey lit at high
+recall. The cost per call is small ($0.001-0.01); the failure mode
+(hallucination) is bounded by self-reported confidence + downstream
+review queue (ticket 0016).
+
+This ticket implements a third `MetadataResolver` alongside OpenAlex
+and Crossref. Opt-in via `--llm-fallback` (existing CLI flag, currently
+errors as not-implemented after ticket 0012). Provider opt-in via env
+var.
+
+## Actions
+
+1. **Add deps** to `pyproject.toml`: `openai>=1.0` (the OpenAI SDK
+   handles OpenRouter and any OpenAI-compatible local endpoint;
+   one client lib for both provider options).
+
+2. **`src/maiba/resolvers/llm.py`** (new) — implement `MetadataResolver`:
+   ```python
+   class LLMResolver:
+       def __init__(self, cfg: Config) -> None: ...
+       def resolve(self, item: Item) -> ResolutionResult | None: ...
+   ```
+   - Reads `OPENROUTER_API_KEY` (or `MAIBA_LLM_API_KEY`) from env;
+     refuses to run without one (raise at construction, do not
+     silently return None).
+   - Endpoint and model from `cfg.llm.endpoint` and `cfg.llm.model`.
+   - Default endpoint: `https://openrouter.ai/api/v1`. Default model:
+     a small fast one (e.g. `openai/gpt-4o-mini` or
+     `anthropic/claude-3.5-haiku` — pick one in the ticket
+     conversation, don't re-litigate at execute time).
+   - Pulls PDF first page via `extract_first_page(item, cfg)` (ticket
+     0014). If `None` (no L1, no PDF), the prompt still works on
+     filename + partial item — degraded but functional.
+
+3. **Prompt structure** (concrete, not negotiable in execute):
+   ```
+   You are a bibliographic metadata extractor. Given partial metadata
+   and the first page of a document, return the missing fields.
+
+   Partial record:
+     TY: {item.TY}
+     TI: {item.TI or "(missing)"}
+     AU: {item.AU or "(missing)"}
+     PY: {item.PY or "(missing)"}
+     filename: {basename of L1[0] or "(no file)"}
+
+   First page (truncated to 2000 chars):
+     {first_page_text or "(no PDF)"}
+
+   Return JSON exactly matching this schema:
+     {
+       "title": "...",
+       "authors": ["Last, First", ...],
+       "year": YYYY,
+       "doi": "10.xxx/yyy" or null,
+       "venue": "..." or null,
+       "confidence": 0.0..1.0,
+       "rationale": "one sentence explaining your confidence"
+     }
+
+   Return only the JSON, no prose. If you cannot determine a field
+   with reasonable confidence, return null for that field and lower
+   the overall confidence accordingly. Do not hallucinate.
+   ```
+
+4. **Structured output**: use OpenAI SDK's `response_format={"type":
+   "json_object"}` (or stricter JSON-schema mode if the chosen model
+   supports it). Parse with `pydantic`. Reject responses that don't
+   parse as `LLMCandidate` schema.
+
+5. **Confidence handling**:
+   - LLM-supplied `confidence` becomes `ResolutionResult.confidence`.
+   - No second-pass cross-check in this ticket. Validation against
+     Crossref/OpenAlex is a future ticket.
+   - Source string: `f"llm:{cfg.llm.model}"` (e.g. `llm:openai/gpt-4o-mini`).
+
+6. **`config/maiba.yaml`** additions:
+   ```yaml
+   llm:
+     enabled: false              # opt-in via --llm-fallback
+     endpoint: "https://openrouter.ai/api/v1"
+     model: "openai/gpt-4o-mini"
+     api_key_env: "OPENROUTER_API_KEY"
+     max_tokens: 800
+     temperature: 0.0            # deterministic
+     prompt_first_page_chars: 2000
+   ```
+
+7. **Pipeline integration**: when `--llm-fallback` is set, append
+   `LLMResolver(cfg)` to `cfg.resolvers.order`. Order matters:
+   OpenAlex → Crossref → LLM. LLM only fires for items the
+   mechanical resolvers couldn't match.
+
+8. **Adherence**: PAT-shape check from ticket 0012 covers
+   `OPENROUTER_API_KEY` too — extend the regex if needed.
+
+## Test (TDD red step)
+
+```python
+# tests/test_resolve_llm.py
+import json
+import pytest
+from unittest.mock import patch, MagicMock
+from pathlib import Path
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.llm import LLMResolver
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+def _mock_completion(payload: dict) -> MagicMock:
+    """Build a mock OpenAI ChatCompletion response carrying the JSON payload."""
+    msg = MagicMock(); msg.content = json.dumps(payload)
+    choice = MagicMock(); choice.message = msg
+    resp = MagicMock(); resp.choices = [choice]
+    return resp
+
+
+def test_llm_resolver_fills_missing_authors(monkeypatch):
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
+    item = Item(TY="JOUR", TI="Incentivising CCS in the EU", AU=[], PY=2010)
+    payload = {
+        "title": "Incentivising CCS in the EU",
+        "authors": ["von Stechow, Christoph"],
+        "year": 2010, "doi": None, "venue": "Energy Policy",
+        "confidence": 0.85, "rationale": "Title is distinctive."
+    }
+    with patch("maiba.resolvers.llm.OpenAI") as MockOpenAI:
+        MockOpenAI.return_value.chat.completions.create.return_value = _mock_completion(payload)
+        resolver = LLMResolver(CFG)
+        result = resolver.resolve(item)
+    assert result is not None
+    assert "von Stechow" in " ".join(result.candidate.AU)
+    assert result.confidence == 0.85
+    assert result.source.startswith("llm:")
+
+
+def test_llm_resolver_refuses_without_api_key(monkeypatch):
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    with pytest.raises(RuntimeError):
+        LLMResolver(CFG)
+
+
+def test_llm_resolver_returns_none_on_low_confidence(monkeypatch):
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
+    payload = {"title": None, "authors": [], "year": None, "doi": None,
+               "venue": None, "confidence": 0.1, "rationale": "Don't know."}
+    with patch("maiba.resolvers.llm.OpenAI") as MockOpenAI:
+        MockOpenAI.return_value.chat.completions.create.return_value = _mock_completion(payload)
+        resolver = LLMResolver(CFG)
+        item = Item(TY="JOUR", TI="?", AU=[], PY=None)
+        result = resolver.resolve(item)
+    # Below cfg.matching.apply_threshold → return None (let pipeline route to
+    # review queue in ticket 0016)
+    assert result is None or result.confidence < CFG.matching.apply_threshold
+
+
+def test_llm_resolver_rejects_malformed_response(monkeypatch):
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
+    bad = MagicMock(); bad.choices[0].message.content = "this is not json"
+    with patch("maiba.resolvers.llm.OpenAI") as MockOpenAI:
+        MockOpenAI.return_value.chat.completions.create.return_value = bad
+        resolver = LLMResolver(CFG)
+        item = Item(TY="JOUR", TI="x", AU=[], PY=2020)
+        with pytest.raises(ValueError):
+            resolver.resolve(item)
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- All HTTP / SDK calls mocked in tests (no real OpenRouter calls in CI).
+- Smoke run: with `OPENROUTER_API_KEY` set + `--llm-fallback`, on the
+  3 AU-missing JOUR records, the LLM resolver fills authors at
+  confidence ≥ 0.7. Manual eyeball, not asserted.
+- No hardcoded model name, endpoint, or token limit in `src/`.
+
+## Out of scope (separate tickets)
+
+- **Cross-check verification** — re-query Crossref/OpenAlex with the
+  LLM-supplied title to confirm. Increases reliability; deferred.
+- **Padme local provider** — different endpoint, possibly different
+  client. Architecture supports it (config.endpoint), but proving
+  end-to-end is its own ticket.
+- **Review queue / low-confidence reporting** — ticket 0016.

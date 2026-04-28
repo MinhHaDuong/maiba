@@ -1,0 +1,147 @@
+%erg v1
+Title: Review queue — write low-confidence fixes to a markdown report
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0015
+
+--- log ---
+2026-04-28T12:34Z claude created
+
+--- body ---
+## Context
+
+The user has stated workflow: "I am fine editing my Zotero in GUI" for
+records the automated path can't fix. So the rest of the pipeline
+needs a way to *flag* low-confidence cases for human review instead
+of either applying-anyway (risky for citations) or silently dropping
+them (invisible).
+
+After tickets 0012 + 0013 (auth, scorer fix) + 0015 (LLM fallback),
+some records will:
+
+- Resolve cleanly above `apply_threshold` → applied to RIS output ✓
+- Return below threshold → currently invisible (resolvers return None)
+- Return above threshold but flagged by the LLM as low-confidence →
+  applied today, but worth surfacing
+
+This ticket adds a `--review-out report.md` CLI flag. Items that did
+not get a clean fix (no candidate, or candidate below threshold) are
+listed in the markdown report with their partial metadata, the
+candidate that was rejected (if any), and the reason. User opens the
+report, reviews each, edits in Zotero GUI.
+
+## Actions
+
+1. **`src/maiba/report.py`** (new):
+   ```python
+   def write_review_report(unresolved: list[ReviewEntry], path: Path) -> None:
+       """Markdown report of items needing human review."""
+   ```
+   `ReviewEntry`: pydantic model wrapping `Item` + best rejected
+   candidate (if any) + rejection reason (`"no_candidate"`,
+   `"below_threshold:0.74"`, `"resolver_error:..."`).
+
+2. **`src/maiba/pipeline.py`** — when `apply=True`:
+   - Items resolved above threshold → modify Item, append `N1`
+     provenance line, write to output RIS (current behavior).
+   - Items resolved below threshold → record `ReviewEntry`, do NOT
+     modify the Item, write the original record unchanged to output.
+   - Items that errored during resolution (e.g. ResolverRateLimited
+     from ticket 0012) → record `ReviewEntry` with the error, write
+     original.
+   At end of run, if any review entries exist AND `--review-out` is
+   set, call `write_review_report`.
+
+3. **`src/maiba/cli.py`** — add `--review-out PATH` argument.
+   - Default: not set; pipeline still tracks review entries but
+     doesn't write a file. Counts appear in the run summary.
+   - When set: pipeline writes the report to that path.
+
+4. **Report format** — markdown, one section per record:
+   ```markdown
+   ## ItemID
+
+   **Type:** RPRT
+   **Title:** Carbon Capture and Storage in Europe — Bellona Report
+   **Authors:** (missing)
+   **Year:** 2008
+   **File:** Bellona-2008-PayingForADecentBurial.pdf
+   **Status:** below_threshold (0.74 < 0.85, resolver=llm)
+
+   **Best candidate (rejected):**
+   - Title: Bellona's CCS strategy paper 2008
+   - Authors: Bellona Foundation
+   - Year: 2008
+   - Confidence: 0.74
+
+   _Edit in Zotero, then re-run scan to verify._
+   ```
+   Sections sorted by ItemID for stable diffs.
+
+## Test (TDD red step)
+
+```python
+# tests/test_review_report.py
+import respx
+from httpx import Response
+from pathlib import Path
+from maiba.config import load_config
+from maiba.pipeline import run
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+@respx.mock
+def test_low_confidence_writes_review_entry(tmp_path):
+    # mock all resolvers to return either nothing or below-threshold
+    respx.get(url__startswith="https://api.openalex.org/").mock(
+        return_value=Response(200, json={"results": []})
+    )
+    respx.get(url__startswith="https://api.crossref.org/").mock(
+        return_value=Response(200, json={"message": {"items": []}})
+    )
+
+    src = Path("tests/fixtures/two-incomplete-records.ris")  # new fixture
+    out = tmp_path / "out.ris"
+    review = tmp_path / "review.md"
+    report = run(input=src, output=out, cfg=CFG, apply=True, review_out=review)
+
+    assert report.unresolved >= 1
+    assert review.exists()
+    text = review.read_text()
+    assert "Status: no_candidate" in text or "Status: below_threshold" in text
+
+
+def test_no_review_out_means_no_file(tmp_path):
+    # ... same setup, but review_out=None
+    # pipeline still tracks counts internally, just doesn't write
+    ...
+
+
+def test_resolved_records_not_in_review(tmp_path):
+    # high-confidence mock → record resolves, must NOT appear in review
+    ...
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- `uv run maiba scan ArchiveCCS.ris -o out.ris --review-out review.md
+  --apply` produces both files. `review.md` lists the unresolved
+  records in a human-readable format. (Smoke check, not asserted.)
+- Output RIS contains only the resolved records' fixes; un-resolved
+  records pass through unchanged. The user can re-run after editing
+  in Zotero and the cycle repeats.
+
+## Out of scope
+
+- **Two-way sync with Zotero.** This ticket assumes the user re-imports
+  the corrected RIS into Zotero (or edits the Zotero record directly).
+  A `pyzotero`-based push is the proper Zotero-backend ticket — that's
+  capability #5 in the README roadmap, not this ticket.
+- **Auto-retry after edit.** User-driven; out of scope.
+- **Confidence calibration.** The LLM's self-reported confidence is
+  trusted as-is. Calibration against known-correct fixes would be a
+  research-grade ticket, not MVP scope.
