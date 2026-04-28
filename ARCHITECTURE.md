@@ -431,11 +431,17 @@ provenance:
   (`tests/fixtures/responses/{openalex,crossref}/`). Resolver tests replay
   these via `respx`; they are **never re-recorded automatically**. Upstream
   shape changes surface as test failures, prompting deliberate re-capture.
-- **2026-04-28 — RIS whitespace tolerance → DECIDED.** Parser accepts both
-  the canonical two-space (`XX  - `) and single-space (`XX - `) tag
-  separator forms on input. Output always emits the canonical two-space
-  form. Vendors disagree on the spec; rejecting single-space would break
-  legitimate imports.
+- **2026-04-28 — RIS whitespace tolerance → SUPERSEDED by rispy decision.**
+  Original: accept both two-space and single-space separators. Superseded:
+  rispy is the parser; it handles the canonical two-space form. Single-space
+  (`XX - `) is not supported by rispy and not worth hand-rolling for.
+- **2026-04-28 — RIS parsing → DECIDED: rispy 0.10.** Don't hand-roll;
+  YAGNI. MIT-licensed, CeCILL-B compatible, mature, zero deps. `maiba.ris`
+  is a thin adapter: `rispy.load()` → `Item`, `Item` → `rispy.dump()`.
+  Custom `MaibaParser` subclass extends `DEFAULT_LIST_TAGS` to include L1
+  (rispy omits it; ArchiveCCS has multi-L1 records). Custom `MaibaWriter`
+  suppresses entry numbering. Adapter validates: binary files, missing TY
+  tags, TY-count vs parsed-count mismatch, entries with all-unknown fields.
 - **2026-04-28 — Retrospective tickets → SCOPED.** Same-session
   `created → claimed → status closed` is acceptable only for pre-flight
   scaffolding the user explicitly requests (precedent: ticket 0006). All
