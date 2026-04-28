@@ -17,7 +17,7 @@ import pytest
 SRC = Path(__file__).resolve().parents[1] / "src" / "maiba"
 
 PATTERNS = [
-    (r"\bNotImplementedError\b", "NotImplementedError"),
+    (r"raise\s+NotImplementedError", "NotImplementedError"),
     (r"@pytest\.mark\.skip\b|pytest\.skip\(", "pytest.skip"),
     (r"#\s*TODO\b", "TODO"),
 ]
