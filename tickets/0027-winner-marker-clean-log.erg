@@ -1,0 +1,66 @@
+%erg v1
+Title: Mark the winning candidate in DEBUG; suppress glyphs at -v; drop log newline
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T19:00Z claude created
+2026-04-28T19:00Z claude claimed
+2026-04-28T19:20Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+Three small UX issues from the user reading 0026's DEBUG output:
+
+1. **No winner marker.** The top-3 list shows raw scores but doesn't
+   say "this one was accepted as the fix". User has to compute it
+   from threshold knowledge.
+2. **Extra blank lines.** Ticket 0011 prepended `\n` to the log
+   format so messages didn't collide with the inline glyph stream.
+   At `-v`/`-vv` that produces a blank line above every log entry —
+   noise when the user is reading sequential log output.
+3. **Glyphs + logs interleave at -v/-vv.** Logs are richer per-record
+   than glyphs; emitting both adds noise.
+
+## Actions
+
+1. **Mark the winner in `_log_top_candidates`.** When a candidate
+   passes the score gate, decorate its line with `*` (matches the
+   existing glyph language: `*` = full fix). Records with no winner
+   show no `*` on any line.
+   ```
+     top1 raw=0.94 *  (2005, Annunziatellis +3)  'Allaying public concern…'
+     top2 raw=0.35    (2023, Sitinjak +2)        'Exploring Public Attitudes…'
+   ```
+
+2. **Drop the `\n` prefix** from the log format string in
+   `_logging.py`. Glyph-collision is solved differently (next item).
+
+3. **Suppress glyphs when verbosity >= 1.** In `cli._cmd_scan`,
+   compute `quiet = args.quiet or args.verbose > 0`. Logs at -v/-vv
+   provide richer per-record visibility; glyphs become redundant.
+   Default verbosity (no `-v`) keeps the current glyph stream.
+
+## Test (TDD red step)
+
+```python
+# tests/test_top_candidates_log.py — addition
+def test_winner_is_marked_with_asterisk(caplog):
+    # mock a search that produces an accepted candidate
+    # assert one and only one top line ends with '*'
+```
+
+## Exit criteria
+
+- `make test` green; new winner-marker test passes.
+- `make lint` green.
+- `uv run maiba scan -v …` emits no glyphs (logs only).
+- `uv run maiba scan -vv …` shows one `*` per accepted record.
+- `uv run maiba scan …` (default verbosity) emits glyphs as before.
+- No leading blank lines in log output.
+
+## Out of scope
+
+- Redesigning the entire scan UX. KISS — three small adjustments.

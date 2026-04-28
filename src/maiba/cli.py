@@ -137,11 +137,13 @@ def _cmd_scan(args: argparse.Namespace) -> int:
             output_tmp = Path(tmp.name)
         output = output_tmp
 
+    # Verbose mode replaces glyphs with richer per-record log lines.
+    quiet = args.quiet or args.verbose > 0
     report = run(
         input=input_path,
         output=output,
         cfg=cfg,
-        quiet=args.quiet,
+        quiet=quiet,
         use_cache=args.cache,
     )
 

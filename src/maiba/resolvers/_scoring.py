@@ -127,8 +127,17 @@ def _raw_confidence(input_item: Item, candidate: Item, cfg: Config) -> float:
     return title_sim * 0.7 + overlap * 0.3
 
 
-def _log_top_candidates(input_item: Item, ranked: list[tuple[Item, float]]) -> None:
-    """DEBUG-log the input record + top N candidates, one short line each."""
+def _log_top_candidates(
+    input_item: Item,
+    ranked: list[tuple[Item, float]],
+    winner_idx: int = -1,
+) -> None:
+    """DEBUG-log the input record + top N candidates, one short line each.
+
+    `winner_idx` is the index in `ranked` of the candidate accepted as
+    the fix (or -1 if no candidate was accepted). The winning line is
+    marked with `*` (matches the glyph language: `*` = full fix).
+    """
     if not log.isEnabledFor(logging.DEBUG):
         return
     log.debug(
@@ -138,10 +147,12 @@ def _log_top_candidates(input_item: Item, ranked: list[tuple[Item, float]]) -> N
         _truncate(input_item.TI),
     )
     for i, (cand, raw) in enumerate(ranked[:_TOP_N], 1):
+        marker = "*" if (i - 1) == winner_idx else " "
         log.debug(
-            "  top%d raw=%.2f  (%s, %s)  %s",
+            "  top%d raw=%.2f %s (%s, %s)  %s",
             i,
             raw,
+            marker,
             cand.PY if cand.PY is not None else "—",
             _first_lastname_display(list(cand.AU)),
             _truncate(cand.TI),
@@ -165,10 +176,15 @@ def select_best_candidate(
         key=lambda t: t[1],
         reverse=True,
     )
-    _log_top_candidates(input_item, ranked)
 
-    for cand, _ in ranked:
+    winner_idx = -1
+    winner: ResolutionResult | None = None
+    for i, (cand, _) in enumerate(ranked):
         accepted = score_candidate(input_item, cand, cfg)
         if accepted is not None:
-            return ResolutionResult(candidate=cand, confidence=accepted, source=source)
-    return None
+            winner_idx = i
+            winner = ResolutionResult(candidate=cand, confidence=accepted, source=source)
+            break
+
+    _log_top_candidates(input_item, ranked, winner_idx=winner_idx)
+    return winner
