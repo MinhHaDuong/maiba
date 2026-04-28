@@ -1,0 +1,146 @@
+%erg v1
+Title: Extract PDF embedded metadata (XMP / info dict) as a sibling to first-page text
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T14:45Z claude created
+
+--- body ---
+## Context
+
+Currently MAIBA reads the PDF's first-page **text** (ticket 0014,
+queued) but ignores the PDF's embedded **metadata** — the XMP packet
+and document info dict that publishers, Zotero, and PDF generators
+typically populate with Title, Author, Subject, Creator, etc.
+
+This is free signal we leave on the table:
+
+- **Cheap and structured** — `pdfinfo` / `pikepdf` returns key-value
+  in microseconds. No prose to parse, no LLM needed.
+- **Often complementary to text** — image-only scans have no
+  first-page text but may still carry XMP. Conversely, generic-
+  template PDFs have noisy metadata but clean first-page text.
+- **Cross-validation use** — if Crossref returns Title="X" and PDF
+  metadata says Title="Y" with low overlap, suspect wrong record
+  matched. Disagreement is a signal.
+- **TI/AU recovery without API** — for items missing TI on input,
+  reading the PDF metadata may fill it in directly, no resolver
+  call needed.
+
+Caveat: PDF metadata lies often. Stale draft titles, generic Creator
+strings ("Adobe PDF Library 11.0"), missing entirely. It's a signal,
+not gospel — same trust posture as filename.
+
+## Actions
+
+1. **Add dep** to `pyproject.toml`: `pikepdf` (more reliable XMP
+   access than shelling out to `pdfinfo`; pure-Python; reads info
+   dict and XMP packet uniformly).
+
+2. **`src/maiba/pdf.py`** (extending the module from ticket 0014):
+   ```python
+   def extract_pdf_metadata(item: Item, cfg: Config) -> dict[str, str] | None:
+       """Return the PDF's embedded metadata dict, or None if Item has
+       no L1 / file missing.
+
+       Keys normalized to a small known set:
+         title, author, subject, keywords, creator, producer,
+         creation_date, mod_date, language
+
+       Raises PdfMetadataError on corruption (parallel to PdfExtractionError).
+       """
+   ```
+
+3. **Pipeline integration — pre-API gap-filling for missing TI:**
+   ```python
+   # in detect.py or a small new pre-resolver step
+   if item.TI is None:
+       meta = extract_pdf_metadata(item, cfg)
+       if meta and meta.get("title"):
+           item = item.copy(update={"TI": meta["title"]})
+           # provenance: maiba:autofixed:DATE source=pdf-metadata
+   ```
+   This recovers TI from XMP before any resolver call. Free hits.
+
+4. **Ticket 0015 (LLM resolver) integration:** when 0015 lands and
+   resumes, feed `metadata` alongside `first_page_text` and partial
+   item into the LLM prompt. Strictly more context, lower
+   hallucination risk.
+
+5. **Cross-check (later, optional):** add an adherence-style sanity
+   check — when Crossref/OpenAlex returns a candidate, compare its
+   title against the PDF metadata title. Large divergence (rapidfuzz
+   < 0.5) flags the match for review-queue routing rather than
+   auto-apply. Out of scope for this ticket; noted for future.
+
+## Test (TDD red step)
+
+```python
+# tests/test_pdf_metadata.py
+import pytest
+from pathlib import Path
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.pdf import extract_pdf_metadata, PdfMetadataError
+
+CFG = load_config(Path("config/maiba.yaml"))
+F = Path("tests/fixtures")
+
+
+def test_extract_metadata_from_pdf_with_xmp():
+    """A PDF with publisher-set Title/Author returns those values."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-with-xmp.pdf"])
+    meta = extract_pdf_metadata(item, CFG)
+    assert meta is not None
+    assert meta.get("title") and meta.get("author")
+
+
+def test_no_l1_returns_none():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020, L1=[])
+    assert extract_pdf_metadata(item, CFG) is None
+
+
+def test_pdf_with_no_metadata_returns_empty_dict():
+    """A PDF with no XMP and empty info dict returns {}, not None."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-no-metadata.pdf"])
+    assert extract_pdf_metadata(item, CFG) == {}
+
+
+def test_corrupted_pdf_raises():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-broken.pdf"])
+    with pytest.raises(PdfMetadataError):
+        extract_pdf_metadata(item, CFG)
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- Smoke run on a sample of `tests/fixtures/ArchiveCCS-cleaned/files/`:
+  count records where PDF metadata title/author exists. Eyeball the
+  values for plausibility. Report the percentage.
+- Pre-resolver TI recovery wired: items missing TI on input get
+  filled from XMP when XMP has a non-empty title. Provenance line
+  records `source=pdf-metadata`.
+- No hardcoded paths or binary names in `src/maiba/pdf.py`.
+
+## Out of scope
+
+- **XMP namespace canonicalization.** Different publishers use
+  different XMP namespaces (Dublin Core, Adobe extensions, custom).
+  Normalize only what's needed today; leave the rest as raw values.
+- **Author-list parsing.** XMP author field is often a single string
+  ("Smith, J., Jones, K., Brown, L.") — splitting it back into a
+  list is its own ticket. Today, return the raw string and let the
+  caller decide.
+- **Cross-check vs. resolver candidates.** Mentioned in Actions §5;
+  separate ticket once basic extraction lands.
+- **Writing metadata back to PDFs.** MAIBA is read-only on PDFs. If
+  the user wants to push fixes back into PDF XMP, separate ticket
+  (and probably out of scope entirely — Zotero handles attachment
+  metadata).
