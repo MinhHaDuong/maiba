@@ -12,10 +12,12 @@ provenance lines so the changes are auditable.
 Two design questions still need to be settled before code (`ARCHITECTURE.md` §2),
 but the answers are constrained by "MVP, no overengineering."
 
-## Status: SCAFFOLD ONLY
+## Status: MVP COMPLETE
 
-Project initialized 2026-04-28. Repository structure, conventions, ticket
-system, Makefile, and `pyproject.toml` are in place. No `src/maiba/*.py` yet.
+All five MVP tickets (0001–0005) implemented and tested. 29/29 tests pass.
+The CLI runs end-to-end: `uv run maiba scan FILE.ris --apply -o OUT.ris`
+detects gaps, resolves via OpenAlex then Crossref, and writes back with
+`maiba:autofixed:` provenance lines.
 
 ## Constraints (user, 2026-04-28)
 

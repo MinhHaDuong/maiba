@@ -24,10 +24,8 @@ dev = [
     "respx>=0.21",
 ]
 
-# Placeholder script registration. The implementation does not exist yet —
-# uncomment and wire when the CLI shape is decided in ARCHITECTURE.md §2.1.
-# [project.scripts]
-# maiba = "maiba.cli:main"
+[project.scripts]
+maiba = "maiba.cli:main"
 
 [build-system]
 requires = ["hatchling"]

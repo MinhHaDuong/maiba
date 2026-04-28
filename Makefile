@@ -10,7 +10,7 @@ UV     ?= uv
 UV_RUN ?= $(UV) run
 export PATH := $(HOME)/.local/bin:$(PATH)
 
-.PHONY: help setup setup-hooks sync test lint format check clean
+.PHONY: help setup setup-hooks sync test lint format check clean scan
 
 help:
 	@echo "MAIBA — My AI Bibliography Assistant"
@@ -56,3 +56,7 @@ check: lint test
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache build dist *.egg-info
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+# scan an RIS file. Usage: make scan INPUT=path/to/file.ris [OUTPUT=path] [APPLY=1]
+scan:
+	$(UV_RUN) maiba scan $(INPUT) $(if $(OUTPUT),-o $(OUTPUT),) $(if $(APPLY),--apply,)
