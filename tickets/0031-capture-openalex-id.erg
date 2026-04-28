@@ -1,0 +1,137 @@
+%erg v1
+Title: Capture OpenAlex Work IDs (W…) on the Item model
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T15:34Z claude created
+
+--- body ---
+## Context
+
+When `OpenAlexResolver` returns a candidate, the response carries an
+OpenAlex Work ID like `https://openalex.org/W2117548367`. The ID is:
+
+- **Stable.** OpenAlex documents IDs as permanent. Unlike DOIs,
+  which can change registrar or move, OAIDs rarely break.
+- **A free pivot.** Knowing the OAID lets future MAIBA features
+  query OpenAlex for citations, related works, full record updates,
+  etc., without re-doing the title search.
+- **Useful even for items with no DOI.** Many grey-lit reports
+  appear in OpenAlex with an OAID but no DOI. Today we drop the
+  OAID, then can't get back to the OpenAlex record cheaply.
+
+The Item model has no field for it. We capture nothing. This ticket
+adds the slot and the wiring.
+
+## Actions
+
+1. **`src/maiba/model.py`** — add an optional `OAID` field to `Item`:
+   ```python
+   class Item(BaseModel):
+       ...
+       OAID: str | None = Field(default=None, description="OpenAlex Work ID, e.g. W2117548367")
+   ```
+   Add `OAID` to `Item.mergeable_fields()` per ticket 0029, so the
+   merge step writes it when present.
+
+2. **`src/maiba/resolvers/openalex.py:_work_to_item`** — extract the
+   OAID from `work["id"]`:
+   ```python
+   oa_url = work.get("id", "")  # "https://openalex.org/W2117548367"
+   oaid = oa_url.rsplit("/", 1)[-1] if "openalex.org/" in oa_url else None
+   ```
+   Pass through to the constructed `Item`.
+
+3. **`src/maiba/ris.py`** — RIS has no standard tag for OpenAlex IDs.
+   Two write options:
+   - **Option A (recommended): use `M1` field.** RIS reserves `M1`-`M3`
+     for "Miscellaneous 1-3" — meant for arbitrary identifiers.
+     Standard RIS readers (Zotero) preserve unknown M-fields.
+     Write `M1  - <OAID>`.
+   - Option B: encode in `N1` provenance line:
+     `maiba:openalex:W2117548367`. Less structured but no schema
+     extension.
+
+   Pick A. It's the standard answer for "I have a non-DOI identifier
+   to attach to a citation."
+
+4. **Reading**: parse `M1` back into `Item.OAID` on RIS read so the
+   roundtrip is stable.
+
+5. **Tests**: extend `test_ris_roundtrip.py` to cover OAID write/read.
+   Extend `test_resolve_openalex.py` to assert OAID is captured from
+   real fixture responses (those JSON files already have `id` fields).
+
+## Test (TDD red step)
+
+```python
+# tests/test_oaid.py
+from pathlib import Path
+import json
+import respx
+from httpx import Response
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.openalex import OpenAlexResolver
+from maiba.ris import read_ris, write_ris
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+@respx.mock
+def test_openalex_resolver_captures_OAID():
+    """Real fixture response carries 'id' = OpenAlex URL; resolver populates Item.OAID."""
+    fixture = json.loads(
+        Path("tests/fixtures/responses/openalex/ashworth-2009-doi.json").read_text()
+    )
+    respx.get(url__startswith="https://api.openalex.org/").mock(
+        return_value=Response(200, json=fixture)
+    )
+    resolver = OpenAlexResolver(CFG)
+    item = Item(TY="JOUR", TI="x", AU=[], PY=2009, DO="10.1016/j.egypro.2009.02.302")
+    result = resolver.resolve(item)
+    assert result.candidate.OAID and result.candidate.OAID.startswith("W")
+
+
+def test_oaid_roundtrips_via_M1(tmp_path):
+    """Item with OAID writes to RIS as M1 and reads back identical."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                OAID="W2117548367")
+    path = tmp_path / "out.ris"
+    write_ris([item], path)
+    text = path.read_text()
+    assert "M1  - W2117548367" in text
+    [item2] = list(read_ris(path))
+    assert item2.OAID == "W2117548367"
+
+
+def test_existing_M1_preserved_on_roundtrip():
+    """An RIS with M1 already populated must not be clobbered."""
+    # ... write M1=foo, read, assert OAID==foo
+    ...
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- After re-run on `ArchiveCCS.ris`: items resolved via OpenAlex have
+  an `M1  - W…` line in the output RIS. Eyeball a few and verify the
+  OAID URL `https://openalex.org/<value>` opens the correct record.
+- ground-truth diff vs `ArchiveCCS-cleaned.ris`: M1 fields don't
+  introduce false-positive deltas (they're additive — Zotero export
+  may or may not have them).
+
+## Out of scope
+
+- Crossref. Crossref doesn't have its own work IDs distinct from
+  DOIs — DOI is the identifier. So no symmetric capture needed for
+  CrossrefResolver.
+- Other identifiers (Semantic Scholar `corpus_id`, arXiv ID, PMID).
+  When MAIBA grows new resolvers, each gets its own ticket. Today
+  we only return OpenAlex and Crossref candidates.
+- Pivoting via OAID (fetching citations, related works). Capture is
+  the prerequisite. The pivot features come later, when there's a
+  clear use case.
