@@ -1,0 +1,144 @@
+%erg v1
+Title: Progress bar and HTTP response cache for the resolver loop
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T08:10Z claude created
+
+--- body ---
+## Context
+
+User-observed pain point on 2026-04-28: a live `uv run maiba scan
+tests/fixtures/ArchiveCCS.ris` (no `--apply`, dry-run) takes ~2–4 minutes
+on the 223-record corpus. Two reasons:
+
+1. **No progress feedback.** The CLI prints nothing until the entire scan
+   finishes. The user has no signal that work is happening or how far
+   along it is.
+2. **No HTTP cache.** Every invocation re-hits OpenAlex and Crossref for
+   every record with a gap. Re-runs (which are common when iterating on
+   gap rules or thresholds) pay full network cost every time.
+
+ARCHITECTURE.md §2.3 explicitly anticipates this:
+> Add HTTP response cache only when a run takes more than ~30 seconds
+> end-to-end on `ArchiveCCS.ris`.
+
+That threshold has been crossed. Time to add the cache. The architecture
+also requires the cache be safe to `rm -rf` without breaking correctness.
+
+## Actions
+
+### Progress (pytest-style, one char per record)
+No new dep. Per record, print one character to `sys.stderr` (flushed),
+followed by a newline at the end.
+
+| Char | Meaning |
+|------|---------|
+| `.`  | Skipped — record had no gaps |
+| `0`  | Not fixed — resolver returned None or confidence below `apply_threshold` |
+| `*`  | Fully fixed — every detected gap filled by the resolver |
+| `+`  | Partially fixed — at least one gap filled, at least one still open |
+
+1. In `src/maiba/pipeline.py`, after the per-record decision in `run()`,
+   call `_emit_progress(char)` which writes to `sys.stderr` and flushes.
+2. After the loop, write `"\n"` to stderr so the next CLI line starts clean.
+3. Suppress when `sys.stderr` is not a TTY (so logs and CI stay clean):
+   `if not sys.stderr.isatty(): return`.
+4. Add a `--quiet` flag to `maiba scan` that suppresses the progress glyphs
+   even on a TTY. (For when stdout is redirected but stderr stays open.)
+
+### HTTP cache (deletable, zero-state-compatible)
+3. Add `hishel>=0.0.30` to runtime deps. (HTTP-spec-compliant cache for
+   httpx; respects upstream `Cache-Control` headers; handles ETags.)
+4. In `src/maiba/resolvers/openalex.py` and `crossref.py`, replace
+   `httpx.Client(...)` with `hishel.CacheClient(...)` configured with a
+   filesystem storage backend at a path from `Config`.
+5. Extend `config/maiba.yaml` `http` section:
+   ```yaml
+   http:
+     timeout_s: 10
+     ...
+     cache_dir: ~/.cache/maiba/http     # safe to rm -rf
+     cache_ttl_s: 2592000               # 30 days; resolver responses are stable
+   ```
+6. Extend `Config.HttpConfig` model in `src/maiba/config.py` to include
+   `cache_dir: str` and `cache_ttl_s: int`.
+7. Expand `~` and create the cache dir on first use.
+
+### CLI flags
+8. Add `--no-cache` to `maiba scan`. When set, bypass cache (still
+   makes network calls but doesn't read or write the store). For
+   debugging fresh upstream responses.
+9. Add `--clear-cache` as a separate verb: `maiba clear-cache` removes
+   `cache_dir`. (Pure convenience; equivalent to `rm -rf <cache_dir>`.)
+
+## Test (TDD red step)
+
+```python
+# tests/test_cache.py
+import respx
+from httpx import Response
+from pathlib import Path
+from maiba.config import load_config
+from maiba.resolvers.openalex import OpenAlexResolver
+from maiba.model import Item
+
+@respx.mock
+def test_resolver_uses_cache_on_second_call(tmp_path):
+    cfg = load_config("config/maiba.yaml")
+    cfg.http.cache_dir = str(tmp_path / "cache")
+
+    route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
+        return_value=Response(200, json={
+            "title": "X", "publication_year": 2020, "authorships": [],
+            "doi": "https://doi.org/10.1/x"
+        })
+    )
+    resolver = OpenAlexResolver(cfg)
+    item = Item(TY="JOUR", TI="X", DO="10.1/x")
+
+    resolver.resolve(item)
+    resolver.resolve(item)
+
+    assert route.call_count == 1, "second call should be served from cache"
+```
+
+```python
+# tests/test_progress.py
+import sys
+import respx
+from pathlib import Path
+from maiba.pipeline import run
+from maiba.config import load_config
+
+@respx.mock
+def test_progress_glyph_per_record(monkeypatch, tmp_path, capsys):
+    """One char per record, in order, on stderr; ends with newline."""
+    monkeypatch.setattr(sys.stderr, "isatty", lambda: True)
+    cfg = load_config("config/maiba.yaml")
+    # Use a small fixture for determinism — good.ris (3 records).
+    run(input=Path("tests/fixtures/good.ris"), output=tmp_path / "out.ris",
+        cfg=cfg, apply=False)
+    err = capsys.readouterr().err
+    glyphs = err.rstrip("\n")
+    assert len(glyphs) == 3
+    assert all(c in ".0*+" for c in glyphs)
+    assert err.endswith("\n")
+```
+
+A second integration test re-runs the existing
+`test_end_to_end_on_archiveccs_subset` with cache enabled and asserts
+the second run makes zero network calls.
+
+## Exit criteria
+
+- `make test` green: cache test confirms second call hits cache, not network.
+- `uv run maiba scan tests/fixtures/ArchiveCCS.ris` (live, dry-run) prints
+  one glyph per record on stderr (`.`, `0`, `*`, `+`), ending with newline.
+- Re-running the same command immediately is at least 5× faster (cache hit).
+- `rm -rf ~/.cache/maiba/http` between runs restores full network behavior
+  without breaking correctness.
+- `--no-cache` flag bypasses the cache.
+- ARCHITECTURE.md §9 gets an entry: "2026-04-28 — HTTP cache added (hishel)".
