@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import logging
+import os
 import shutil
 import sys
 import tempfile
@@ -13,6 +15,23 @@ from dotenv import find_dotenv, load_dotenv
 from maiba._logging import configure as configure_logging
 from maiba.config import load_config
 from maiba.pipeline import run
+
+log = logging.getLogger("maiba.cli")
+
+
+def _log_auth_status() -> None:
+    """Tell the user whether OPENALEX_API_KEY was found.
+
+    INFO when set (visible at -v); WARNING when not (visible at default
+    verbosity so the user knows why a long run hit rate-limit).
+    """
+    key = os.environ.get("OPENALEX_API_KEY", "").strip()
+    if key:
+        log.info("OpenAlex auth: detected (key length=%d)", len(key))
+    else:
+        log.warning(
+            "OpenAlex auth: OPENALEX_API_KEY not set — using $0 free tier (expect rate limits)"
+        )
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -104,6 +123,7 @@ def _resolve_input(args: argparse.Namespace) -> tuple[Path, Path | None]:
 
 def _cmd_scan(args: argparse.Namespace) -> int:
     """Execute the `scan` subcommand."""
+    _log_auth_status()
     cfg = load_config(args.config)
     input_path, input_tmp = _resolve_input(args)
 
