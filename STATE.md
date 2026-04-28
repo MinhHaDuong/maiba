@@ -30,33 +30,34 @@ system, Makefile, and `pyproject.toml` are in place. No `src/maiba/*.py` yet.
 - **LLM:** opt-in only, via OpenRouter (cloud) or padme local runtime. Default
   path is API-only and free.
 
-## Open decisions (see ARCHITECTURE.md §2)
+## Decisions locked (2026-04-28)
 
-1. **UI shape** — recommendation: CLI only for MVP. Awaiting confirmation.
-2. **Abstraction depth** — recommendation: Level 1 (two protocols, one impl each).
-   Awaiting confirmation.
-3. **State persistence** — recommendation: zero state for MVP. RIS in → RIS out.
-   No database, no run log, no resume file. Each run is a pure function of the
-   input file plus the current state of the web. Awaiting confirmation.
-4. **Library backend for MVP** — RIS file roundtrip (not the Zotero SQLite).
-   Reasoning: `ArchiveCCS.ris` already exists and is the unit of work; SQLite
-   write-back means worrying about Zotero being open, schema versions, attachments.
-   Defer SQLite until v1.
+All four open decisions confirmed by user. See `ARCHITECTURE.md` §8 for the log.
+
+- UI: pure CLI for MVP
+- Abstraction: Level 1 — two `Protocol`s, one implementation each
+- State: zero — RIS in / RIS out, no cache, no DB
+- Backend: RIS file roundtrip; Zotero SQLite/Web-API deferred
 
 ## Next actions (in order)
 
-1. Confirm the four open decisions with the user (5-min conversation).
-2. Open `tickets/0001-load-ris.erg` — read RIS, expose `Iterator[Item]`.
-3. Open `tickets/0002-detect-gaps.erg` — classify each item by what's missing.
-4. Open `tickets/0003-resolve-openalex.erg` — query OpenAlex for one item; merge.
-5. Open `tickets/0004-resolve-crossref.erg` — same for Crossref; rank candidates.
-6. Open `tickets/0005-write-ris.erg` — emit corrected RIS with provenance lines.
-7. End-to-end smoke test: run on `ArchiveCCS.ris`, eyeball the diff.
-8. Pick a license (MIT or Apache-2.0); commit `LICENSE`.
+1. Pick a license (MIT or Apache-2.0); commit `LICENSE`.
+2. Work tickets `0001` → `0005` in dependency order via TDD.
+3. End-to-end smoke test: `make scan INPUT=…/ArchiveCCS.ris`, eyeball the diff.
+
+## Tickets
+
+| ID | Title | Depends on |
+|----|-------|------------|
+| 0001 | RIS roundtrip + data model + config loader | — |
+| 0002 | Detect gaps | 0001 |
+| 0003 | Resolve via OpenAlex | 0001 |
+| 0004 | Resolve via Crossref | 0001 |
+| 0005 | CLI pipeline + integration test on ArchiveCCS.ris | 0001, 0002, 0003, 0004 |
 
 ## Blockers
 
-The four open decisions in `ARCHITECTURE.md` §2.
+None. Code generation unblocked.
 
 ## Background
 

@@ -1,0 +1,88 @@
+%erg v1
+Title: Resolve item metadata via OpenAlex
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0001
+
+--- log ---
+2026-04-28T08:32Z claude created
+
+--- body ---
+## Context
+
+Implement the `MetadataResolver` protocol against the OpenAlex Works API.
+Mirrors the polite-pool style from
+`Climate Finance/scripts/catalog_openalex.py` and `utils.polite_get`:
+
+- User-Agent header includes `mailto:` from `config.contact.mailto`.
+- Honors `config.http.timeout_s`, `max_retries`, `backoff_s`, `rate_limit_per_s`.
+- Returns the top candidate that scores ≥ `config.matching.title_similarity_min`
+  AND `config.matching.author_overlap_min`, or `None` if no candidate qualifies.
+
+Search strategy:
+
+- If the input `Item` has a DOI: fetch `/works/doi:<DOI>` directly.
+- Else: search `/works?search=<title>&filter=...` with the year as a filter.
+- Score each candidate by `rapidfuzz.fuzz.token_sort_ratio` on title plus
+  fraction of input authors found in the candidate's authorship list.
+
+## Actions
+
+1. Add deps: `httpx`, `rapidfuzz`.
+2. `src/maiba/resolvers/openalex.py` — implement `MetadataResolver`:
+   ```python
+   class OpenAlexResolver:
+       def __init__(self, cfg: Config): ...
+       def resolve(self, item: Item) -> ResolutionResult | None: ...
+   ```
+3. `src/maiba/resolvers/__init__.py` — define the `MetadataResolver` Protocol
+   and the `ResolutionResult` dataclass (candidate `Item` + confidence float +
+   source string).
+4. `tests/test_resolve_openalex.py` — see Test. Use `respx` to mock HTTP.
+
+## Test (TDD red step)
+
+```python
+# tests/test_resolve_openalex.py
+import respx
+from httpx import Response
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.openalex import OpenAlexResolver
+
+CFG = load_config("config/maiba.yaml")
+
+@respx.mock
+def test_resolve_by_doi_returns_full_record():
+    respx.get("https://api.openalex.org/works/doi:10.1016/j.egypro.2009.02.302").mock(
+        return_value=Response(200, json={
+            "id": "https://openalex.org/W123",
+            "doi": "https://doi.org/10.1016/j.egypro.2009.02.302",
+            "title": "Engaging the public on CCS: a large group process",
+            "publication_year": 2009,
+            "authorships": [
+                {"author": {"display_name": "Peta Ashworth"}},
+                {"author": {"display_name": "Simone Carr-Cornish"}},
+            ],
+            "host_venue": {"display_name": "Energy Procedia"},
+        })
+    )
+    resolver = OpenAlexResolver(CFG)
+    item = Item(TY="JOUR", TI="Engaging the public on CCS",
+                AU=["Ashworth, P.", "et al."], PY=2009,
+                DO="10.1016/j.egypro.2009.02.302")
+    result = resolver.resolve(item)
+    assert result is not None
+    assert result.candidate.JO == "Energy Procedia"
+    assert "Carr-Cornish" in " ".join(result.candidate.AU)
+    assert result.source == "openalex"
+    assert 0.0 <= result.confidence <= 1.0
+```
+
+## Exit criteria
+
+- `make test` green; `respx` mocks every HTTP call (no real network in tests).
+- All thresholds and endpoints come from `Config`.
+- Smoke run on one DOI from `ArchiveCCS.ris` returns plausible candidate
+  (manual eyeball, not asserted).

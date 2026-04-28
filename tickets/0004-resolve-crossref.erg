@@ -1,0 +1,79 @@
+%erg v1
+Title: Resolve item metadata via Crossref
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0001
+
+--- log ---
+2026-04-28T08:33Z claude created
+
+--- body ---
+## Context
+
+Second `MetadataResolver` implementation, against the Crossref REST API. Same
+interface as the OpenAlex resolver (ticket 0003). Used as a fallback when
+OpenAlex returns no candidate above the threshold.
+
+- User-Agent includes `mailto:` from `config.contact.mailto` (Crossref polite pool).
+- Honors `config.http.*` timeouts, retries, backoff, rate limit.
+- Search strategy: if input has DOI → `GET /works/<doi>`; else
+  `GET /works?query.title=<title>&query.author=<first-author>&rows=5`,
+  filtered by year ± 1.
+- Same scoring (`rapidfuzz` title + author overlap) and same
+  `config.matching.*` thresholds as OpenAlex.
+
+## Actions
+
+1. `src/maiba/resolvers/crossref.py` — `CrossrefResolver` implementing
+   `MetadataResolver`.
+2. Map Crossref's response shape (`message.title[0]`, `message.author[*].family`,
+   `message.container-title[0]`, `message.published-print.date-parts`, etc.)
+   to `Item`.
+3. `tests/test_resolve_crossref.py` — see Test. `respx` mocks all HTTP.
+
+## Test (TDD red step)
+
+```python
+# tests/test_resolve_crossref.py
+import respx
+from httpx import Response
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.crossref import CrossrefResolver
+
+CFG = load_config("config/maiba.yaml")
+
+@respx.mock
+def test_resolve_by_doi_returns_full_record():
+    respx.get("https://api.crossref.org/works/10.1016/j.egypro.2009.02.302").mock(
+        return_value=Response(200, json={"message": {
+            "DOI": "10.1016/j.egypro.2009.02.302",
+            "title": ["Engaging the public on CCS: a large group process"],
+            "author": [
+                {"given": "Peta", "family": "Ashworth"},
+                {"given": "Simone", "family": "Carr-Cornish"},
+            ],
+            "container-title": ["Energy Procedia"],
+            "published-print": {"date-parts": [[2009]]},
+            "volume": "1", "page": "4765-4773",
+        }})
+    )
+    resolver = CrossrefResolver(CFG)
+    item = Item(TY="JOUR", TI="Engaging the public on CCS",
+                AU=["Ashworth, P.", "et al."], PY=2009,
+                DO="10.1016/j.egypro.2009.02.302")
+    result = resolver.resolve(item)
+    assert result is not None
+    assert result.candidate.JO == "Energy Procedia"
+    assert result.candidate.VL == "1"
+    assert result.candidate.SP == "4765" and result.candidate.EP == "4773"
+    assert "Carr-Cornish" in " ".join(result.candidate.AU)
+    assert result.source == "crossref"
+```
+
+## Exit criteria
+
+- `make test` green; no real HTTP in tests.
+- Endpoint and headers configurable via `Config`.
+- Same `MetadataResolver` shape as ticket 0003 — interchangeable in the pipeline.

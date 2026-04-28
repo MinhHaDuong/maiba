@@ -1,0 +1,102 @@
+%erg v1
+Title: CLI pipeline + integration test on ArchiveCCS.ris
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0001
+Blocked-by: 0002
+Blocked-by: 0003
+Blocked-by: 0004
+
+--- log ---
+2026-04-28T08:34Z claude created
+
+--- body ---
+## Context
+
+The MVP glue: a single CLI command that reads an RIS file, fixes incomplete
+records via the resolver chain, and writes a corrected RIS with provenance
+notes. This is the integration ticket; nothing here is novel logic, just
+wiring the four foundation tickets together.
+
+User-facing shape (subject to argparse details):
+
+```
+uv run maiba scan INPUT.ris [-o OUTPUT.ris] [--config config/maiba.yaml]
+                            [--apply] [--llm-fallback]
+                            [--report report.md]
+```
+
+- Default (no `--apply`): dry-run. Prints the fix plan to stdout. No file written.
+- `--apply`: writes corrected RIS to `OUTPUT.ris` (or `INPUT.fixed.ris` if `-o` omitted).
+- Each modified item gains an `N1` line of the form
+  `maiba:autofixed:2026-04-28 source=openalex confidence=0.93`
+  and `N1` lines preserving prior values of changed fields:
+  `maiba:before AU=["Ashworth, P.", "et al."]`.
+- `--llm-fallback` is parsed but raises `NotImplementedError` for MVP.
+
+## Actions
+
+1. `src/maiba/pipeline.py` — `run(input, output, cfg, apply: bool) -> Report`.
+   Iterate items → detect gaps → for each gap, try resolvers in
+   `cfg.resolvers.order` until one returns a result above
+   `cfg.matching.apply_threshold` → merge into the item, recording provenance.
+2. `src/maiba/cli.py` — argparse entry point, calls `pipeline.run`.
+3. Wire `[project.scripts] maiba = "maiba.cli:main"` in `pyproject.toml`.
+4. Add `make scan INPUT=... OUTPUT=...` target.
+5. `tests/test_pipeline_integration.py` — see Test.
+
+## Test (TDD red step)
+
+The integration test runs the full pipeline on `tests/fixtures/ArchiveCCS.ris`
+with all HTTP calls mocked via `respx`. Mock returns are recorded fixtures of
+real OpenAlex / Crossref responses for a handful of items in the file (e.g.,
+the Ashworth.ea-2009 DOI) — generate them once, commit them under
+`tests/fixtures/responses/`, and replay deterministically.
+
+```python
+# tests/test_pipeline_integration.py
+import respx
+from httpx import Response
+import json
+from pathlib import Path
+from maiba.pipeline import run
+from maiba.config import load_config
+
+FIXTURE = Path("tests/fixtures/ArchiveCCS.ris")
+RESPONSES = Path("tests/fixtures/responses")
+
+@respx.mock
+def test_end_to_end_on_archiveccs_subset(tmp_path):
+    # Replay every recorded HTTP response, default-deny anything unrecorded.
+    for f in RESPONSES.glob("*.json"):
+        rec = json.loads(f.read_text())
+        respx.get(rec["url"]).mock(return_value=Response(200, json=rec["body"]))
+
+    out = tmp_path / "out.ris"
+    cfg = load_config("config/maiba.yaml")
+    report = run(input=FIXTURE, output=out, cfg=cfg, apply=True)
+
+    assert report.scanned == 223
+    assert report.fixed >= 1
+    text = out.read_text(encoding="utf-8")
+    assert "maiba:autofixed:" in text
+    assert "maiba:before" in text
+
+    # Spot check: Ashworth-2009 record gained Carr-Cornish as second author.
+    assert "Carr-Cornish" in text
+```
+
+A small helper script `scripts/record_fixture_responses.py` (also in this
+ticket) populates `tests/fixtures/responses/` by hitting the live APIs once,
+so the test stays offline-runnable forever after.
+
+## Exit criteria
+
+- `make test` green; integration test mocks all HTTP.
+- `uv run maiba scan /home/haduong/CNRS/html/ArchiveCCS/ArchiveCCS.ris -o /tmp/out.ris --apply`
+  runs end to end without raising. (Smoke check, eyeball the diff.)
+- `make scan INPUT=/home/haduong/CNRS/html/ArchiveCCS/ArchiveCCS.ris` works.
+- The diff between input and output includes `maiba:autofixed:` provenance
+  lines on every modified record.
+- Update `STATE.md` to reflect MVP-complete status.

@@ -1,0 +1,78 @@
+%erg v1
+Title: RIS roundtrip, Item data model, and config loader
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T08:30Z claude created
+
+--- body ---
+## Context
+
+Foundation ticket for the MVP. Everything else depends on this. Three things land
+together because they are too small to split and too coupled to merge separately:
+
+1. **`Item` pydantic model** — the in-memory representation of one bibliographic
+   record. Fields drawn from the RIS tags actually used in `ArchiveCCS.ris`
+   (TY, TI, AU, PY, JO, VL, IS, SP, EP, DO, UR, LA, KW, N1, L1, L2, ER).
+2. **RIS reader / writer** — parse a `.ris` file into `Iterator[Item]`, and
+   emit `Iterable[Item]` back to a `.ris` file. Roundtrip-stable on the entries
+   that matter (no field shuffle, no quoting drift).
+3. **Config loader** — read `config/maiba.yaml` into a typed `Config` model
+   (pydantic). Per ARCHITECTURE.md §0: no hardcoded constants in code.
+
+`config/maiba.yaml` ships with the ticket. Use the sketch in ARCHITECTURE.md §7.
+
+## Actions
+
+1. Add deps to `pyproject.toml`: `pydantic>=2`, `pyyaml`, plus `pytest` in dev.
+2. `src/maiba/model.py` — `Item` and `Config` pydantic models.
+3. `src/maiba/config.py` — `load_config(path: Path) -> Config`.
+4. `src/maiba/ris.py` — `read_ris(path: Path) -> Iterator[Item]` and
+   `write_ris(items: Iterable[Item], path: Path) -> None`.
+5. `config/maiba.yaml` — committed default; reads cleanly.
+6. `tests/test_ris_roundtrip.py` — see Test below.
+7. `tests/test_config.py` — load `config/maiba.yaml`, assert required fields.
+8. Wire `make test` to pass.
+
+## Test (TDD red step)
+
+```python
+# tests/test_ris_roundtrip.py
+from pathlib import Path
+from maiba.ris import read_ris, write_ris
+
+FIXTURE = Path("tests/fixtures/ArchiveCCS.ris")
+
+def test_archiveccs_parses_to_223_items():
+    items = list(read_ris(FIXTURE))
+    assert len(items) == 223
+
+def test_archiveccs_roundtrip_is_stable(tmp_path):
+    items = list(read_ris(FIXTURE))
+    out = tmp_path / "out.ris"
+    write_ris(items, out)
+    items2 = list(read_ris(out))
+    assert items == items2  # pydantic equality on the parsed model
+
+def test_known_record_has_expected_fields():
+    items = {it.id: it for it in read_ris(FIXTURE) if it.id}
+    # Ashworth.ea-2009-EngagingThePublic... has a DOI on page 1
+    ash = next(it for it in items.values()
+               if it.DO == "10.1016/j.egypro.2009.02.302")
+    assert ash.TY == "JOUR"
+    assert ash.JO == "Energy Procedia"
+    assert "Ashworth" in " ".join(ash.AU)
+```
+
+`tests/fixtures/ArchiveCCS.ris` is the 223-entry RIS produced by the
+2026-04-27 indexing exercise. It is the canonical fixture for every layer
+of MAIBA — the same file flows through unit, integration, and smoke tests.
+
+## Exit criteria
+
+- `make test` green (asserts 223 parsed items + roundtrip stability).
+- `make lint` green.
+- `uv run python -c "from maiba.config import load_config; load_config('config/maiba.yaml')"` works.
+- No hardcoded API URLs, mailto, or thresholds anywhere in `src/maiba/`.

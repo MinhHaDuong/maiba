@@ -306,7 +306,21 @@ provenance:
 
 ## 8. Decisions log
 
-- _(empty — populate after each design conversation)_
+- **2026-04-28 — UI shape (§2.1) → DECIDED: A.** Pure CLI for MVP. No TUI, no
+  web UI. One verb per command, machine-readable output where useful.
+- **2026-04-28 — Abstraction depth (§2.2) → DECIDED: Level 1.** Two Python
+  `Protocol`s — `LibraryBackend` and `MetadataResolver` — with one
+  implementation each. No entry-points, no plugin registry, no event bus.
+  Add a second implementation only when a real second case shows up.
+- **2026-04-28 — State persistence (§2.3) → DECIDED: zero state.** RIS in →
+  RIS out. No DB, no run log, no resume file. If runtime grows past ~30 s
+  on `ArchiveCCS.ris`, add an HTTP response cache that is safe to delete.
+- **2026-04-28 — Library backend for MVP (§2.4) → DECIDED: A.** RIS file
+  roundtrip. Zotero SQLite/Web-API write-back deferred until post-MVP.
+- **2026-04-28 — Resolver order → DECIDED:** OpenAlex first, then Crossref.
+  Configurable in `config/maiba.yaml` (`resolvers.order`).
+- **2026-04-28 — LLM fallback → DECIDED:** opt-in only via `--llm-fallback`,
+  off by default. OpenRouter for cloud, padme HTTP for local. Disabled in MVP.
 
 ## 9. Glossary
 

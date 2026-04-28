@@ -1,0 +1,64 @@
+%erg v1
+Title: Detect gaps in bibliographic items
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0001
+
+--- log ---
+2026-04-28T08:31Z claude created
+
+--- body ---
+## Context
+
+For each `Item`, classify what's missing. The MVP definition lives in
+`config/maiba.yaml` under `gaps`:
+
+```yaml
+gaps:
+  required_fields: [TI, AU, PY]
+  recommended_fields: [DO, JO, AB]
+  forbidden_authors: ["et al.", "Anonymous"]
+```
+
+A field is a **gap** if absent, empty, or in the forbidden list. The function
+returns a list of RIS tags that are gaps — empty list means the record is
+complete.
+
+## Actions
+
+1. `src/maiba/detect.py` — `detect_gaps(item: Item, cfg: Config) -> list[str]`.
+2. Required-field check, recommended-field check, forbidden-author check.
+3. `tests/test_detect.py` — see Test.
+
+## Test (TDD red step)
+
+```python
+# tests/test_detect.py
+from maiba.detect import detect_gaps
+from maiba.model import Item
+from maiba.config import load_config
+
+CFG = load_config("config/maiba.yaml")
+
+def test_complete_item_has_no_gaps():
+    item = Item(TY="JOUR", TI="X", AU=["Doe, J."], PY=2020, DO="10.1/x")
+    assert detect_gaps(item, CFG) == []
+
+def test_missing_doi_is_recommended_gap():
+    item = Item(TY="JOUR", TI="X", AU=["Doe, J."], PY=2020)
+    assert "DO" in detect_gaps(item, CFG)
+
+def test_et_al_author_is_forbidden_gap():
+    item = Item(TY="JOUR", TI="X", AU=["et al."], PY=2020, DO="10.1/x")
+    assert "AU" in detect_gaps(item, CFG)
+```
+
+## Exit criteria
+
+- `make test` green.
+- Add a test that runs `detect_gaps` over `tests/fixtures/ArchiveCCS.ris` and
+  asserts that the count of items with at least one gap is in a reasonable
+  range (≥ 30 — there are 6 `et al.` records, 2 corrupted-PDF stubs, plus
+  ~25 records that lack JO/AB/DO).
+- No constants in code — all gap rules read from the loaded `Config`.
