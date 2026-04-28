@@ -1,11 +1,14 @@
 %erg v1
 Title: Verify .env propagates to resolvers; log auth status at startup
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T14:30Z claude created
+2026-04-28T17:00Z claude claimed
+2026-04-28T17:10Z claude note dotenv propagation already worked (ticket 0017); this ticket adds observability + adherence tests; switched test capture from caplog to capsys because configure_logging(force=True) wipes caplog handlers
+2026-04-28T17:15Z claude status closed all-exit-criteria-met
 
 --- body ---
 ## Context
