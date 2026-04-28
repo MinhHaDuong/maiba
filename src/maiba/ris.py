@@ -124,12 +124,18 @@ _SCALAR_FIELDS: list[tuple[str, str]] = [
 
 
 def _item_to_entry(item: Item) -> dict:
+    """Map an Item to a rispy-style dict.
+
+    Field order matches what ArchiveCCS and most RIS exports emit
+    (TY → AU → TI → PY → DA → JO → … → KW → L1 → N1) so a textual diff
+    of input vs output highlights real fixes instead of reordering noise.
+    """
     entry: dict = {"type_of_reference": item.TY}
 
-    if item.TI:
-        entry["title"] = item.TI
     if item.AU:
         entry["authors"] = item.AU
+    if item.TI:
+        entry["title"] = item.TI
     if item.PY is not None:
         entry["year"] = str(item.PY)
 
