@@ -6,6 +6,7 @@ Author: claude
 
 --- log ---
 2026-04-28T09:30Z claude created
+2026-04-28T10:00Z claude note dropped deprecation shim — project still pre-1.0, breaking is fine
 
 --- body ---
 ## Context
@@ -66,14 +67,7 @@ If neither input nor stdin nor `-o` is sensible (e.g., interactive shell
 with no `-i` and no piped input), print help and exit 2 with a clear
 message.
 
-### 3. Backward-compatibility shim
-The positional `input` argument is dropped, but a file path appearing
-as the only positional after `scan` is a common muscle-memory invocation
-(`maiba scan FILE.ris`). Accept this for one release as an alias for
-`-i FILE`. Emit a deprecation warning to stderr. Document the migration
-in README.
-
-### 4. Update help strings and README
+### 3. Update help strings and README
 - Every flag gets a one-line `help=` that names what it does AND what
   the default is.
 - README gets a "Recipes" section showing common patterns:
@@ -137,12 +131,12 @@ def test_scan_file_to_file(tmp_path):
     assert "TY  - JOUR" in out.read_text(encoding="utf-8")
 
 
-def test_positional_input_is_deprecated_but_works(tmp_path):
+def test_positional_input_is_rejected(tmp_path):
+    """Old positional form must error — no backward-compat shim."""
     out = tmp_path / "out.ris"
     r = _run(["scan", str(GOOD), "-o", str(out)])
-    assert r.returncode == 0
-    assert out.exists()
-    assert b"deprecat" in r.stderr.lower()
+    assert r.returncode != 0
+    assert not out.exists()
 ```
 
 Mock the resolvers (network) for these tests via a fixture that
@@ -157,8 +151,9 @@ the test surface here is CLI shape, not resolver behavior.
 - `uv run maiba scan -i FILE.ris > OUT.ris` works.
 - `cat FILE.ris | uv run maiba scan -o OUT.ris` works.
 - `cat FILE.ris | uv run maiba scan > OUT.ris` works.
-- `uv run maiba scan FILE.ris -o OUT.ris` (positional) still works,
-  emits a deprecation warning to stderr.
+- `uv run maiba scan FILE.ris -o OUT.ris` (positional) **errors** —
+  no backward-compat shim. Project is pre-1.0; breaking the old form
+  is the cheapest way to keep the CLI clean.
 - `--apply` is removed; reference to it in any test or doc is updated.
 - README has a Recipes section with the four idioms above.
 - `make test` green; `make lint` green.
