@@ -1,8 +1,10 @@
-# MAIBA — Architecture (open discussion, not yet decided)
+# MAIBA — Architecture
 
-This document is a working draft. It frames the design decisions that gate the first
-line of code. Read `README.md` first. Nothing here is final — entries marked **DECIDED**
-have user sign-off; everything else is a question.
+Read `README.md` first. This document is the design contract for the MVP:
+the open questions in §2 were locked on 2026-04-28 (see §9 for the log) and
+the `Item` data model in §6 is frozen for tickets 0001–0005. New decisions
+are appended to §9 with a date. Nothing in §3–§8 is mutable without a
+corresponding §9 entry.
 
 ## 0. MVP target (user, 2026-04-28)
 
@@ -34,12 +36,15 @@ via web APIs, write back with provenance. Iteratively grow capability.
 What MAIBA *isn't* (today): a Zotero replacement, a citation generator, a PDF reader,
 a writing assistant. Adjacent, not overlapping.
 
-## 2. Open questions for discussion
+## 2. Design questions (all DECIDED 2026-04-28 — see §9 for the log)
 
-These two questions block the first line of code. KISS — pick the smallest answer that
-meets the present need; widen later when the pain is concrete.
+These four questions originally blocked the first line of code. All four are now
+resolved with the user. Subsections are kept as the rationale record — read them
+to understand *why* the answer is what it is, not to debate them again. KISS:
+pick the smallest answer that meets the present need; widen later when the pain
+is concrete.
 
-### 2.1 User interface
+### 2.1 User interface — DECIDED: A (pure CLI for MVP)
 
 What does the user actually type / click to run MAIBA? Three plausible shapes, ordered
 from least to most code:
@@ -89,11 +94,11 @@ visualization (capability #9) lands and actually needs a canvas. If you decide l
 to build a Zotero plugin, it is essentially a thin native UI over the same CLI core
 — so don't paint yourself into a Python-only corner.
 
-**Decision needed:** confirm A for v0, defer B and C, or pick a different shape.
+**Decided:** A. See §9.
 
 ---
 
-### 2.2 Plugin / abstraction depth
+### 2.2 Plugin / abstraction depth — DECIDED: Level 1 (two protocols, one impl each)
 
 How much of the system should be pluggable on day 1? The choices ladder up in cost:
 
@@ -145,11 +150,11 @@ a concrete second case exists before adding one." This keeps the code testable
 (swap in a fake `LibraryBackend` for tests) without paying for an ecosystem that
 hasn't shown up.
 
-**Decision needed:** confirm Level 1, or argue for 0/2/3.
+**Decided:** Level 1. See §9.
 
 ---
 
-### 2.3 State persistence
+### 2.3 State persistence — DECIDED: zero state for MVP
 
 How much does MAIBA remember between runs?
 
@@ -167,11 +172,11 @@ How much does MAIBA remember between runs?
 **Recommendation:** zero state for MVP. Add response cache only when a run
 takes more than ~30 seconds end-to-end on `ArchiveCCS.ris`.
 
-**Decision needed:** confirm zero state.
+**Decided:** zero state. See §9.
 
 ---
 
-### 2.4 Library backend for MVP
+### 2.4 Library backend for MVP — DECIDED: A (RIS file roundtrip)
 
 Which backend does the MVP support?
 
@@ -188,11 +193,11 @@ Which backend does the MVP support?
 (your RIS is the source of truth, Zotero is a downstream consumer). Add B or C
 later when your day-to-day work moves into Zotero.
 
-**Decision needed:** confirm A.
+**Decided:** A. See §9.
 
 ---
 
-## 3. Data flow (sketch, contingent on §2)
+## 3. Data flow
 
 ```
 ┌──────────────────┐     ┌──────────────┐     ┌────────────────┐
@@ -329,7 +334,7 @@ maiba:before JO=
 
 These lines are emitted as separate `N1  - …` entries in the output RIS.
 
-## 7. Stack (proposed, not decided)
+## 7. Stack
 
 For MVP (RIS roundtrip, OpenAlex + Crossref, no LLM):
 
@@ -407,6 +412,37 @@ provenance:
   Configurable in `config/maiba.yaml` (`resolvers.order`).
 - **2026-04-28 — LLM fallback → DECIDED:** opt-in only via `--llm-fallback`,
   off by default. OpenRouter for cloud, padme HTTP for local. Disabled in MVP.
+- **2026-04-28 — Item data model contract (§6) → FROZEN.** RIS tag, OpenAlex
+  path, Crossref path mapping locked. Tickets 0001/0003/0004/0005 share this
+  single contract; resolvers do not invent fields. Shape variation handled
+  in mapping (Crossref date priority, OpenAlex `host_venue` →
+  `primary_location.source`, corporate author `name`-only entries, OpenAlex
+  `abstract_inverted_index`).
+- **2026-04-28 — `Item.id` derivation (§6.4) → DECIDED.** `L1` basename
+  without extension (matches the existing ArchiveCCS naming convention).
+  Fallback: SHA-1 of `(TI, AU[0], PY)` if `L1` is absent. Never written to RIS.
+- **2026-04-28 — Provenance representation (§6.5) → DECIDED.** When MAIBA
+  modifies a record, prepend `N1  - maiba:autofixed:DATE source=… confidence=…`
+  plus one `N1  - maiba:before FIELD=…` per modified field. Stays inside the
+  RIS file — no sidecar, no separate journal (consistent with the zero-state
+  decision above).
+- **2026-04-28 — Test contract grounded in real API responses → DECIDED.**
+  Ticket 0006 captured 12 frozen JSON fixtures
+  (`tests/fixtures/responses/{openalex,crossref}/`). Resolver tests replay
+  these via `respx`; they are **never re-recorded automatically**. Upstream
+  shape changes surface as test failures, prompting deliberate re-capture.
+- **2026-04-28 — RIS whitespace tolerance → DECIDED.** Parser accepts both
+  the canonical two-space (`XX  - `) and single-space (`XX - `) tag
+  separator forms on input. Output always emits the canonical two-space
+  form. Vendors disagree on the spec; rejecting single-space would break
+  legitimate imports.
+- **2026-04-28 — Retrospective tickets → SCOPED.** Same-session
+  `created → claimed → status closed` is acceptable only for pre-flight
+  scaffolding the user explicitly requests (precedent: ticket 0006). All
+  changes under `src/maiba/` must execute through orchestrator TDD.
+  See `AGENTS.md` "Retrospective tickets".
+- **2026-04-28 — License → OPEN.** `pyproject.toml` shows `license = "TBD"`.
+  Pick MIT or Apache-2.0 before the first `src/maiba/` commit.
 
 ## 10. Glossary
 
