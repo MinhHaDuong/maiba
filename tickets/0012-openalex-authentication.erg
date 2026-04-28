@@ -1,0 +1,145 @@
+%erg v1
+Title: Authenticate OpenAlex requests with OPENALEX_API_KEY
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T11:45Z claude created
+
+--- body ---
+## Context
+
+OpenAlex moved from a free unlimited polite-pool model to credit-based
+billing. Today the unauthenticated path returns:
+
+```json
+{"error": "Rate limit exceeded",
+ "message": "Insufficient budget. This request costs $0.001 but you only
+            have $0 remaining.",
+ "retryAfter": 52045}
+```
+
+The resolver currently sends only `User-Agent: MAIBA/0.0 (mailto:…)` —
+the legacy polite-pool style — and silently treats the 4xx error as
+"no candidate." That accounts for ~6 of the 7 JOUR misses observed on
+`tests/fixtures/ArchiveCCS.ris`.
+
+The user has a $6.53 prepaid balance on their OpenAlex account. The
+PAT is already placed in `~/CNRS/code/maiba/.env` (gitignored).
+Reading the env var and sending the bearer header unblocks the
+prepaid balance.
+
+## Actions
+
+1. **`src/maiba/resolvers/openalex.py`** — read `OPENALEX_API_KEY` from
+   the environment in `__init__`. If set, include
+   `Authorization: Bearer <key>` in the httpx client headers. If unset,
+   behavior unchanged (legacy polite-pool path; user gets the $0
+   free-tier limit).
+
+2. **`src/maiba/resolvers/openalex.py`** — surface 4xx errors instead
+   of swallowing them. A 429 / rate-limit / budget-exhausted response
+   must raise a typed exception (`ResolverRateLimited` or similar),
+   not return `None`. `None` is reserved for "search ran cleanly,
+   no candidate above threshold." A pipeline-level catch can decide
+   policy (skip-and-continue, abort, etc.).
+
+3. **`README.md`** — add a "Configuration" section:
+   ```
+   ## OpenAlex authentication (optional)
+   OpenAlex now requires credits beyond a $0 daily free tier. To use a
+   prepaid balance, set OPENALEX_API_KEY in the environment or in
+   .env (gitignored):
+       export OPENALEX_API_KEY=...
+   If unset, MAIBA falls back to the unauthenticated path (free tier
+   only; expect rate-limit errors during long runs).
+   ```
+
+4. **`ARCHITECTURE.md` §9** — append a decision-log entry:
+   ```
+   - 2026-04-28 — OpenAlex authentication → DECIDED: opt-in via
+     OPENALEX_API_KEY env var. Triggered by OpenAlex moving from
+     free polite pool to credit-based billing during the MVP run.
+     Default unchanged (unauthenticated). Credentials never live in
+     config/maiba.yaml — env var only. Keys named explicitly so a
+     future reader sees the contract.
+   ```
+
+5. **`tests/test_resolve_openalex.py`** — add two tests:
+   - `test_resolver_sends_bearer_when_env_set`: with monkeypatch'd
+     `OPENALEX_API_KEY`, the captured request must contain
+     `Authorization: Bearer …`. Use `respx` to assert.
+   - `test_resolver_raises_on_rate_limit`: when the mocked response
+     is `Response(429, json={"error": "Rate limit exceeded"})`,
+     `resolver.resolve(item)` must raise (not return `None`).
+
+6. **`tests/test_hygiene_stubs.py`** (or new adherence test) — assert
+   no PAT-shaped string is committed:
+   ```python
+   def test_no_committed_api_keys():
+       """Catch accidental commits of OPENALEX_API_KEY-shaped values."""
+       # OpenAlex keys look like alphanumeric ~22 chars after =.
+       # Heuristic: catch literal "OPENALEX_API_KEY=" outside .env
+       # files (which are gitignored).
+       ...
+   ```
+   Or simpler: `git ls-files | xargs grep -l "OPENALEX_API_KEY="` must
+   return empty (the only acceptable home is `.env`, gitignored).
+
+## Test (TDD red step)
+
+```python
+# tests/test_resolve_openalex.py — additions
+import os
+import respx
+from httpx import Response
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.openalex import OpenAlexResolver, ResolverRateLimited
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+@respx.mock
+def test_resolver_sends_bearer_when_env_set(monkeypatch):
+    monkeypatch.setenv("OPENALEX_API_KEY", "test-key-xxx")
+    route = respx.get(url__startswith="https://api.openalex.org/").mock(
+        return_value=Response(200, json={"results": []})
+    )
+    resolver = OpenAlexResolver(CFG)
+    resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+    assert route.called
+    assert route.calls.last.request.headers.get("authorization") == "Bearer test-key-xxx"
+
+
+@respx.mock
+def test_resolver_raises_on_rate_limit():
+    respx.get(url__startswith="https://api.openalex.org/").mock(
+        return_value=Response(429, json={"error": "Rate limit exceeded"})
+    )
+    resolver = OpenAlexResolver(CFG)
+    with pytest.raises(ResolverRateLimited):
+        resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+```
+
+## Exit criteria
+
+- `make test` green.
+- `make lint` green.
+- With `OPENALEX_API_KEY` set in `.env`, a smoke run on the 7 JOUR
+  misses produces ≥4 hits (manual eyeball — not asserted in tests).
+  This validates the diagnostic from the dev session: the misses were
+  auth failures, not threshold issues.
+- No PAT-shaped string in any tracked file (mechanical check via
+  hygiene test).
+- ARCHITECTURE.md §9 entry committed in the same PR.
+- README documents the env-var opt-in.
+
+## Out of scope (separate tickets)
+
+- Year-missing / author-missing scorer fix. Likely accounts for some
+  of the remaining JOUR misses; surface as a follow-up after this
+  unblocks the auth path.
+- Crossref auth. Crossref polite pool remains free; no auth needed.
+- LLM fallback for grey literature. Separate, larger ticket.
