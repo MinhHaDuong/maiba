@@ -2,11 +2,26 @@
 
 from __future__ import annotations
 
+import os
+
 from rapidfuzz import fuzz
 
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
+
+
+def _api_key() -> str:
+    return os.environ.get("OPENALEX_API_KEY", "").strip()
+
+
+class ResolverRateLimitedError(Exception):
+    """Raised when an upstream resolver returns HTTP 429 (rate limited)."""
+
+    def __init__(self, source: str) -> None:
+        super().__init__(f"{source} resolver: rate limited (HTTP 429)")
+        self.source = source
+
 
 _OPENALEX_TYPE_TO_RIS: dict[str, str] = {
     "article": "JOUR",
@@ -121,6 +136,9 @@ class OpenAlexResolver:
         self._base_url = cfg.resolvers.openalex.base_url
         self._mailto = cfg.contact.mailto
         headers = {"User-Agent": f"MAIBA/0.0 (mailto:{self._mailto})"}
+        key = _api_key()
+        if key:
+            headers["Authorization"] = f"Bearer {key}"
         self._client = make_http_client(cfg.http, headers, use_cache=use_cache)
 
     def resolve(self, item: Item) -> ResolutionResult | None:
@@ -131,6 +149,8 @@ class OpenAlexResolver:
     def _resolve_by_doi(self, item: Item) -> ResolutionResult | None:
         url = f"{self._base_url}/works/doi:{item.DO}"
         resp = self._client.get(url, params={"mailto": self._mailto})
+        if resp.status_code == 429:
+            raise ResolverRateLimitedError("openalex")
         if resp.status_code != 200:
             return None
         work = resp.json()
@@ -148,6 +168,8 @@ class OpenAlexResolver:
 
         url = f"{self._base_url}/works"
         resp = self._client.get(url, params=params)
+        if resp.status_code == 429:
+            raise ResolverRateLimitedError("openalex")
         if resp.status_code != 200:
             return None
 

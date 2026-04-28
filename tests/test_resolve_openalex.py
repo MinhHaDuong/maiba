@@ -3,12 +3,13 @@
 import json
 from pathlib import Path
 
+import pytest
 import respx
 from httpx import Response
 
 from maiba.config import load_config
 from maiba.model import Item
-from maiba.resolvers.openalex import OpenAlexResolver
+from maiba.resolvers.openalex import OpenAlexResolver, ResolverRateLimitedError
 
 CFG = load_config("config/maiba.yaml")
 FIXTURES = Path("tests/fixtures/responses/openalex")
@@ -69,3 +70,37 @@ def test_resolve_returns_none_on_true_miss():
     )
     result = resolver.resolve(item)
     assert result is None
+
+
+@respx.mock
+def test_api_key_sent_as_bearer_header(monkeypatch):
+    monkeypatch.setenv("OPENALEX_API_KEY", "test-key-abc")
+    route = respx.get(url__startswith="https://api.openalex.org/works?").mock(
+        return_value=Response(200, json={"results": []})
+    )
+    resolver = OpenAlexResolver(CFG)
+    resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+    assert route.called
+    assert route.calls.last.request.headers.get("authorization") == "Bearer test-key-abc"
+
+
+@respx.mock
+def test_no_auth_header_without_api_key(monkeypatch):
+    monkeypatch.delenv("OPENALEX_API_KEY", raising=False)
+    route = respx.get(url__startswith="https://api.openalex.org/works?").mock(
+        return_value=Response(200, json={"results": []})
+    )
+    resolver = OpenAlexResolver(CFG)
+    resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
+    assert route.called
+    assert "authorization" not in route.calls.last.request.headers
+
+
+@respx.mock
+def test_rate_limited_raises():
+    respx.get(url__startswith="https://api.openalex.org/works?").mock(
+        return_value=Response(429, json={"error": "Rate limit exceeded"})
+    )
+    resolver = OpenAlexResolver(CFG)
+    with pytest.raises(ResolverRateLimitedError):
+        resolver.resolve(Item(TY="JOUR", TI="x", AU=["a"], PY=2020))
