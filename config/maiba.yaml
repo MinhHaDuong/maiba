@@ -16,7 +16,10 @@ resolvers:
 
 gaps:
   required_fields: [TI, AU, PY]
-  recommended_fields: [DO, JO, AB]
+  # AB intentionally not recommended: most RIS exports never carry abstracts,
+  # so flagging it as a gap turns every record into a network call. Add it
+  # back if your corpus has abstracts and you want them filled.
+  recommended_fields: [DO, JO]
   forbidden_authors: ["et al.", "Anonymous"]
 
 matching:

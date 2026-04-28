@@ -53,6 +53,10 @@ def test_end_to_end_on_archiveccs_subset(tmp_path):
     _setup_mocks()
     out = tmp_path / "out.ris"
     cfg = load_config("config/maiba.yaml")
+    # Add AB back to recommended_fields so the Ashworth abstract-fill path
+    # is exercised. Default config drops AB to avoid network spam on RIS
+    # files that never carry abstracts.
+    cfg.gaps.recommended_fields = [*cfg.gaps.recommended_fields, "AB"]
     report = run(input=FIXTURE, output=out, cfg=cfg, apply=True)
 
     assert report.scanned == 223
