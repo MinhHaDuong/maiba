@@ -1,0 +1,188 @@
+%erg v1
+Title: Structured logging with --verbose for the scan pipeline
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T10:30Z claude created
+
+--- body ---
+## Context
+
+User feedback (2026-04-28): "is there a debug log level?" — there isn't.
+Today the only signals while `maiba scan` runs are progress glyphs on
+stderr (one char per record after it finishes processing) and the
+summary printed at the end. When a scan feels stuck or slow, there is
+no way to see what the resolver is doing right now.
+
+`grep -rn "logging\|logger" src/maiba/` returns nothing. Adding a
+proper `logging` setup gives us instrumentation cheaply and matches
+how a Python tool is expected to behave.
+
+## Coordination note
+
+Tickets 0009 (HTTP cache) and 0010 (CLI streams + self-doc help) are
+being orchestrated in parallel. Both touch files this ticket will
+also touch:
+
+- 0009 → wraps `httpx.Client` in both resolvers (where DEBUG-level
+  HTTP logs would also live).
+- 0010 → restructures `src/maiba/cli.py` (where the `-v` flag would
+  be added).
+
+This ticket is **not** blocked by either — it can be implemented after
+whichever lands first and rebase against the other. But the executor
+should pull main right before claiming, and expect to integrate.
+
+## Actions
+
+### 1. Logging setup
+Create `src/maiba/_logging.py` (underscore-prefixed: internal helper):
+
+```python
+import logging
+import sys
+
+_LEVEL_FROM_VERBOSITY = {
+    0: logging.WARNING,
+    1: logging.INFO,
+    2: logging.DEBUG,
+}
+
+def configure(verbosity: int) -> None:
+    """Set up root logger.
+
+    verbosity 0 (default) → WARNING; 1 → INFO; 2+ → DEBUG.
+    Stream is stderr so logs interleave naturally with progress glyphs
+    and don't pollute stdout (which carries the corrected RIS in the
+    streams CLI).
+    """
+    level = _LEVEL_FROM_VERBOSITY.get(verbosity, logging.DEBUG)
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s %(levelname)-7s %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+        stream=sys.stderr,
+        force=True,
+    )
+```
+
+### 2. CLI flag
+In `src/maiba/cli.py`, add `-v` / `--verbose` (count action):
+```python
+parser.add_argument("-v", "--verbose", action="count", default=0,
+                    help="Increase log verbosity (-v INFO, -vv DEBUG)")
+```
+Top of `main()`: `_logging.configure(args.verbose)`.
+
+(If ticket 0010 has landed first, the `-v` lives on the top-level
+parser, not just on `scan`. Either way it has to be visible in
+`maiba --help`.)
+
+### 3. Instrumentation points
+
+Per layer, log at the level that matches operational utility:
+
+**`src/maiba/pipeline.py`** (logger name: `maiba.pipeline`)
+- INFO at scan start: `"scanning %d records from %s"`
+- INFO per fix applied: `"fixed %s via %s (conf=%.2f, fields=%s)"`
+- DEBUG per record decision: `"record %s gaps=%s decision=%s"`
+
+**`src/maiba/resolvers/openalex.py`** (logger name: `maiba.openalex`)
+- DEBUG before each HTTP call: `"GET %s"`
+- DEBUG on response: `"HTTP %d in %.2fs"`
+- DEBUG per candidate score: `"candidate %s title_sim=%.2f overlap=%.2f conf=%.2f"`
+- WARNING on HTTP error / timeout / retry
+
+**`src/maiba/resolvers/crossref.py`** (logger name: `maiba.crossref`)
+Same pattern as OpenAlex.
+
+**`src/maiba/ris.py`** (logger name: `maiba.ris`)
+- INFO at file load: `"loaded %d items from %s"`
+- INFO at file write: `"wrote %d items to %s"`
+
+### 4. No third-party log spam
+`httpx`, `urllib3`, etc. log at INFO by default. Pin them to WARNING
+unless verbosity >= 2:
+```python
+if verbosity < 2:
+    for noisy in ("httpx", "httpcore", "urllib3"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
+```
+
+## Test (TDD red step)
+
+```python
+# tests/test_logging.py
+import logging
+from pathlib import Path
+
+import respx
+from httpx import Response
+
+from maiba._logging import configure
+from maiba.config import load_config
+from maiba.pipeline import run
+
+
+def test_configure_default_is_warning():
+    configure(0)
+    assert logging.getLogger("maiba").getEffectiveLevel() == logging.WARNING
+
+
+def test_configure_verbose_is_info():
+    configure(1)
+    assert logging.getLogger("maiba").getEffectiveLevel() == logging.INFO
+
+
+def test_configure_double_verbose_is_debug():
+    configure(2)
+    assert logging.getLogger("maiba").getEffectiveLevel() == logging.DEBUG
+
+
+@respx.mock
+def test_pipeline_logs_per_record_at_debug(caplog, tmp_path):
+    respx.get(url__startswith="https://api.openalex.org").mock(
+        return_value=Response(200, json={"meta": {"count": 0}, "results": []})
+    )
+    respx.get(url__startswith="https://api.crossref.org").mock(
+        return_value=Response(
+            200,
+            json={"status": "ok", "message": {"items": [], "total-results": 0}},
+        )
+    )
+    cfg = load_config("config/maiba.yaml")
+    with caplog.at_level(logging.DEBUG, logger="maiba.pipeline"):
+        run(input=Path("tests/fixtures/good.ris"),
+            output=tmp_path / "out.ris", cfg=cfg, apply=False)
+    # Three records → at least three DEBUG records from the pipeline logger.
+    pipeline_records = [r for r in caplog.records if r.name == "maiba.pipeline"]
+    assert len(pipeline_records) >= 3
+
+
+def test_no_third_party_log_spam_at_default(caplog):
+    configure(0)
+    # httpx, httpcore should be silenced to WARNING.
+    assert logging.getLogger("httpx").getEffectiveLevel() == logging.WARNING
+    assert logging.getLogger("httpcore").getEffectiveLevel() == logging.WARNING
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- `uv run maiba scan -i tests/fixtures/good.ris` (default verbosity)
+  prints no log lines on stderr (just glyphs + summary).
+- `uv run maiba scan -i tests/fixtures/good.ris -v` shows INFO lines
+  per fix and per file load.
+- `uv run maiba scan -i tests/fixtures/good.ris -vv` shows DEBUG lines
+  including each HTTP URL fired and each candidate score.
+- httpx/httpcore are WARNING-only at verbosity < 2.
+- The four glyphs and the summary line are unchanged.
+
+## Out of scope
+
+- Log to file (use shell redirection: `maiba scan ... 2> debug.log`).
+- Structured JSON logs.
+- Per-module verbosity controls (`MAIBA_LOG_LEVEL=DEBUG:openalex`).
