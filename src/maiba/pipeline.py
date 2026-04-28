@@ -52,6 +52,14 @@ def _announce(total: int, n_doi: int, *, quiet: bool = False) -> None:
         file=sys.stderr,
         flush=True,
     )
+    print(
+        f"Legend: {GLYPH_SKIP} no gaps  "
+        f"{GLYPH_NOT_FIXED} not fixed  "
+        f"{GLYPH_PARTIAL_FIX} partial fix  "
+        f"{GLYPH_FULL_FIX} full fix",
+        file=sys.stderr,
+        flush=True,
+    )
 
 
 @dataclass
