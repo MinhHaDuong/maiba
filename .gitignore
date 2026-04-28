@@ -1,0 +1,25 @@
+# git-erg compiled binary
+tickets/tools/go/erg
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# uv (commit uv.lock for reproducibility)
+.venv/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local secrets
+.env
+.env.local
