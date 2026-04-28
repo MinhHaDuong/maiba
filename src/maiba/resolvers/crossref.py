@@ -5,11 +5,10 @@ from __future__ import annotations
 import re
 from urllib.parse import quote
 
-from rapidfuzz import fuzz
-
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
+from maiba.resolvers._scoring import score_candidate
 
 _CROSSREF_TYPE_TO_RIS = {
     "journal-article": "JOUR",
@@ -67,45 +66,14 @@ class CrossrefResolver:
 
         for work in items:
             candidate = _work_to_item(work)
-            title_sim = fuzz.token_sort_ratio(item.TI, candidate.TI or "") / 100.0
-            author_overlap = _compute_author_overlap(item.AU, candidate.AU)
-            confidence = title_sim * 0.7 + author_overlap * 0.3
-
-            if (
-                confidence >= self._cfg.matching.title_similarity_min
-                and author_overlap >= self._cfg.matching.author_overlap_min
-                and confidence > best_confidence
-            ):
+            confidence = score_candidate(item, candidate, self._cfg)
+            if confidence is not None and confidence > best_confidence:
                 best_confidence = confidence
                 best_result = ResolutionResult(
                     candidate=candidate, confidence=confidence, source="crossref"
                 )
 
         return best_result
-
-
-def _compute_author_overlap(input_authors: list[str], candidate_authors: list[str]) -> float:
-    if not input_authors:
-        return 0.0
-    if not candidate_authors:
-        return 0.0
-    candidate_lower = [a.lower() for a in candidate_authors]
-    matches = 0
-    for author in input_authors:
-        author_lower = author.lower()
-        for cand in candidate_lower:
-            if _author_matches(author_lower, cand):
-                matches += 1
-                break
-    return matches / len(input_authors)
-
-
-def _author_matches(input_author: str, candidate_author: str) -> bool:
-    input_family = input_author.split(",")[0].strip()
-    candidate_family = candidate_author.split(",")[0].strip()
-    if not input_family or not candidate_family:
-        return False
-    return input_family == candidate_family
 
 
 def _work_to_item(work: dict) -> Item:
