@@ -60,6 +60,18 @@ def _author_overlap(
     return len(matches) / len(input_lastnames)
 
 
+def _reconstruct_abstract(inverted: dict | None) -> str | None:
+    if not inverted:
+        return None
+    pos_to_word: dict[int, str] = {}
+    for word, positions in inverted.items():
+        for p in positions:
+            pos_to_word[p] = word
+    if not pos_to_word:
+        return None
+    return " ".join(pos_to_word[i] for i in sorted(pos_to_word))
+
+
 def _work_to_item(work: dict) -> Item:
     """Map an OpenAlex Work object to a MAIBA Item."""
     authors = [
@@ -100,6 +112,7 @@ def _work_to_item(work: dict) -> Item:
         DO=doi if doi else None,
         LA=work.get("language"),
         KW=keywords,
+        AB=_reconstruct_abstract(work.get("abstract_inverted_index")),
     )
 
 

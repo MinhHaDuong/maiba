@@ -1,6 +1,6 @@
 %erg v1
 Title: CLI pipeline + integration test on ArchiveCCS.ris
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
@@ -11,6 +11,8 @@ Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:34Z claude created
+2026-04-28T19:30Z claude claimed
+2026-04-28T19:50Z claude status closed work-complete
 
 --- body ---
 ## Context
