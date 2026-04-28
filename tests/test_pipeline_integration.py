@@ -56,10 +56,28 @@ def test_end_to_end_on_archiveccs_subset(tmp_path):
     report = run(input=FIXTURE, output=out, cfg=cfg, apply=True)
 
     assert report.scanned == 223
-    assert report.fixed >= 1
+    assert out.exists()
+
+
+@respx.mock
+def test_et_al_author_is_fixed_from_doi_lookup(tmp_path):
+    """Records with 'et al.' as author and a DOI get the full author list back.
+
+    Uses a dedicated fixture (`et-al-with-doi.ris`) with one engineered
+    record so the assertion doesn't depend on AB being a recommended gap.
+    """
+    _setup_mocks()
+    out = tmp_path / "out.ris"
+    cfg = load_config("config/maiba.yaml")
+    fixture = Path("tests/fixtures/et-al-with-doi.ris")
+    report = run(input=fixture, output=out, cfg=cfg, apply=True)
+
+    assert report.scanned == 1
+    assert report.fixed == 1
     text = out.read_text(encoding="utf-8")
+    assert "Carr-Cornish" in text
     assert "maiba:autofixed:" in text
-    assert "maiba:before" in text
+    assert "maiba:before AU=" in text
 
 
 @respx.mock
