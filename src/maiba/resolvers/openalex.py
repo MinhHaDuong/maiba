@@ -2,16 +2,11 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
-import httpx
-from hishel import SyncSqliteStorage
-from hishel.httpx import SyncCacheClient
 from rapidfuzz import fuzz
 
 from maiba.config import Config
 from maiba.model import Item
-from maiba.resolvers import ResolutionResult
+from maiba.resolvers import ResolutionResult, make_http_client
 
 _OPENALEX_TYPE_TO_RIS: dict[str, str] = {
     "article": "JOUR",
@@ -126,23 +121,7 @@ class OpenAlexResolver:
         self._base_url = cfg.resolvers.openalex.base_url
         self._mailto = cfg.contact.mailto
         headers = {"User-Agent": f"MAIBA/0.0 (mailto:{self._mailto})"}
-        if use_cache:
-            cache_dir = Path(cfg.http.cache_dir).expanduser()
-            cache_dir.mkdir(parents=True, exist_ok=True)
-            storage = SyncSqliteStorage(
-                database_path=cache_dir / "http.db",
-                default_ttl=cfg.http.cache_ttl_s,
-            )
-            self._client = SyncCacheClient(
-                storage=storage,
-                headers=headers,
-                timeout=cfg.http.timeout_s,
-            )
-        else:
-            self._client = httpx.Client(
-                headers=headers,
-                timeout=cfg.http.timeout_s,
-            )
+        self._client = make_http_client(cfg.http, headers, use_cache=use_cache)
 
     def resolve(self, item: Item) -> ResolutionResult | None:
         if item.DO:
