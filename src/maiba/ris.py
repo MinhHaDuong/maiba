@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from collections.abc import Iterable, Iterator
 from pathlib import Path
+from typing import IO
 
 from rispy.parser import LIST_TYPE_TAGS, RisParser
 from rispy.writer import RisWriter
@@ -195,8 +196,12 @@ def _item_to_entry(item: Item) -> dict:
     return ordered
 
 
-def write_ris(items: Iterable[Item], path: Path) -> None:
+def write_ris(items: Iterable[Item], dest: Path | IO[str]) -> None:
+    """Write items to *dest*, which may be a Path or an open text file handle."""
     entries = [_item_to_entry(item) for item in items]
     writer = _MaibaWriter()
     text = writer.formats(entries)
-    path.write_text(text, encoding="utf-8")
+    if isinstance(dest, Path):
+        dest.write_text(text, encoding="utf-8")
+    else:
+        dest.write(text)

@@ -57,6 +57,6 @@ clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache build dist *.egg-info
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 
-# scan an RIS file. Usage: make scan INPUT=path/to/file.ris [OUTPUT=path] [APPLY=1]
+# scan an RIS file. Usage: make scan INPUT=path/to/file.ris [OUTPUT=path]
 scan:
-	$(UV_RUN) maiba scan $(INPUT) $(if $(OUTPUT),-o $(OUTPUT),) $(if $(APPLY),--apply,)
+	$(UV_RUN) maiba scan $(if $(INPUT),-i $(INPUT),) $(if $(OUTPUT),-o $(OUTPUT),)

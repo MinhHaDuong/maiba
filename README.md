@@ -80,12 +80,10 @@ maiba/
 
 ## Quick start
 
-There is nothing to run yet. Once code lands, the workflow will be:
-
 ```bash
 make setup          # install deps via uv
 make help           # list targets
-uv run maiba --help # CLI entry point (when implemented)
+uv run maiba        # print help and exit 0
 ```
 
 ## Configuration
@@ -106,6 +104,18 @@ request. When unset, MAIBA falls back to the unauthenticated path
 (free-tier only; expect rate-limit aborts during long runs).
 
 The key never lives in `config/maiba.yaml` — env var only.
+
+## Recipes
+
+```bash
+maiba scan -i in.ris -o out.ris               # file in, file out
+cat in.ris | maiba scan -o out.ris            # stdin → file
+cat in.ris | maiba scan > out.ris             # stdin → stdout
+maiba scan -i in.ris | grep 'maiba:auto'      # spot-check fixes
+```
+
+When writing to stdout, the summary (Scanned / Fixed / …) goes to stderr
+so it does not corrupt the piped RIS data stream.
 
 ## Conventions
 

@@ -27,7 +27,6 @@ def test_progress_glyph_per_record_on_tty(monkeypatch, tmp_path, capsys):
         input=Path("tests/fixtures/good.ris"),
         output=tmp_path / "out.ris",
         cfg=cfg,
-        apply=False,
     )
     err = capsys.readouterr().err
     # Output is: announce line + legend + glyphs + trailing newline.
@@ -47,7 +46,6 @@ def test_progress_suppressed_when_stderr_not_tty(monkeypatch, tmp_path, capsys):
         input=Path("tests/fixtures/empty.ris"),
         output=tmp_path / "out.ris",
         cfg=cfg,
-        apply=False,
     )
     assert capsys.readouterr().err == ""
 

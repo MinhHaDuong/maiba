@@ -1,6 +1,6 @@
 %erg v1
 Title: Make the CLI Unix-pipeable and self-documenting
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
@@ -9,6 +9,8 @@ Author: claude
 2026-04-28T10:00Z claude note dropped deprecation shim — project still pre-1.0, breaking is fine
 2026-04-28T12:00Z claude note reimagine — `read_ris(path: Path)` doesn't accept stdin; widen to `Path | str` and stream stdin through a temp file in cli.py (rispy needs a real path or file handle). README overlap with 0012 is additive (Configuration vs Recipes sections) — low risk.
 2026-04-28T12:15Z claude note feasibility PASS — verified pipeline.run() signature (use_cache kwarg present, must NOT be dropped); 4 integration test call sites confirmed at lines 56,73,88,99; cli.py summary print is currently to stdout (this is the bug 0010 fixes); _emit_progress correctly uses sys.stderr.isatty().
+2026-04-28T10:05Z claude claimed feature/0010-cli-streams worktree agent-a60b8a0591f6ec72a
+2026-04-28T10:05Z claude status closed completed-via-pr pending-pr-number
 
 --- body ---
 ## Context
