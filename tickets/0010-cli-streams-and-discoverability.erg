@@ -1,0 +1,178 @@
+%erg v1
+Title: Make the CLI Unix-pipeable and self-documenting
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T09:30Z claude created
+
+--- body ---
+## Context
+
+User feedback (2026-04-28): `uv run maiba` is not self-documenting and
+the I/O model is awkward.
+
+Two concrete observations:
+
+1. **No-args invocation is hostile.** `uv run maiba` errors with
+   `the following arguments are required: cmd` and exits 2. The user
+   has to know to type `--help` to discover the verbs.
+2. **The `--apply` / `-o` dance is unidiomatic.** A Unix-style janitor
+   should read from a file or stdin, write to a file or stdout, and
+   stream progress to stderr — composable with `cat`, `tee`, `grep`,
+   shell redirection. Today's CLI requires `--apply` plus `-o` plus
+   the silently-suppressed glyphs to make any of this work.
+
+User's proposal (verbatim):
+> uv run maiba prints help, with all options. Proposition: with -o it
+> prints a progress bar, without it prints on stdout. Same for -i.
+
+## Actions
+
+### 1. Self-documenting top level
+- `uv run maiba` (no args) → print top-level help and exit 0.
+  argparse's default behavior is to error; override by setting the
+  parser default to `func=lambda _: parser.print_help()` and dropping
+  `required=True` from the subparsers.
+- `uv run maiba scan` (no args to the verb) keeps current behavior
+  (errors that `input` is required) — that one is informative.
+
+### 2. Stream-shaped I/O for `scan`
+Replace the positional `input` and the `-o` / `--apply` triad with two
+optional flags that mirror Unix tools:
+
+| Flag | If set | If unset |
+|------|--------|----------|
+| `-i FILE` / `--input FILE` | Read RIS from FILE | Read RIS from stdin |
+| `-o FILE` / `--output FILE` | Write corrected RIS to FILE | Write to stdout |
+
+Side effect on progress glyphs:
+- Output is a **file** → emit glyphs to stderr (TTY-gated, as today).
+- Output is **stdout** → suppress glyphs by default, since stderr might
+  still be a TTY but interleaving glyphs with the data stream is fine
+  (stdout/stderr are separate). Actually keep glyphs on stderr in this
+  case too — they don't interfere with stdout. Only `--quiet`
+  suppresses them.
+- Input is **stdin** → no change to glyph behavior; just consume stdin
+  to a tempfile or buffer (rispy needs a path or file handle, both work).
+
+`--apply` is **removed**. Writing happens iff `-o` is provided OR
+stdout is not a TTY (i.e., piped). When stdout IS a TTY and no `-o`,
+print the corrected RIS to the terminal (a "preview" mode); the user
+can pipe to `less` or redirect.
+
+If neither input nor stdin nor `-o` is sensible (e.g., interactive shell
+with no `-i` and no piped input), print help and exit 2 with a clear
+message.
+
+### 3. Backward-compatibility shim
+The positional `input` argument is dropped, but a file path appearing
+as the only positional after `scan` is a common muscle-memory invocation
+(`maiba scan FILE.ris`). Accept this for one release as an alias for
+`-i FILE`. Emit a deprecation warning to stderr. Document the migration
+in README.
+
+### 4. Update help strings and README
+- Every flag gets a one-line `help=` that names what it does AND what
+  the default is.
+- README gets a "Recipes" section showing common patterns:
+  ```
+  maiba scan -i in.ris -o out.ris               # file in, file out
+  cat in.ris | maiba scan -o out.ris            # stdin → file
+  cat in.ris | maiba scan > out.ris             # stdin → stdout
+  maiba scan -i in.ris | grep -B1 'maiba:auto'  # spot-check fixes
+  ```
+
+## Test (TDD red step)
+
+```python
+# tests/test_cli_streams.py
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).parent.parent
+GOOD = ROOT / "tests/fixtures/good.ris"
+
+
+def _run(args: list[str], stdin: bytes | None = None) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["uv", "run", "maiba", *args],
+        input=stdin,
+        capture_output=True,
+        cwd=ROOT,
+    )
+
+
+def test_no_args_prints_help_exit_zero():
+    r = _run([])
+    assert r.returncode == 0
+    assert b"usage: maiba" in r.stdout
+    assert b"scan" in r.stdout
+
+
+def test_scan_file_to_stdout(tmp_path):
+    r = _run(["scan", "-i", str(GOOD)])
+    assert r.returncode == 0
+    assert b"TY  - JOUR" in r.stdout
+    # No file written
+    assert not list(tmp_path.iterdir())
+
+
+def test_scan_stdin_to_stdout():
+    data = GOOD.read_bytes()
+    r = _run(["scan"], stdin=data)
+    assert r.returncode == 0
+    assert b"TY  - JOUR" in r.stdout
+
+
+def test_scan_file_to_file(tmp_path):
+    out = tmp_path / "out.ris"
+    r = _run(["scan", "-i", str(GOOD), "-o", str(out)])
+    assert r.returncode == 0
+    assert out.exists()
+    assert "TY  - JOUR" in out.read_text(encoding="utf-8")
+
+
+def test_positional_input_is_deprecated_but_works(tmp_path):
+    out = tmp_path / "out.ris"
+    r = _run(["scan", str(GOOD), "-o", str(out)])
+    assert r.returncode == 0
+    assert out.exists()
+    assert b"deprecat" in r.stderr.lower()
+```
+
+Mock the resolvers (network) for these tests via a fixture that
+monkeypatches both resolvers' `__init__` to no-op clients, OR run
+against the existing respx-mocked pattern. Either approach is fine —
+the test surface here is CLI shape, not resolver behavior.
+
+## Exit criteria
+
+- `uv run maiba` (no args) prints help and exits 0.
+- `uv run maiba scan -i FILE.ris -o OUT.ris` works.
+- `uv run maiba scan -i FILE.ris > OUT.ris` works.
+- `cat FILE.ris | uv run maiba scan -o OUT.ris` works.
+- `cat FILE.ris | uv run maiba scan > OUT.ris` works.
+- `uv run maiba scan FILE.ris -o OUT.ris` (positional) still works,
+  emits a deprecation warning to stderr.
+- `--apply` is removed; reference to it in any test or doc is updated.
+- README has a Recipes section with the four idioms above.
+- `make test` green; `make lint` green.
+- All existing tests still pass (the integration test in
+  `tests/test_pipeline_integration.py` will need to update its `apply=`
+  call sites but the pipeline's `run()` signature should stay
+  unchanged — only the CLI shape moves).
+
+## Out of scope
+
+- Changing `--report` (markdown report) — it's already file-based and
+  works fine.
+- Changing `--quiet` — keep as-is for the case where the user wants no
+  glyphs even on a TTY.
+- A streaming RIS parser. rispy is whole-file; the stdin path buffers
+  the input first. Streaming is a separate concern (and ARCHITECTURE.md
+  doesn't ask for it).
