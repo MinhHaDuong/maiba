@@ -44,7 +44,8 @@ Eight fixtures, see `tests/fixtures/README.md` for the table:
 - `good.ris` — 3-record hand-written sample
 - `empty.ris` — zero bytes
 - `bad-notaris.ris`, `bad-no-er.ris`, `bad-no-ty.ris`,
-  `bad-malformed-tag.ris`, `bad-truncated-mid-record.ris`
+  `bad-malformed-tag.ris`, `bad-truncated-mid-record.ris`,
+  `bad-binaryfile.ris` (real-world mistake: PDF renamed to `.ris`)
 
 ```python
 # tests/test_ris_roundtrip.py
@@ -97,6 +98,7 @@ def test_empty_returns_no_items():
     "bad-no-ty.ris",
     "bad-malformed-tag.ris",
     "bad-truncated-mid-record.ris",
+    "bad-binaryfile.ris",
 ])
 def test_bad_inputs_raise(name):
     with pytest.raises(RisParseError):
@@ -105,7 +107,9 @@ def test_bad_inputs_raise(name):
 
 The parser must define a `RisParseError` exception in `maiba.ris`.
 Empty file → empty iterator (no raise). Any structural defect → raise
-with a message that names the line number and the problem.
+with a message that names the line number and the problem. Binary input
+(non-UTF-8 bytes) must surface as `RisParseError`, not a bare
+`UnicodeDecodeError` from the lower level.
 
 ## Exit criteria
 
