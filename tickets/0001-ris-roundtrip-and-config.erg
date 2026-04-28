@@ -1,12 +1,14 @@
 %erg v1
 Title: RIS roundtrip, Item data model, and config loader
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:30Z claude created
+2026-04-28T12:00Z claude claimed
+2026-04-28T12:30Z claude status closed work-complete
 
 --- body ---
 ## Context

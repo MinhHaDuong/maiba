@@ -1,0 +1,34 @@
+contact:
+  mailto: minh.ha-duong@cnrs.fr
+
+http:
+  timeout_s: 10
+  max_retries: 3
+  backoff_s: 1.5
+  rate_limit_per_s: 5
+
+resolvers:
+  order: [openalex, crossref]
+  openalex:
+    base_url: https://api.openalex.org
+  crossref:
+    base_url: https://api.crossref.org
+
+gaps:
+  required_fields: [TI, AU, PY]
+  recommended_fields: [DO, JO, AB]
+  forbidden_authors: ["et al.", "Anonymous"]
+
+matching:
+  title_similarity_min: 0.85
+  author_overlap_min: 0.5
+  apply_threshold: 0.85
+
+llm:
+  enabled: false
+  provider: openrouter
+  model: openai/gpt-4o-mini
+  endpoint_padme: http://padme:11434
+
+provenance:
+  tag_prefix: "maiba"
