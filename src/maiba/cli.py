@@ -28,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.llm_fallback:
-        raise NotImplementedError("LLM fallback is not implemented in MVP")
+        parser.error("--llm-fallback is not implemented in MVP")
 
     cfg = load_config(args.config)
 
