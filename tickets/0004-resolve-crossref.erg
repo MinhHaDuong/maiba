@@ -1,6 +1,6 @@
 %erg v1
 Title: Resolve item metadata via Crossref
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
@@ -8,6 +8,8 @@ Blocked-by: 0006
 
 --- log ---
 2026-04-28T08:33Z claude created
+2026-04-28T10:00Z claude claimed
+2026-04-28T10:15Z claude status closed TDD complete, 3 tests green
 
 --- body ---
 ## Context
