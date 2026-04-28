@@ -1,0 +1,156 @@
+%erg v1
+Title: Pipeline merge step drops derived fields outside the gap set
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T15:30Z claude created
+
+--- body ---
+## Context
+
+`src/maiba/pipeline.py:227` merges resolver output into the input Item
+by iterating only over `gaps`:
+
+```python
+for tag in gaps:
+    new_value = getattr(candidate, tag, None)
+    old_value = getattr(item, tag, None)
+    if _is_filled(new_value) and new_value != old_value:
+        new_data[tag] = new_value
+```
+
+`gaps` is computed by the gap detector and contains only fields the
+user *asked* to fix per `cfg.gaps.required_fields` +
+`cfg.gaps.recommended_fields`.
+
+**Bug:** when the user narrows the gap config (e.g.
+`required_fields: [TI, AU, PY]` only), and Crossref/OpenAlex returns
+a fully-populated candidate including DOI, journal, volume, pages —
+the pipeline writes only the AU it was asked for and **silently
+discards the rest**. The DOI we were just handed by Crossref doesn't
+make it to the output RIS.
+
+The user reported this directly: "when we get a DOI from crossref,
+openalex or on first page, do we add it to the result file? Because
+we should."
+
+This is asymmetric: gap detection is "what's broken on input." The
+merge step should be "fill anything we're given that's missing on
+input." The two are different questions; conflating them costs us
+free metadata.
+
+## Actions
+
+1. **`src/maiba/pipeline.py:_merge_fix`** — change the merge loop to
+   iterate over all relevant Item fields, not just `gaps`:
+   ```python
+   MERGEABLE_FIELDS = ("TI", "AU", "PY", "DA", "JO", "T2", "VL",
+                       "IS", "SP", "EP", "DO", "UR", "LA", "KW",
+                       "AB", "PB", "CY")
+   for tag in MERGEABLE_FIELDS:
+       new_value = getattr(candidate, tag, None)
+       old_value = getattr(item, tag, None)
+       if _is_filled(new_value) and not _is_filled(old_value):
+           new_data[tag] = new_value
+           fields_changed[tag] = (old_value, new_value)
+   ```
+   Critical contract: **only write into empty slots, never overwrite
+   populated fields.** This is the safety boundary — we trust the
+   user's existing data more than the resolver's.
+
+2. **`MERGEABLE_FIELDS` lives in the model**, not the pipeline:
+   ```python
+   # src/maiba/model.py
+   class Item(BaseModel):
+       ...
+       @classmethod
+       def mergeable_fields(cls) -> tuple[str, ...]:
+           """Field names safe to fill from a resolver candidate.
+           Excludes id, L1/L2, N1, TY (type stays from input)."""
+   ```
+   Pipeline calls `Item.mergeable_fields()`. Single source of truth.
+
+3. **Provenance unchanged:** the `maiba:before <field>=<old>` line
+   is still appended for every changed field. The user can audit
+   what was filled and where it came from.
+
+4. **Gap detection unchanged:** still uses
+   `cfg.gaps.required_fields` + `cfg.gaps.recommended_fields` to
+   decide what to FIX (resolve via API). The narrowed gap config
+   still controls which records hit the resolvers and which pass
+   through. This ticket only changes what happens AFTER a resolver
+   returned.
+
+## Test (TDD red step)
+
+```python
+# tests/test_pipeline_merge.py
+import pytest
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers import ResolutionResult
+from maiba.pipeline import _merge_fix
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+def test_merge_fills_missing_DO_even_if_not_in_gaps():
+    """DOI returned by resolver must land in output even when DO
+    wasn't in the gap set (e.g. user narrowed gap config to TI/AU/PY)."""
+    item = Item(TY="JOUR", TI="x", AU=[], PY=2010, DO=None)
+    candidate = Item(TY="JOUR", TI="x", AU=["Doe, J."], PY=2010,
+                     DO="10.1/x", JO="Energy Policy", VL="38")
+    result = ResolutionResult(candidate=candidate, confidence=0.9, source="crossref")
+    fixed, applied = _merge_fix(item, result, gaps=["AU"], cfg=CFG, today="2026-04-28")
+    assert fixed.AU == ["Doe, J."]      # asked-for field filled
+    assert fixed.DO == "10.1/x"         # not asked-for, but came back — kept
+    assert fixed.JO == "Energy Policy"  # same
+    assert fixed.VL == "38"
+
+
+def test_merge_does_not_overwrite_existing_fields():
+    """If input already has a field set, the resolver's version doesn't overwrite."""
+    item = Item(TY="JOUR", TI="My title", AU=["Smith, J."], PY=2010, DO="10.1/original")
+    candidate = Item(TY="JOUR", TI="Different title", AU=["Doe, J."], PY=2010, DO="10.1/different")
+    result = ResolutionResult(candidate=candidate, confidence=0.9, source="crossref")
+    fixed, applied = _merge_fix(item, result, gaps=[], cfg=CFG, today="2026-04-28")
+    assert fixed.TI == "My title"           # unchanged
+    assert fixed.DO == "10.1/original"      # unchanged
+    assert fixed.AU == ["Smith, J."]        # unchanged
+
+
+def test_provenance_records_every_changed_field():
+    item = Item(TY="JOUR", TI="x", AU=[], PY=2010)
+    candidate = Item(TY="JOUR", TI="x", AU=["Doe, J."], PY=2010,
+                     DO="10.1/x", JO="Energy Policy")
+    result = ResolutionResult(candidate=candidate, confidence=0.9, source="crossref")
+    fixed, applied = _merge_fix(item, result, gaps=["AU"], cfg=CFG, today="2026-04-28")
+    n1_text = "\n".join(fixed.N1)
+    assert "maiba:before AU=" in n1_text
+    assert "maiba:before DO=" in n1_text
+    assert "maiba:before JO=" in n1_text
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- Re-run on `tests/fixtures/ArchiveCCS.ris` post-fix: items previously
+  resolved on AU only now also have DO, JO, VL, etc. populated where
+  the resolver provided them. Manual eyeball, not asserted in tests.
+- Score against `ArchiveCCS-cleaned.ris` ground truth: per-field
+  recall on DO/JO/VL/SP/EP improves vs. baseline. (Smoke check;
+  formal scoring is a future ticket.)
+
+## Out of scope
+
+- Adding a config knob like `cfg.merge.opportunistic: bool`. The
+  rule is "fill what's empty" — there's no defensible reason to
+  keep a slot empty when the resolver gave us a value.
+- Conflict resolution (input has different value than resolver).
+  This ticket leaves the input untouched in that case. Cross-check
+  /  divergence detection is a future ticket.
+- LLM-resolver path. Same fix applies once 0015 lands; the merge
+  step is resolver-agnostic.

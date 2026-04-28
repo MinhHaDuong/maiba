@@ -1,0 +1,143 @@
+%erg v1
+Title: Extract DOI from PDF first-page text before resolver search
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0014
+
+--- log ---
+2026-04-28T15:32Z claude created
+
+--- body ---
+## Context
+
+When the resolver runs on an item with no `DO` field, it falls back
+to title search — noisy on short titles, expensive in API calls. But
+many PDFs have their DOI printed on the first page (publisher
+header, footer, abstract block). We can extract it deterministically
+with a regex.
+
+This is exactly what we did during the original `ArchiveCCS.ris`
+indexing run on 2026-04-27. The regex `10\.\d{4,9}/[-._;()/:A-Z0-9]+`
+found 24 DOIs across 214 PDFs. Those DOIs are why the dirty RIS has
+24 records resolvable via direct DOI lookup today. MAIBA does NOT
+currently apply this regex inside the running pipeline — it relies
+on whatever DOI was in the input RIS.
+
+After ticket 0014 (PDF first-page extraction) lands, this becomes a
+small addition: scan the extracted text for a DOI before the
+resolver runs. If found, populate `Item.DO` (provenanced as
+`source=pdf-firstpage`) and the resolver takes the direct-lookup
+path, which is much more reliable than title search.
+
+## Actions
+
+1. **`src/maiba/pdf.py`** (in addition to `extract_first_page` from
+   ticket 0014):
+   ```python
+   DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
+
+   def extract_doi_from_first_page(item: Item, cfg: Config) -> str | None:
+       """Return the first DOI found in the PDF first-page text, or None.
+
+       Cheap wrapper over extract_first_page() + regex.
+       """
+       text = extract_first_page(item, cfg)
+       if not text:
+           return None
+       m = DOI_RE.search(text)
+       return m.group(0).rstrip(".,;:") if m else None
+   ```
+
+2. **`src/maiba/pipeline.py`** — pre-resolver hook: for items missing
+   `DO`, attempt PDF DOI extraction. If found:
+   ```python
+   if item.DO is None and item.L1:
+       doi = extract_doi_from_first_page(item, cfg)
+       if doi:
+           item = item.model_copy(update={"DO": doi})
+           # provenance: maiba:autofixed:DATE source=pdf-firstpage
+   ```
+   Apply BEFORE the resolver chain runs. The resolver then sees an
+   item with `DO` and takes the cheap direct path.
+
+3. **Provenance**: same N1 lines as resolver fixes, with
+   `source=pdf-firstpage` (and confidence=1.0, since regex match on
+   raw PDF text is high-confidence by construction).
+
+4. **Configuration** — no new knobs. The DOI regex is structural,
+   not tunable. (Per the §6.2 architecture rule: regexes that
+   express the spec belong in code; values that vary by use-case
+   belong in config.)
+
+## Test (TDD red step)
+
+```python
+# tests/test_pdf_doi.py
+from pathlib import Path
+import pytest
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.pdf import extract_doi_from_first_page
+
+CFG = load_config(Path("config/maiba.yaml"))
+F = Path("tests/fixtures")
+
+
+def test_doi_extracted_from_pdf_with_doi_in_first_page():
+    """Use a real fixture PDF with a known DOI in the first page."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2009,
+                L1=[f"file://{F.absolute()}/sample-with-doi.pdf"])
+    doi = extract_doi_from_first_page(item, CFG)
+    assert doi == "10.1016/j.egypro.2009.02.302"
+
+
+def test_no_doi_in_first_page_returns_none():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-no-doi.pdf"])
+    assert extract_doi_from_first_page(item, CFG) is None
+
+
+def test_no_l1_returns_none():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020, L1=[])
+    assert extract_doi_from_first_page(item, CFG) is None
+
+
+def test_doi_trailing_punctuation_stripped():
+    """A DOI followed by a period (sentence-ending) should not include the period."""
+    # Use a fixture PDF where the DOI is followed by '. ' or ',' or ');'
+    ...
+```
+
+Plus an integration test asserting the pipeline pre-hook:
+```python
+def test_pipeline_extracts_doi_before_resolver(monkeypatch, tmp_path):
+    """An item with no DO but a PDF carrying a DOI takes the direct lookup
+    path, not title search."""
+    # ... mock OpenAlex DOI endpoint, assert it was called
+    # ... assert title-search endpoint was NOT called
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- Re-run on `tests/fixtures/ArchiveCCS.ris` after this lands: at
+  least 5 of the previously-title-searched JOUR records flip to
+  DOI-based lookups (the ones whose PDFs printed the DOI on page 1).
+  Manual eyeball, not asserted.
+- The provenance trail makes the source clear: a record fixed via
+  PDF-first-page DOI extraction must have an N1 line ending
+  `source=pdf-firstpage`.
+
+## Out of scope
+
+- Multi-page DOI scan. First page only — by far the highest-density
+  location and matches ticket 0014's contract.
+- DOI normalization (uppercase → lowercase, percent-decoding, etc.).
+  Most DOIs come out clean; if normalization becomes painful,
+  separate ticket.
+- Conflict between extracted DOI and resolver-returned DOI. If the
+  extracted DOI takes us to a different record, the resolver's
+  cross-check (future ticket) is the right place to flag it. This
+  ticket trusts the regex hit.
