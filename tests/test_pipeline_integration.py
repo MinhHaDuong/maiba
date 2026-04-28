@@ -98,3 +98,53 @@ def test_complete_records_are_unchanged(tmp_path):
 
     assert report.scanned == report.with_gaps + (report.scanned - report.with_gaps)
     assert report.fixed <= report.with_gaps
+
+
+@respx.mock
+def test_openalex_429_does_not_abort_pipeline(tmp_path):
+    """When OpenAlex returns 429, Crossref must still be tried for every record.
+
+    The dead resolver is skipped for the rest of the run; the pipeline does
+    NOT drain remaining records unchanged (the old abort-and-drain contract).
+    """
+    respx.get(url__startswith="https://api.openalex.org").mock(
+        return_value=Response(429, json={"error": "Rate limit exceeded"})
+    )
+    ashworth_cr = json.loads((RESPONSES / "crossref/ashworth-2009-doi.json").read_text())
+    crossref_route = respx.get(url__startswith="https://api.crossref.org").mock(
+        return_value=Response(200, json=ashworth_cr)
+    )
+
+    cfg = load_config("config/maiba.yaml")
+    out = tmp_path / "out.ris"
+    fixture = Path("tests/fixtures/et-al-with-doi.ris")
+    report = run(input=fixture, output=out, cfg=cfg)
+
+    assert crossref_route.called, "crossref must be tried after openalex 429"
+    assert report.rate_limited >= 1, "expected at least one record marked rate-limited"
+    assert report.fixed == 1, "crossref candidate should still produce a fix"
+    text = out.read_text(encoding="utf-8")
+    assert "maiba:autofixed:" in text
+
+
+@respx.mock
+def test_openalex_429_only_logged_once(tmp_path, caplog):
+    """The dead-resolver warning fires once, not once per record."""
+    import logging
+
+    respx.get(url__startswith="https://api.openalex.org").mock(
+        return_value=Response(429, json={"error": "Rate limit exceeded"})
+    )
+    respx.get(url__startswith="https://api.crossref.org").mock(
+        return_value=Response(
+            200, json={"status": "ok", "message": {"items": [], "total-results": 0}}
+        )
+    )
+    cfg = load_config("config/maiba.yaml")
+    with caplog.at_level(logging.WARNING, logger="maiba.pipeline"):
+        run(input=FIXTURE, output=tmp_path / "out.ris", cfg=cfg)
+
+    rate_limit_warnings = [r for r in caplog.records if "rate limited" in r.getMessage().lower()]
+    assert len(rate_limit_warnings) == 1, (
+        f"expected exactly one rate-limit warning, got {len(rate_limit_warnings)}"
+    )

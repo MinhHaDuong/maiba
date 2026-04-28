@@ -100,6 +100,14 @@ class FixApplied:
 
 @dataclass
 class Report:
+    """Aggregate result of a `run()`.
+
+    `rate_limited` counts records that ran with a degraded resolver
+    chain (at least one resolver was skipped because it was rate
+    limited earlier in this run). Records before the first 429 are
+    not counted.
+    """
+
     scanned: int = 0
     with_gaps: int = 0
     fixed: int = 0
@@ -125,12 +133,9 @@ def run(  # noqa: PLR0915
 
     _announce(len(items), *_preview_counts(items, cfg), quiet=quiet)
 
-    aborted = False
+    dead_resolvers: set[str] = set()
     try:
-        for idx, item in enumerate(items):
-            if aborted:
-                out_items.append(item)
-                continue
+        for item in items:
             gaps = detect_gaps(item, cfg)
             if not gaps:
                 out_items.append(item)
@@ -139,19 +144,9 @@ def run(  # noqa: PLR0915
                 continue
             report.with_gaps += 1
 
-            try:
-                result = _try_resolvers(item, resolvers)
-            except ResolverRateLimitedError as exc:
+            result = _try_resolvers(item, resolvers, dead_resolvers)
+            if dead_resolvers:
                 report.rate_limited += 1
-                print(
-                    f"\n{exc.source}: rate limited — aborting remaining "
-                    f"resolver calls (record {idx + 1}/{len(items)}).",
-                    file=sys.stderr,
-                    flush=True,
-                )
-                out_items.append(item)
-                aborted = True
-                continue
             if result is None:
                 out_items.append(item)
                 _emit_progress(_classify(len(gaps), 0), quiet=quiet)
@@ -195,9 +190,28 @@ def _build_resolvers(cfg: Config, *, use_cache: bool = False) -> list[MetadataRe
     return [_RESOLVER_BUILDERS[name](cfg, use_cache=use_cache) for name in cfg.resolvers.order]
 
 
-def _try_resolvers(item: Item, resolvers: list[MetadataResolver]) -> ResolutionResult | None:
+def _try_resolvers(
+    item: Item,
+    resolvers: list[MetadataResolver],
+    dead: set[str],
+) -> ResolutionResult | None:
+    """Iterate resolvers, skipping any in `dead`.
+
+    On `ResolverRateLimitedError` from a resolver call, the resolver's
+    `source` is added to `dead` (so subsequent records skip it) and the
+    next resolver in the chain is tried for THIS record. The first
+    failure of a given resolver is logged at WARNING.
+    """
     for resolver in resolvers:
-        result = resolver.resolve(item)
+        source = getattr(resolver, "source", resolver.__class__.__name__.lower())
+        if source in dead:
+            continue
+        try:
+            result = resolver.resolve(item)
+        except ResolverRateLimitedError as exc:
+            log.warning("%s: rate limited — skipping for the rest of this run", exc.source)
+            dead.add(exc.source)
+            continue
         if result is not None:
             return result
     return None
