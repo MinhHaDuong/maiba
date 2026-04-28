@@ -1,12 +1,14 @@
 %erg v1
 Title: Detect gaps in bibliographic items
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
 
 --- log ---
 2026-04-28T08:31Z claude created
+2026-04-28T09:15Z claude claimed
+2026-04-28T09:20Z claude status closed TDD green, all 7 tests pass
 
 --- body ---
 ## Context
