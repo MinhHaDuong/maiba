@@ -1,0 +1,135 @@
+%erg v1
+Title: Extract PDF first-page text from the L1 link
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T12:30Z claude created
+
+--- body ---
+## Context
+
+Standalone utility that turns an `Item.L1` link (or list of links) into
+plain first-page text. Foundation for ticket 0015 (LLM resolver), which
+needs the PDF's content to fill in missing metadata for grey
+literature. Also potentially useful later for full-text attach,
+abstract reconstruction, etc.
+
+Design constraints:
+
+- Read-only; never modifies the PDF
+- Pure function: `(L1, config) -> str | None`. No state.
+- Handles the realistic failure modes seen during the ArchiveCCS
+  indexing run:
+  - PDF has a normal text layer → `pdftotext -f 1 -l 1` (fast)
+  - PDF is image-only / OCR-required → `tesseract` on `pdftoppm`
+    rendered page-1 PNG (slower; opt-in via config)
+  - PDF is corrupted (xref broken) → raise `PdfExtractionError`
+  - File missing → raise `PdfExtractionError`
+  - L1 is `file://` URL → strip prefix; resolve to absolute path
+
+## Actions
+
+1. **Add deps** to `pyproject.toml` — none new at runtime; rely on
+   `pdftotext`, `pdftoppm`, `tesseract` as system binaries (the
+   ArchiveCCS workflow already proved these are available).
+2. **`src/maiba/pdf.py`** (new module):
+   ```python
+   def extract_first_page(item: Item, cfg: Config) -> str | None:
+       """Return first-page text, or None if Item has no L1 / file missing.
+
+       Raises PdfExtractionError on corruption / unrecognized format.
+       """
+   ```
+3. **Two-tier strategy**:
+   - Try `pdftotext -f 1 -l 1 <path>` first; if output ≥ N chars, return.
+   - If output < N chars (likely image-only), and `cfg.pdf.ocr_fallback`
+     is True (default False), render page 1 with `pdftoppm`, OCR with
+     `tesseract`, return that.
+   - Threshold N is configurable (default 50 chars).
+4. **Config additions** to `config/maiba.yaml`:
+   ```yaml
+   pdf:
+     min_text_chars: 50      # below this, treat as image-only
+     ocr_fallback: false     # opt-in; OCR is slow
+     ocr_language: "fra+eng" # tesseract -l value
+     timeout_s: 30           # per-extraction wall-clock cap
+   ```
+5. **Tests** — see Test below.
+
+## Test (TDD red step)
+
+Reuse `tests/fixtures/bad-binaryfile.ris` infrastructure: that file
+already contains the first 512 bytes of a real PDF. Add a tiny PDF
+fixture (or render one on the fly with `reportlab`-equivalent — but
+that's a new dep, prefer a committed fixture).
+
+Two committed PDF fixtures:
+- `tests/fixtures/sample-text.pdf` — a 1-page PDF with text layer
+  (~50 bytes of actual text content)
+- `tests/fixtures/sample-broken.pdf` — a deliberately-corrupted PDF
+  (e.g., the Damen-2003 file we found broken during indexing — it's
+  in `~/CNRS/html/ArchiveCCS/`)
+
+```python
+# tests/test_pdf_extract.py
+import pytest
+from pathlib import Path
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.pdf import extract_first_page, PdfExtractionError
+
+CFG = load_config(Path("config/maiba.yaml"))
+F = Path("tests/fixtures")
+
+
+def test_extract_text_layer():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-text.pdf"])
+    text = extract_first_page(item, CFG)
+    assert text is not None and len(text) > 50
+
+def test_no_l1_returns_none():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020, L1=[])
+    assert extract_first_page(item, CFG) is None
+
+def test_missing_file_raises():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=["file:///nonexistent/path.pdf"])
+    with pytest.raises(PdfExtractionError):
+        extract_first_page(item, CFG)
+
+def test_corrupted_pdf_raises():
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/sample-broken.pdf"])
+    with pytest.raises(PdfExtractionError):
+        extract_first_page(item, CFG)
+
+def test_image_only_returns_none_when_ocr_disabled(monkeypatch):
+    # use bad-binaryfile.ris content (512 bytes of real PDF, no text layer)
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
+                L1=[f"file://{F.absolute()}/bad-binaryfile.ris"])
+    # default cfg has ocr_fallback=False
+    assert extract_first_page(item, CFG) is None
+```
+
+## Exit criteria
+
+- `make test` green.
+- `extract_first_page(item, cfg)` works on a sample of `ArchiveCCS.ris`
+  records (manual eyeball, not asserted).
+- No hardcoded thresholds, paths, or binary names in `src/maiba/pdf.py`
+  — all from config.
+- `PdfExtractionError` defined in `maiba.pdf` (not bubble up
+  `subprocess.CalledProcessError` etc.).
+
+## Out of scope
+
+- Multi-page extraction. First page only for now (MVP scope; LLM
+  resolver only needs the title-block).
+- Caching. The HTTP cache from ticket 0009 is for API responses;
+  PDF re-extraction is local and fast enough that caching is YAGNI.
+  Revisit if extraction shows up in a profile later.
+- Returning structured fields (title-region, author-region, etc.).
+  Just plaintext for now; let the LLM do the parsing in 0015.
