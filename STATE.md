@@ -41,9 +41,8 @@ All four open decisions confirmed by user. See `ARCHITECTURE.md` §8 for the log
 
 ## Next actions (in order)
 
-1. Pick a license (MIT or Apache-2.0); commit `LICENSE`.
-2. Work tickets `0001` → `0005` in dependency order via TDD.
-3. End-to-end smoke test: `make scan INPUT=…/ArchiveCCS.ris`, eyeball the diff.
+1. Work tickets `0001` → `0005` in dependency order via TDD.
+2. End-to-end smoke test: `make scan INPUT=…/ArchiveCCS.ris`, eyeball the diff.
 
 ## Tickets
 

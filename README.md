@@ -95,7 +95,8 @@ uv run maiba --help # CLI entry point (when implemented)
 - Workflow: **Imperial Dragon** five-claw (Imagine → Plan → Execute → Verify → Reflect).
   See `AGENTS.md`.
 - Tickets: **`%erg v1`** local files in `tickets/`. See `.claude/rules/tickets.md`.
-- License: TBD (likely MIT or Apache-2.0; see `pyproject.toml` once decided).
+- License: **CeCILL-B v1** (CEA-CNRS-INRIA Logiciel Libre, BSD-equivalent,
+  GPL-compatible). See `LICENSE`.
 
 ## Related work
 

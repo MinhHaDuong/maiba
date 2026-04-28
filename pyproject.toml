@@ -5,7 +5,7 @@ description = "MAIBA — My AI Bibliography Assistant. Detect and fix incomplete
 authors = [{ name = "Minh Ha-Duong", email = "minh.ha-duong@cnrs.fr" }]
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "TBD" }
+license = { text = "CECILL-B" }
 keywords = ["bibliography", "zotero", "reference-manager", "metadata", "ris", "bibtex"]
 
 # Runtime deps are intentionally empty until ARCHITECTURE.md §2 is decided.
