@@ -11,10 +11,14 @@ compare against. This is the bug fix from ticket 0013.
 
 from __future__ import annotations
 
+import logging
+
 from rapidfuzz import fuzz
 
 from maiba.config import Config
 from maiba.model import Item
+
+log = logging.getLogger("maiba.scoring")
 
 
 def _extract_lastname(name: str) -> str:
@@ -65,10 +69,24 @@ def score_candidate(input_item: Item, candidate: Item, cfg: Config) -> float | N
     if not clean_au:
         # Title-only path: no author penalty when the input has nothing
         # comparable. Still bounded by title_min.
-        return title_sim if title_sim >= title_min else None
+        result = title_sim if title_sim >= title_min else None
+        log.debug(
+            "score(title-only) input.id=%s title_sim=%.2f result=%s",
+            input_item.id,
+            title_sim,
+            result,
+        )
+        return result
 
     overlap = _author_overlap(input_item.AU, candidate.AU, forbidden)
     confidence = title_sim * 0.7 + overlap * 0.3
-    if confidence >= title_min and overlap >= cfg.matching.author_overlap_min:
-        return confidence
-    return None
+    accepted = confidence >= title_min and overlap >= cfg.matching.author_overlap_min
+    log.debug(
+        "score(two-axis) input.id=%s title_sim=%.2f overlap=%.2f conf=%.2f accepted=%s",
+        input_item.id,
+        title_sim,
+        overlap,
+        confidence,
+        accepted,
+    )
+    return confidence if accepted else None

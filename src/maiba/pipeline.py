@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import sys
 from dataclasses import dataclass, field
 from datetime import date
@@ -15,6 +16,8 @@ from maiba.resolvers import MetadataResolver, ResolutionResult
 from maiba.resolvers.crossref import CrossrefResolver
 from maiba.resolvers.openalex import OpenAlexResolver, ResolverRateLimitedError
 from maiba.ris import read_ris, write_ris
+
+log = logging.getLogger("maiba.pipeline")
 
 _RESOLVER_BUILDERS = {
     "openalex": OpenAlexResolver,
@@ -113,6 +116,7 @@ def run(  # noqa: PLR0915
     use_cache: bool = False,
 ) -> Report:
     items = list(read_ris(input))
+    log.info("scanning %d records from %s", len(items), input)
     resolvers = _build_resolvers(cfg, use_cache=use_cache)
     today = date.today().isoformat()
     report = Report(scanned=len(items))
@@ -165,6 +169,16 @@ def run(  # noqa: PLR0915
             if fix.fields_changed:
                 report.fixed += 1
                 report.fixes.append(fix)
+                log.info(
+                    "fixed %s via %s (conf=%.2f, fields=%s)",
+                    fix.item_id,
+                    fix.source,
+                    fix.confidence,
+                    sorted(fix.fields_changed.keys()),
+                )
+            log.debug(
+                "record %s gaps=%s fields_changed=%s", item.id, gaps, list(fix.fields_changed)
+            )
             _emit_progress(_classify(len(gaps), len(fix.fields_changed)), quiet=quiet)
             emitted = True
     finally:
