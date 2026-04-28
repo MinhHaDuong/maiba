@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 from pathlib import Path
 
 from maiba.config import load_config
@@ -25,8 +26,17 @@ def main(argv: list[str] | None = None) -> int:
     )
     scan.add_argument("--report", type=Path, default=None, help="Write a markdown report")
     scan.add_argument("--quiet", action="store_true", help="Suppress per-record progress glyphs")
+    scan.add_argument("--no-cache", action="store_true", help="Bypass the HTTP response cache")
+
+    cc = sub.add_parser("clear-cache", help="Remove the HTTP response cache directory")
+    cc.add_argument(
+        "--config", type=Path, default=Path("config/maiba.yaml"), help="Path to maiba.yaml"
+    )
 
     args = parser.parse_args(argv)
+
+    if args.cmd == "clear-cache":
+        return _clear_cache(args)
 
     if args.llm_fallback:
         parser.error("--llm-fallback is not implemented in MVP")
@@ -37,7 +47,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and output is None:
         output = args.input.with_suffix(".fixed.ris")
 
-    report = run(input=args.input, output=output, cfg=cfg, apply=args.apply, quiet=args.quiet)
+    report = run(
+        input=args.input,
+        output=output,
+        cfg=cfg,
+        apply=args.apply,
+        quiet=args.quiet,
+        use_cache=not args.no_cache,
+    )
 
     print(f"Scanned: {report.scanned}")
     print(f"With gaps: {report.with_gaps}")
@@ -49,6 +66,17 @@ def main(argv: list[str] | None = None) -> int:
     if args.report is not None:
         _write_report(args.report, report)
 
+    return 0
+
+
+def _clear_cache(args: argparse.Namespace) -> int:
+    cfg = load_config(args.config)
+    cache_dir = Path(cfg.http.cache_dir).expanduser()
+    if cache_dir.exists():
+        shutil.rmtree(cache_dir)
+        print(f"Removed cache directory: {cache_dir}")
+    else:
+        print(f"Cache directory does not exist: {cache_dir}")
     return 0
 
 
