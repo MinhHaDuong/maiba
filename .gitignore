@@ -26,3 +26,9 @@ dist/
 # Local secrets
 .env
 .env.local
+
+# Zotero-exported PDFs alongside the ground-truth RIS — too large for git
+# (267 MB across 222 files). The RIS itself IS committed; the L1 paths
+# resolve relative to the RIS's directory, so any test that follows the
+# L1 links needs a local copy of files/ next to the RIS.
+tests/fixtures/ArchiveCCS-cleaned/files/
