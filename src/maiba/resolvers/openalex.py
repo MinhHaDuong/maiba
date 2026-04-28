@@ -7,7 +7,7 @@ import os
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
-from maiba.resolvers._scoring import score_candidate
+from maiba.resolvers._scoring import select_best_candidate
 
 
 def _api_key() -> str:
@@ -151,17 +151,5 @@ class OpenAlexResolver:
         results = data.get("results", [])
         if not results:
             return None
-
-        best_result: ResolutionResult | None = None
-        best_confidence = 0.0
-
-        for work in results:
-            candidate = _work_to_item(work)
-            confidence = score_candidate(item, candidate, self._cfg)
-            if confidence is not None and confidence > best_confidence:
-                best_confidence = confidence
-                best_result = ResolutionResult(
-                    candidate=candidate, confidence=confidence, source="openalex"
-                )
-
-        return best_result
+        candidates = [_work_to_item(w) for w in results]
+        return select_best_candidate(item, candidates, self._cfg, source="openalex")
