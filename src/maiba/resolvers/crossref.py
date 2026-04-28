@@ -8,7 +8,7 @@ from urllib.parse import quote
 from maiba.config import Config
 from maiba.model import Item
 from maiba.resolvers import ResolutionResult, make_http_client
-from maiba.resolvers._scoring import _extract_lastname, score_candidate
+from maiba.resolvers._scoring import _extract_lastname, select_best_candidate
 
 _CROSSREF_TYPE_TO_RIS = {
     "journal-article": "JOUR",
@@ -75,20 +75,8 @@ class CrossrefResolver:
         items = data.get("message", {}).get("items", [])
         if not items:
             return None
-
-        best_result: ResolutionResult | None = None
-        best_confidence = 0.0
-
-        for work in items:
-            candidate = _work_to_item(work)
-            confidence = score_candidate(item, candidate, self._cfg)
-            if confidence is not None and confidence > best_confidence:
-                best_confidence = confidence
-                best_result = ResolutionResult(
-                    candidate=candidate, confidence=confidence, source="crossref"
-                )
-
-        return best_result
+        candidates = [_work_to_item(w) for w in items]
+        return select_best_candidate(item, candidates, self._cfg, source="crossref")
 
 
 def _work_to_item(work: dict) -> Item:

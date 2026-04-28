@@ -105,14 +105,18 @@ def test_cli_uses_stdlib_argparse():
 
 
 def test_resolvers_use_shared_scoring():
-    """Both resolvers must call score_candidate, not inline the math.
+    """Both resolvers must delegate to the shared scorer, not inline the math.
 
     Ticket 0013 fix: the inline `title_sim * 0.7 + overlap * 0.3` formula
     rejected items with missing AU even when the title was a perfect
-    match. Ratcheted here so a regression to inline math fails CI.
+    match. Ratcheted here so a regression to inline math fails CI. The
+    shared entry point is `select_best_candidate` (ticket 0025); a
+    direct `score_candidate` call also satisfies the contract.
     """
     for name in ("openalex.py", "crossref.py"):
         path = SRC / "resolvers" / name
         src = path.read_text(encoding="utf-8")
         assert "title_sim * 0.7" not in src, f"{path}: inline scoring formula"
-        assert "score_candidate(" in src, f"{path}: must call shared scorer"
+        assert "select_best_candidate(" in src or "score_candidate(" in src, (
+            f"{path}: must call shared scorer"
+        )

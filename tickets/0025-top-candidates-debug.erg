@@ -1,0 +1,81 @@
+%erg v1
+Title: DEBUG-log input record + top 3 candidates per resolver call
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T17:50Z claude created
+2026-04-28T17:50Z claude claimed
+2026-04-28T18:30Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+`-vv` currently emits one DEBUG line per (input, candidate) pair from
+`maiba.scoring`. On a 20-candidate search that's 20 lines per record;
+hard to read, hard to compare, and the candidate's identity (author,
+title, year) is missing — only the score is shown.
+
+When diagnosing why a record didn't match, the human eye wants to
+see, side by side:
+
+```
+input  id=Annunziatelli-200X-... TI='Allaying Public Concern…' AU=['Annunziatelli, F.', …] PY=2008
+top1   score=0.62 TI='…' AU=[…] PY=2008
+top2   score=0.57 TI='…' AU=[…] PY=2008
+top3   score=0.42 TI='…' AU=[…] PY=2007
+```
+
+That's 4 lines per record instead of 20, and the visual diff between
+input and candidate is immediate.
+
+## Actions
+
+1. **`src/maiba/resolvers/_scoring.py`** —
+   - Drop the per-candidate DEBUG log inside `score_candidate`
+     (replaced by the top-3 view below; per-candidate log becomes noise).
+   - Add a new helper `select_best_candidate(input_item, candidates,
+     cfg, source) -> ResolutionResult | None`. It scores each
+     candidate, logs the input + top 3 at DEBUG, and returns the
+     highest-scoring candidate as a `ResolutionResult` (or None).
+
+2. **`src/maiba/resolvers/openalex.py`** and **crossref.py** —
+   - Replace the inline scoring loop in `_resolve_by_search` with
+     a call to `select_best_candidate(item, candidates, cfg, "openalex")`
+     (or "crossref"). Removes ~15 lines of duplication per resolver.
+
+3. **Test updates** — none of the existing tests assert the
+   per-candidate DEBUG line text, so removing it is safe. Add one
+   new test that confirms the top-3 lines appear in stderr at -vv.
+
+## Test (TDD red step)
+
+```python
+# tests/test_top_candidates_log.py
+import respx
+from httpx import Response
+
+def test_top3_candidates_logged_at_debug(tmp_path, monkeypatch, capsys):
+    # mock openalex with 4+ candidates
+    # run the resolver at -vv
+    # assert "input id=" appears once
+    # assert "top1", "top2", "top3" each appear
+    # assert "top4" does NOT appear
+```
+
+## Exit criteria
+
+- `make test` green; new test passes.
+- `make lint` green.
+- `uv run maiba scan -vv -i … 2>&1 | grep -E 'input id=|top[123]'`
+  produces 4 lines per scored record (input + top3).
+- The per-candidate `score(two-axis)` line is gone.
+- Both resolvers route through `select_best_candidate` (no inline
+  scoring loop).
+
+## Out of scope
+
+- Configurable top-N (always 3). YAGNI.
+- Truncating long titles to fit the terminal. Whoever wants pretty
+  output can pipe through `cut -c1-200`.
