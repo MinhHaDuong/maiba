@@ -6,6 +6,7 @@ Author: claude
 
 --- log ---
 2026-04-28T11:45Z claude created
+2026-04-28T12:00Z claude note reimagine — drop Action 6 (YAGNI: pre-commit/.gitignore is the right layer for secret scanning, not a pytest test); confirm bearer-contract = read env var at __init__ time (matches existing client shape); ResolverRateLimited lives in openalex.py (no shared exceptions module — KISS); README + ARCHITECTURE entries kept (light docs, same PR)
 
 --- body ---
 ## Context

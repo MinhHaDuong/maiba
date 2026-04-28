@@ -7,6 +7,7 @@ Author: claude
 --- log ---
 2026-04-28T09:30Z claude created
 2026-04-28T10:00Z claude note dropped deprecation shim — project still pre-1.0, breaking is fine
+2026-04-28T12:00Z claude note reimagine — `read_ris(path: Path)` doesn't accept stdin; widen to `Path | str` and stream stdin through a temp file in cli.py (rispy needs a real path or file handle). README overlap with 0012 is additive (Configuration vs Recipes sections) — low risk.
 
 --- body ---
 ## Context
