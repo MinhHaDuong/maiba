@@ -109,7 +109,6 @@ def run(  # noqa: PLR0915
     input: Path,
     output: Path | None,
     cfg: Config,
-    apply: bool,
     quiet: bool = False,
     use_cache: bool = False,
 ) -> Report:
@@ -172,7 +171,7 @@ def run(  # noqa: PLR0915
         if emitted and not quiet and sys.stderr.isatty():
             print("", file=sys.stderr, flush=True)
 
-    if apply and output is not None:
+    if output is not None:
         write_ris(out_items, output)
 
     return report

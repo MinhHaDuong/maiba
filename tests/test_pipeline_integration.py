@@ -53,7 +53,7 @@ def test_end_to_end_on_archiveccs_subset(tmp_path):
     _setup_mocks()
     out = tmp_path / "out.ris"
     cfg = load_config("config/maiba.yaml")
-    report = run(input=FIXTURE, output=out, cfg=cfg, apply=True)
+    report = run(input=FIXTURE, output=out, cfg=cfg)
 
     assert report.scanned == 223
     assert out.exists()
@@ -70,7 +70,7 @@ def test_et_al_author_is_fixed_from_doi_lookup(tmp_path):
     out = tmp_path / "out.ris"
     cfg = load_config("config/maiba.yaml")
     fixture = Path("tests/fixtures/et-al-with-doi.ris")
-    report = run(input=fixture, output=out, cfg=cfg, apply=True)
+    report = run(input=fixture, output=out, cfg=cfg)
 
     assert report.scanned == 1
     assert report.fixed == 1
@@ -83,12 +83,10 @@ def test_et_al_author_is_fixed_from_doi_lookup(tmp_path):
 @respx.mock
 def test_dry_run_does_not_write_output(tmp_path):
     _setup_mocks()
-    out = tmp_path / "out.ris"
     cfg = load_config("config/maiba.yaml")
-    report = run(input=FIXTURE, output=out, cfg=cfg, apply=False)
+    report = run(input=FIXTURE, output=None, cfg=cfg)
 
     assert report.scanned == 223
-    assert not out.exists()
 
 
 @respx.mock
@@ -96,7 +94,7 @@ def test_complete_records_are_unchanged(tmp_path):
     _setup_mocks()
     out = tmp_path / "out.ris"
     cfg = load_config("config/maiba.yaml")
-    report = run(input=FIXTURE, output=out, cfg=cfg, apply=True)
+    report = run(input=FIXTURE, output=out, cfg=cfg)
 
     assert report.scanned == report.with_gaps + (report.scanned - report.with_gaps)
     assert report.fixed <= report.with_gaps
