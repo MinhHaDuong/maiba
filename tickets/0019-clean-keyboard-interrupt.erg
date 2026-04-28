@@ -1,0 +1,76 @@
+%erg v1
+Title: Clean Ctrl+C — print a short message instead of dumping a traceback
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T16:00Z claude created
+2026-04-28T16:00Z claude claimed
+2026-04-28T16:15Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+User feedback after 0018 landed: hitting Ctrl+C during a long scan
+dumps a 60-line httpx/httpcore traceback ending in `ssl.py recv`.
+The user reaction was literally "Not very nice interrupt".
+
+The pipeline currently lets `KeyboardInterrupt` propagate from
+inside `httpx.Client.get` all the way through `pipeline.run` and
+`cli.main` to the Python interpreter, which prints the traceback.
+Standard CLI tools (curl, git, pytest) handle SIGINT by exiting
+130 with at most a one-line "interrupted" message.
+
+## Actions
+
+1. **`src/maiba/cli.py`** — wrap `main()`'s body in
+   `try/except KeyboardInterrupt`. On interrupt:
+   - Print one short line to stderr: `aborted by user (Ctrl+C)`.
+   - Return 130 (POSIX SIGINT exit code = 128 + 2).
+2. No changes to `pipeline.run()`. Partial-output-on-interrupt is
+   out of scope (see "Out of scope" below).
+
+## Test (TDD red step)
+
+```python
+# tests/test_cli_interrupt.py
+import pytest
+from unittest.mock import patch
+
+from maiba.cli import main
+
+
+def test_keyboard_interrupt_returns_130_with_clean_message(capsys, monkeypatch, tmp_path):
+    """Ctrl+C during scan exits 130 with a short message and no traceback."""
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / ".env").write_text("")
+    fixture = tmp_path / "in.ris"
+    fixture.write_text("TY  - JOUR\nTI  - x\nER  - \n")
+
+    with patch("maiba.cli.run", side_effect=KeyboardInterrupt):
+        rc = main(["scan", "-i", str(fixture), "-o", str(tmp_path / "out.ris")])
+
+    assert rc == 130
+    captured = capsys.readouterr()
+    assert "aborted by user" in captured.err.lower()
+    assert "traceback" not in captured.err.lower()
+```
+
+## Exit criteria
+
+- `make test` green; new test passes.
+- `make lint` green.
+- After this lands, hitting Ctrl+C during a real scan prints
+  `aborted by user (Ctrl+C)` and nothing else (manual eyeball).
+- `echo $?` after Ctrl+C reports 130.
+
+## Out of scope
+
+- **Partial output on interrupt.** Today nothing is written to the
+  output file if the run is interrupted mid-loop (write happens at
+  the end of `run()`). Saving partial RIS would need a per-record
+  flush or a finally block in `run()` — a bigger change. Open a
+  separate ticket if the user asks for this.
+- **Resume from where we left off.** Out of scope for MVP.
+- **Trapping SIGTERM.** Only SIGINT (Ctrl+C) is in scope.

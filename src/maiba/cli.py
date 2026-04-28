@@ -158,7 +158,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.llm_fallback:
         parser.error("--llm-fallback is not implemented in MVP")
 
-    return _cmd_scan(args)
+    try:
+        return _cmd_scan(args)
+    except KeyboardInterrupt:
+        print("\naborted by user (Ctrl+C)", file=sys.stderr, flush=True)
+        return 130
 
 
 def _clear_cache(args: argparse.Namespace) -> int:
