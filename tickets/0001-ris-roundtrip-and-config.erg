@@ -1,6 +1,6 @@
 %erg v1
 Title: RIS roundtrip, Item data model, and config loader
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0006
@@ -8,6 +8,8 @@ Blocked-by: 0006
 --- log ---
 2026-04-28T08:30Z claude created
 2026-04-28T18:00Z claude note rewritten to mandate rispy>=0.10 as parser (user: YAGNI)
+2026-04-28T18:30Z claude claimed
+2026-04-28T19:00Z claude status closed work-complete
 
 --- body ---
 ## Context
