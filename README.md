@@ -92,18 +92,29 @@ uv run maiba        # print help and exit 0
 
 OpenAlex moved from a free polite-pool model to credit-based billing.
 The unauthenticated path now returns HTTP 429 once the daily $0 free
-tier is exhausted. To use a prepaid balance, set `OPENALEX_API_KEY`
-in the environment or in a gitignored `.env`:
+tier is exhausted. To use a prepaid balance, place `OPENALEX_API_KEY`
+in a gitignored `.env` file at the project root:
+
+```
+# .env
+OPENALEX_API_KEY=your-key-here
+```
+
+The CLI auto-loads `.env` from the current working directory at
+startup (via python-dotenv). A shell-exported variable takes
+precedence over the `.env` value, so
 
 ```bash
 export OPENALEX_API_KEY=your-key-here
+maiba scan -i FILE.ris
 ```
 
-When set, MAIBA sends `Authorization: Bearer <key>` on every OpenAlex
-request. When unset, MAIBA falls back to the unauthenticated path
-(free-tier only; expect rate-limit aborts during long runs).
+also works. When the key is set, MAIBA sends
+`Authorization: Bearer <key>` on every OpenAlex request. When unset,
+MAIBA falls back to the unauthenticated path (free-tier only; expect
+rate-limit aborts during long runs).
 
-The key never lives in `config/maiba.yaml` — env var only.
+The key never lives in `config/maiba.yaml` — env var or `.env` only.
 
 ## Recipes
 
