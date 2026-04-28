@@ -159,7 +159,7 @@ class OpenAlexResolver:
             overlap = _author_overlap(item.AU, candidate.AU, forbidden)
             confidence = title_sim * 0.7 + overlap * 0.3
 
-            if title_sim >= title_min and overlap >= author_min and confidence > best_confidence:
+            if confidence >= title_min and overlap >= author_min and confidence > best_confidence:
                 best_confidence = confidence
                 best_result = ResolutionResult(
                     candidate=candidate, confidence=confidence, source="openalex"
