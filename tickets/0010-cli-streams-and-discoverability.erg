@@ -163,6 +163,81 @@ the test surface here is CLI shape, not resolver behavior.
   call sites but the pipeline's `run()` signature should stay
   unchanged — only the CLI shape moves).
 
+## Plan refinements (Phase 3, 2026-04-28)
+
+These supersede the original Actions/Test where they conflict.
+
+### Behavior contracts
+
+- **`pipeline.run()` signature**: drop `apply: bool` entirely. `output
+  is not None` is the new write predicate. The four integration test
+  call sites must be updated accordingly.
+- **stdin path**: buffer stdin to a tempfile in `cli.py` via
+  `shutil.copyfileobj(sys.stdin.buffer, tmp)`. Do NOT widen
+  `read_ris(path: Path)` to accept TextIO — keeps `ris.py` clean.
+- **Glyphs in piped mode**: `pipeline.py:41` already checks
+  `sys.stderr.isatty()`. No change needed; ticket body's stated
+  behavior is already implemented.
+- **Summary line in stream mode**: when `output is None` (writing
+  corrected RIS to stdout), the `Scanned: N  Fixed: M` summary must
+  go to **stderr** to avoid corrupting the piped RIS data.
+
+### Concrete changes
+
+1. **`src/maiba/pipeline.py`** — drop `apply: bool` param from `run()`.
+   Change `if apply and output is not None:` → `if output is not None:`.
+2. **`src/maiba/cli.py`** —
+   - `parser.add_subparsers(...)` with `required=False`. Set defaults
+     so no-args invocation prints help and exits 0.
+   - On `scan`: replace positional `input` and `--apply` with
+     `-i/--input` (Path, default None) and `-o/--output` (Path,
+     default None).
+   - I/O routing logic per the table in the original Actions section.
+   - When stdin is read, buffer to a `tempfile.NamedTemporaryFile`
+     and pass the path to `read_ris`.
+   - Summary always to stderr when `output is None`; to stdout
+     otherwise.
+3. **`src/maiba/ris.py`** — no changes.
+4. **`Makefile`** line 62 — remove `$(if $(APPLY),--apply,)`.
+   Replace `$(INPUT)` positional with `$(if $(INPUT),-i $(INPUT),)`.
+5. **`tests/test_pipeline_integration.py`** — update four call sites
+   (lines 56, 73, 88, 99): drop `apply=True/False` kwarg. The
+   `apply=False, output=out` case at line 88 becomes `output=None`
+   (correct dry-run form going forward).
+6. **`tests/test_cli_streams.py`** (NEW) — five subprocess tests per
+   the original ticket body, with the tautology fix below.
+7. **`README.md`** — Recipes section per original ticket body.
+
+### Tautology fix
+
+Original: `assert b"usage: maiba" in r.stdout` passes for any argparse
+parser. Strengthen by asserting at least two known subcommand names
+appear in help output:
+
+```python
+def test_no_args_prints_help_exit_zero():
+    r = _run([])
+    assert r.returncode == 0
+    assert b"usage: maiba" in r.stdout
+    assert b"scan" in r.stdout            # primary verb
+    assert b"clear-cache" in r.stdout     # cache verb (proves real help, not stub)
+```
+
+### Stream-mode integrity test
+
+Add to the new test file — guards against the summary-corrupting-stdout
+bug class:
+
+```python
+def test_scan_stdin_to_stdout_keeps_summary_off_stdout():
+    data = GOOD.read_bytes()
+    r = _run(["scan"], stdin=data)
+    assert r.returncode == 0
+    assert b"TY  - " in r.stdout
+    assert b"Scanned:" not in r.stdout    # summary must NOT pollute stream
+    assert b"Scanned:" in r.stderr        # but it must still appear somewhere
+```
+
 ## Out of scope
 
 - Changing `--report` (markdown report) — it's already file-based and

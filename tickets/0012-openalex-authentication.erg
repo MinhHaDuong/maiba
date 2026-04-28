@@ -137,6 +137,60 @@ def test_resolver_raises_on_rate_limit():
 - ARCHITECTURE.md §9 entry committed in the same PR.
 - README documents the env-var opt-in.
 
+## Plan refinements (Phase 3, 2026-04-28)
+
+These supersede the original Actions/Test where they conflict.
+
+### Behavior contracts
+
+- **Bearer header**: read `OPENALEX_API_KEY` at `__init__` time. Strip whitespace.
+  Empty/unset → no header (legacy unauthenticated path). Set → inject
+  `Authorization: Bearer <key>` into the httpx client headers.
+- **Status codes**: raise `ResolverRateLimited` on **429 only**. 401/403 (bad key)
+  still fall through to `return None` — that's "no candidate", not "stop trying".
+- **Pipeline catch**: abort-and-drain. On first `ResolverRateLimited`,
+  increment `report.rate_limited`, log to stderr, append the current item
+  and all remaining items unchanged to `out_items`, then `break` the loop.
+  Output file is complete; no data lost; we don't burn quota on certain failures.
+
+### Concrete changes
+
+1. **`src/maiba/resolvers/openalex.py`** — define `ResolverRateLimited`
+   exception class at module level. Update `__init__` to read env var
+   and inject Bearer header. Update `_resolve_by_doi` and
+   `_resolve_by_search` to raise on 429 (before the existing `!= 200`
+   gate).
+2. **`src/maiba/pipeline.py`** — add `rate_limited: int = 0` field to
+   `Report`. Wrap the `_try_resolvers(...)` call in the main loop with
+   `try/except ResolverRateLimited` per the abort-and-drain contract.
+3. **`tests/conftest.py`** (NEW) — autouse fixture that
+   `monkeypatch.delenv("OPENALEX_API_KEY", raising=False)`. Makes every
+   existing test hermetic regardless of developer shell environment.
+4. **`tests/test_resolve_openalex.py`** — three new tests:
+   - `test_api_key_sent_as_bearer_header` (set env, assert header)
+   - `test_no_auth_header_without_api_key` (unset env, assert absent)
+   - `test_rate_limited_raises` (mock 429, expect `ResolverRateLimited`)
+5. **`README.md`** — add "Configuration" section documenting the
+   `OPENALEX_API_KEY` env var (optional, enables prepaid balance).
+6. **`ARCHITECTURE.md` §9** — append decision-log entry per the
+   original ticket body.
+
+### Drop from original spec
+
+- **Action 6** (`test_no_committed_api_keys`): YAGNI. `.gitignore` and
+  pre-commit hooks are the right layer for secret scanning, not pytest.
+
+### Pre-implementation verification
+
+Before writing the production code, run:
+```
+curl -s -o /dev/null -w "%{http_code}\n" \
+  -H "Authorization: Bearer FAKE" \
+  "https://api.openalex.org/works?search=test"
+```
+A `200` or `429` (not `400`) confirms OpenAlex accepts the Bearer
+header. Document the result in the PR body.
+
 ## Out of scope (separate tickets)
 
 - Year-missing / author-missing scorer fix. Likely accounts for some
