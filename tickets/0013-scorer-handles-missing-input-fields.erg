@@ -1,0 +1,159 @@
+%erg v1
+Title: Resolver scorer must handle items with missing input fields
+Status: open
+Created: 2026-04-28
+Author: claude
+Blocked-by: 0012
+
+--- log ---
+2026-04-28T12:00Z claude created
+
+--- body ---
+## Context
+
+Both `OpenAlexResolver._resolve_by_search` and `CrossrefResolver._resolve_by_search`
+score candidates with the same fixed-weight formula:
+
+```python
+confidence = title_sim * 0.7 + author_overlap * 0.3
+if confidence >= title_min and author_overlap >= author_min and ...:
+    accept
+```
+
+Where `title_min = 0.85`, `author_min = 0.5` (per `config/maiba.yaml`).
+
+**Bug:** when the input `Item` has missing or forbidden authors
+(`AU` is `[]`, `["et al."]`, etc.), the scorer cannot ever accept a
+match, regardless of how good the candidate is:
+
+- `author_overlap` is 0 → `confidence` is capped at `0.7` (= title_sim × 0.7)
+- A perfect title match scores 0.7, which is below `title_min = 0.85`
+- And the `author_overlap >= author_min` check fails outright
+
+So **the very items that need their authors filled in are the items
+the resolver refuses to match.** Verified against
+`tests/fixtures/ArchiveCCS.ris`: 3 of 7 JOUR misses are AU-missing
+(`Séquestrer le CO2`, `Incentivising CCS in the EU`, `Factors
+Influencing the Societal Acceptance`). Crossref direct-API queries
+return relevant candidates at high relevance scores; MAIBA scores
+them as 0.7 and rejects.
+
+Same bug in both resolvers — `src/maiba/resolvers/openalex.py:170-172`
+and `src/maiba/resolvers/crossref.py:72-77`. Identical formula.
+
+## Why blocked-by 0012
+
+Without OpenAlex auth (ticket 0012), the resolver returns `None` for a
+different reason — the 429 rate-limit response is silently swallowed.
+That makes it impossible to distinguish "auth failure" from "scorer
+rejected the candidate." Once 0012 lands, OpenAlex returns real
+candidates and the scorer bug becomes the dominant remaining failure
+mode.
+
+## Actions
+
+1. **`src/maiba/resolvers/_scoring.py`** (new) — extract the scoring
+   logic so both resolvers share one implementation. A tiny module:
+   ```python
+   def score_candidate(input_item: Item, candidate: Item, cfg: Config) -> float | None:
+       """Return confidence in [0, 1] or None if candidate doesn't qualify.
+
+       Scoring drops the field-axis-of-comparison when the input lacks
+       that field — we cannot penalise a candidate for failing to match
+       what we never had to compare against.
+       """
+       ...
+   ```
+2. **Both resolvers** call `score_candidate(...)` instead of inlining
+   the formula. Behavior unchanged for items with all required fields
+   present.
+3. **Scoring logic for missing input fields:**
+   - If `input.AU` is empty or all-forbidden: drop the author axis.
+     `confidence = title_sim` (no 0.7 cap, no overlap floor).
+   - If `input.PY` is missing: search uses no year filter (already
+     correct). Scoring axis is unchanged — title and author still
+     apply. No change here, just documenting.
+   - If `input.TI` is missing: refuse (return `None`). Cannot search
+     without a title. Today this case doesn't appear (0 of 20
+     incompletes have missing TI), but the contract should say so.
+4. **Threshold reuses `title_similarity_min`** for the title-only path —
+   no new config knob. KISS.
+
+## Test (TDD red step)
+
+```python
+# tests/test_scoring.py — new file
+
+import pytest
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers._scoring import score_candidate
+
+CFG = load_config(Path("config/maiba.yaml"))
+
+
+def test_perfect_match_scores_high():
+    inp = Item(TY="JOUR", TI="Engaging the public on CCS",
+               AU=["Ashworth, Peta"], PY=2009)
+    cand = Item(TY="JOUR", TI="Engaging the public on CCS",
+                AU=["Ashworth, Peta", "Carr-Cornish, Simone"], PY=2009)
+    assert score_candidate(inp, cand, CFG) > 0.85
+
+
+def test_missing_input_AU_falls_back_to_title_only():
+    """Bug fix: items with empty/forbidden AU must still match on title alone."""
+    inp = Item(TY="JOUR", TI="Incentivising CCS in the EU",
+               AU=["et al."], PY=2010)
+    cand = Item(TY="JOUR", TI="Incentivising CCS in the EU: a quantitative assessment",
+                AU=["Boot-Handford, M.", "Abanades, J. C."], PY=2010)
+    score = score_candidate(inp, cand, CFG)
+    assert score is not None
+    assert score >= 0.85  # title-only path passes the title_min threshold
+
+
+def test_missing_input_AU_still_rejects_bad_title():
+    """Title-only path is still bounded by title_min."""
+    inp = Item(TY="JOUR", TI="Engaging the public on CCS", AU=[], PY=2009)
+    cand = Item(TY="JOUR", TI="Carbon nanotubes for hydrogen storage",
+                AU=["Different, A."], PY=2009)
+    assert score_candidate(inp, cand, CFG) is None
+
+
+def test_missing_input_TI_returns_None():
+    inp = Item(TY="JOUR", TI=None, AU=["Ashworth, P."], PY=2009)
+    cand = Item(TY="JOUR", TI="Anything", AU=["Ashworth, P."], PY=2009)
+    assert score_candidate(inp, cand, CFG) is None
+```
+
+## Exit criteria
+
+- `make test` green; new tests pass.
+- `make lint` green.
+- The 3 AU-missing JOUR records in `ArchiveCCS.ris` (Séquestrer,
+  Incentivising, Factors Influencing) match against real OpenAlex/
+  Crossref candidates after this ticket + 0012. Manual eyeball, not
+  asserted. Re-run the REPL diagnostic to verify.
+- Both resolvers route through the shared `_scoring` module — no
+  inline scoring formula remains. Adherence test enforces this:
+  ```python
+  def test_resolvers_use_shared_scoring():
+      """Both resolvers must call score_candidate, not inline the math."""
+      for path in (Path("src/maiba/resolvers/openalex.py"),
+                   Path("src/maiba/resolvers/crossref.py")):
+          src = path.read_text()
+          assert "title_sim * 0.7" not in src, f"{path}: inline scoring formula"
+          assert "score_candidate(" in src, f"{path}: must call shared scorer"
+  ```
+
+## Out of scope (separate tickets if needed)
+
+- Threshold tuning (`title_min`, `author_min`). Re-evaluate after this
+  fix lands and the auth path works — verbose-mode logging from
+  ticket 0011 will surface whether remaining misses are threshold or
+  candidate-availability.
+- Type coercion (`TY` Crossref `book-chapter` vs MAIBA `JOUR`).
+  Possibly already affecting matches; surface as a separate ticket
+  if observed in the REPL diagnostic post-fix.
+- Fuzzy author matching beyond name-fragment overlap. Today's
+  `_author_overlap` is exact lastname matching with `et al.` skipped;
+  could improve with rapidfuzz on author strings. Not blocking.
