@@ -1,0 +1,108 @@
+%erg v1
+Title: Pytest-style progress glyphs in scan loop
+Status: open
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T08:10Z claude created
+2026-04-28T08:30Z claude note split off cache work to ticket 0009
+
+--- body ---
+## Context
+
+User-observed pain on a live `uv run maiba scan tests/fixtures/ArchiveCCS.ris`
+(2026-04-28): the CLI prints nothing until the entire scan finishes. The
+user has no signal that work is happening or how far along it is.
+
+The 223-record dry-run takes ~2–4 minutes against live OpenAlex/Crossref;
+without progress feedback this feels broken. (Cache work to address the
+runtime itself is split into ticket 0009.)
+
+## Actions
+
+No new dependency. Per record, write one character to `sys.stderr`
+(flushed), followed by a newline at the end.
+
+| Char | Meaning |
+|------|---------|
+| `.`  | Skipped — record had no gaps |
+| `0`  | Not fixed — resolver returned None or confidence below `apply_threshold` |
+| `*`  | Fully fixed — every detected gap filled by the resolver |
+| `+`  | Partially fixed — at least one gap filled, at least one still open |
+
+1. In `src/maiba/pipeline.py` `run()`, classify each record's outcome
+   into one of the four states above and call `_emit_progress(char)`
+   right after the per-record decision.
+2. `_emit_progress` writes to `sys.stderr` (flushed). Suppress when
+   `sys.stderr` is not a TTY so logs/CI stay clean:
+   `if not sys.stderr.isatty(): return`.
+3. After the loop ends, write `"\n"` to stderr so the next CLI line
+   starts clean.
+4. Add `--quiet` to `maiba scan`. When set, suppress glyphs even on a TTY.
+
+### Edge cases
+- Empty input → no glyphs, no trailing newline (the loop just doesn't run).
+- An exception mid-loop → the partial glyph stream stays on screen; the
+  finally clause emits the trailing newline so the shell prompt isn't
+  jammed against the last glyph.
+
+## Test (TDD red step)
+
+```python
+# tests/test_progress.py
+import sys
+from pathlib import Path
+
+import respx
+from httpx import Response
+
+from maiba.config import load_config
+from maiba.pipeline import run
+
+
+@respx.mock
+def test_progress_glyph_per_record_on_tty(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(sys.stderr, "isatty", lambda: True)
+    # Default-deny network: no resolver hits; every gapped record gets `0`.
+    respx.get(url__startswith="https://api.openalex.org").mock(
+        return_value=Response(200, json={"meta": {"count": 0}, "results": []})
+    )
+    respx.get(url__startswith="https://api.crossref.org").mock(
+        return_value=Response(
+            200,
+            json={"status": "ok", "message": {"items": [], "total-results": 0}},
+        )
+    )
+    cfg = load_config("config/maiba.yaml")
+    run(input=Path("tests/fixtures/good.ris"), output=tmp_path / "out.ris",
+        cfg=cfg, apply=False)
+    err = capsys.readouterr().err
+    glyphs = err.rstrip("\n")
+    assert len(glyphs) == 3
+    assert all(c in ".0*+" for c in glyphs)
+    assert err.endswith("\n")
+
+
+def test_progress_suppressed_when_stderr_not_tty(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(sys.stderr, "isatty", lambda: False)
+    cfg = load_config("config/maiba.yaml")
+    # Empty fixture → loop doesn't fire either way; verifies no crash on non-tty.
+    run(input=Path("tests/fixtures/empty.ris"), output=tmp_path / "out.ris",
+        cfg=cfg, apply=False)
+    assert capsys.readouterr().err == ""
+```
+
+A small unit test on the classification helper would also be nice
+(`_classify(gaps_before, fields_changed_count) -> char`) — bare logic,
+no I/O.
+
+## Exit criteria
+
+- `make test` green; new tests above pass.
+- `uv run maiba scan tests/fixtures/good.ris` (TTY) prints `.0*+`-class
+  glyphs on stderr, one per record, with trailing newline.
+- `uv run maiba scan tests/fixtures/good.ris --quiet` produces no glyphs
+  even on a TTY.
+- `make lint` green.
+- The four glyphs are module-level constants in `pipeline.py`; not config-tunable.
