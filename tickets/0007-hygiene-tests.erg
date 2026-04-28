@@ -1,12 +1,15 @@
 %erg v1
 Title: Mechanical hygiene tests for src and config
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0001
 
 --- log ---
 2026-04-28T09:30Z claude created
+2026-04-28T11:30Z claude note spec rewritten — original assumed pre-0005 state; tests adjusted for current code (print to stdout in cli.py is OK; print in other src files must specify file=)
+2026-04-28T11:30Z claude claimed
+2026-04-28T11:45Z claude status closed work-complete
 
 --- body ---
 ## Context

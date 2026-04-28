@@ -81,7 +81,7 @@ def _work_to_item(work: dict) -> Item:
     ]
 
     doi_raw = work.get("doi") or ""
-    doi = doi_raw.removeprefix("https://doi.org/") if doi_raw else None
+    doi = doi_raw.removeprefix("https://doi.org/") if doi_raw else None  # noqa: hygiene
 
     source_name = None
     primary_loc = work.get("primary_location") or {}
