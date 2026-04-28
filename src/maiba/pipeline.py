@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -19,6 +20,27 @@ _RESOLVER_BUILDERS = {
     "openalex": OpenAlexResolver,
     "crossref": CrossrefResolver,
 }
+
+GLYPH_SKIP = "."
+GLYPH_NOT_FIXED = "0"
+GLYPH_FULL_FIX = "*"
+GLYPH_PARTIAL_FIX = "+"
+
+
+def _classify(gaps_count: int, fields_changed_count: int) -> str:
+    if gaps_count == 0:
+        return GLYPH_SKIP
+    if fields_changed_count == 0:
+        return GLYPH_NOT_FIXED
+    if fields_changed_count >= gaps_count:
+        return GLYPH_FULL_FIX
+    return GLYPH_PARTIAL_FIX
+
+
+def _emit_progress(char: str, *, quiet: bool = False) -> None:
+    if quiet or not sys.stderr.isatty():
+        return
+    print(char, end="", flush=True, file=sys.stderr)
 
 
 @dataclass
@@ -38,34 +60,53 @@ class Report:
     fixes: list[FixApplied] = field(default_factory=list)
 
 
-def run(input: Path, output: Path | None, cfg: Config, apply: bool) -> Report:
+def run(
+    input: Path,
+    output: Path | None,
+    cfg: Config,
+    apply: bool,
+    quiet: bool = False,
+) -> Report:
     items = list(read_ris(input))
     resolvers = _build_resolvers(cfg)
     today = date.today().isoformat()
     report = Report(scanned=len(items))
     out_items: list[Item] = []
+    emitted = False
 
-    for item in items:
-        gaps = detect_gaps(item, cfg)
-        if not gaps:
-            out_items.append(item)
-            continue
-        report.with_gaps += 1
+    try:
+        for item in items:
+            gaps = detect_gaps(item, cfg)
+            if not gaps:
+                out_items.append(item)
+                _emit_progress(_classify(0, 0), quiet=quiet)
+                emitted = True
+                continue
+            report.with_gaps += 1
 
-        result = _try_resolvers(item, resolvers)
-        if result is None:
-            out_items.append(item)
-            continue
-        if result.confidence < cfg.matching.apply_threshold:
-            report.skipped_below_threshold += 1
-            out_items.append(item)
-            continue
+            result = _try_resolvers(item, resolvers)
+            if result is None:
+                out_items.append(item)
+                _emit_progress(_classify(len(gaps), 0), quiet=quiet)
+                emitted = True
+                continue
+            if result.confidence < cfg.matching.apply_threshold:
+                report.skipped_below_threshold += 1
+                out_items.append(item)
+                _emit_progress(_classify(len(gaps), 0), quiet=quiet)
+                emitted = True
+                continue
 
-        fixed_item, fix = _merge_fix(item, result, gaps, cfg, today)
-        out_items.append(fixed_item)
-        if fix.fields_changed:
-            report.fixed += 1
-            report.fixes.append(fix)
+            fixed_item, fix = _merge_fix(item, result, gaps, cfg, today)
+            out_items.append(fixed_item)
+            if fix.fields_changed:
+                report.fixed += 1
+                report.fixes.append(fix)
+            _emit_progress(_classify(len(gaps), len(fix.fields_changed)), quiet=quiet)
+            emitted = True
+    finally:
+        if emitted and not quiet and sys.stderr.isatty():
+            print("", file=sys.stderr, flush=True)
 
     if apply and output is not None:
         write_ris(out_items, output)

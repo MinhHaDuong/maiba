@@ -24,6 +24,7 @@ def main(argv: list[str] | None = None) -> int:
         "--llm-fallback", action="store_true", help="Enable LLM fallback (not implemented in MVP)"
     )
     scan.add_argument("--report", type=Path, default=None, help="Write a markdown report")
+    scan.add_argument("--quiet", action="store_true", help="Suppress per-record progress glyphs")
 
     args = parser.parse_args(argv)
 
@@ -36,7 +37,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and output is None:
         output = args.input.with_suffix(".fixed.ris")
 
-    report = run(input=args.input, output=output, cfg=cfg, apply=args.apply)
+    report = run(input=args.input, output=output, cfg=cfg, apply=args.apply, quiet=args.quiet)
 
     print(f"Scanned: {report.scanned}")
     print(f"With gaps: {report.with_gaps}")

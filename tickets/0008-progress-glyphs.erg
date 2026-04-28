@@ -1,12 +1,14 @@
 %erg v1
 Title: Pytest-style progress glyphs in scan loop
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T08:10Z claude created
 2026-04-28T08:30Z claude note split off cache work to ticket 0009
+2026-04-28T09:00Z claude claimed
+2026-04-28T09:20Z claude status closed work-complete
 
 --- body ---
 ## Context
