@@ -1,11 +1,14 @@
 %erg v1
 Title: HTTP response cache for OpenAlex/Crossref resolvers
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T08:30Z claude created split-off-from-0008
+2026-04-28T08:37Z claude claimed
+2026-04-28T08:37Z claude status doing
+2026-04-28T09:15Z claude status closed — all exit criteria met: 41 tests green, lint clean, ~500x cache speedup verified live
 
 --- body ---
 ## Context

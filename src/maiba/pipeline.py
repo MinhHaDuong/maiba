@@ -110,9 +110,10 @@ def run(
     cfg: Config,
     apply: bool,
     quiet: bool = False,
+    use_cache: bool = False,
 ) -> Report:
     items = list(read_ris(input))
-    resolvers = _build_resolvers(cfg)
+    resolvers = _build_resolvers(cfg, use_cache=use_cache)
     today = date.today().isoformat()
     report = Report(scanned=len(items))
     out_items: list[Item] = []
@@ -160,8 +161,8 @@ def run(
     return report
 
 
-def _build_resolvers(cfg: Config) -> list[MetadataResolver]:
-    return [_RESOLVER_BUILDERS[name](cfg) for name in cfg.resolvers.order]
+def _build_resolvers(cfg: Config, *, use_cache: bool = False) -> list[MetadataResolver]:
+    return [_RESOLVER_BUILDERS[name](cfg, use_cache=use_cache) for name in cfg.resolvers.order]
 
 
 def _try_resolvers(item: Item, resolvers: list[MetadataResolver]) -> ResolutionResult | None:

@@ -17,6 +17,8 @@ class HttpConfig(BaseModel):
     max_retries: int
     backoff_s: float
     rate_limit_per_s: int
+    cache_dir: str
+    cache_ttl_s: int
 
 
 class ResolverEndpoint(BaseModel):

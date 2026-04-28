@@ -447,6 +447,14 @@ provenance:
   scaffolding the user explicitly requests (precedent: ticket 0006). All
   changes under `src/maiba/` must execute through orchestrator TDD.
   See `AGENTS.md` "Retrospective tickets".
+- **2026-04-28 — HTTP cache (§2.3) → DECIDED: hishel, opt-in via `--cache`.**
+  Runtime on ArchiveCCS.ris crossed the ~30 s threshold. hishel 1.2
+  (`SyncCacheClient` wrapping `httpx.Client`) with `SyncSqliteStorage` at
+  `~/.cache/maiba/http/http.db`, deletable without breaking correctness.
+  Default is **off** — preserves the §2.3 zero-state default for one-shot
+  users; dev-loop and re-run users opt in with `--cache` (or wipe via
+  `maiba clear-cache`). FilterPolicy with `cache_ttl_s` (30 days), since
+  OpenAlex/Crossref omit `Cache-Control`.
 - **2026-04-28 — License → DECIDED: CeCILL-B v1.** CEA-CNRS-INRIA Logiciel
   Libre, BSD-equivalent, GPL-compatible, French-law jurisdiction. Chosen
   for institutional alignment with CNRS while keeping adoption friction at

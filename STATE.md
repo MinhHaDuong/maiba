@@ -38,7 +38,7 @@ All four open decisions confirmed by user. See `ARCHITECTURE.md` §8 for the log
 
 - UI: pure CLI for MVP
 - Abstraction: Level 1 — two `Protocol`s, one implementation each
-- State: zero — RIS in / RIS out, no cache, no DB
+- State: zero by default — RIS in / RIS out, no DB; opt-in HTTP response cache at `~/.cache/maiba/http/` via `--cache` (deletable)
 - Backend: RIS file roundtrip; Zotero SQLite/Web-API deferred
 
 ## Next actions (in order)

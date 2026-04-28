@@ -1,0 +1,58 @@
+"""Tests for HTTP response caching via hishel."""
+
+import respx
+from httpx import Response
+
+from maiba.config import load_config
+from maiba.model import Item
+from maiba.resolvers.openalex import OpenAlexResolver
+
+
+@respx.mock
+def test_cache_flag_enables_caching(tmp_path):
+    cfg = load_config("config/maiba.yaml")
+    cfg.http.cache_dir = str(tmp_path / "cache")
+
+    route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
+        return_value=Response(
+            200,
+            json={
+                "title": "X",
+                "publication_year": 2020,
+                "authorships": [],
+                "doi": "https://doi.org/10.1/x",
+            },
+        )
+    )
+    resolver = OpenAlexResolver(cfg, use_cache=True)
+    item = Item(TY="JOUR", TI="X", DO="10.1/x")
+
+    resolver.resolve(item)
+    resolver.resolve(item)
+
+    assert route.call_count == 1, "second call should be served from cache"
+
+
+@respx.mock
+def test_default_does_not_cache(tmp_path):
+    cfg = load_config("config/maiba.yaml")
+    cfg.http.cache_dir = str(tmp_path / "cache")
+
+    route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
+        return_value=Response(
+            200,
+            json={
+                "title": "X",
+                "publication_year": 2020,
+                "authorships": [],
+                "doi": "https://doi.org/10.1/x",
+            },
+        )
+    )
+    resolver = OpenAlexResolver(cfg)
+    item = Item(TY="JOUR", TI="X", DO="10.1/x")
+
+    resolver.resolve(item)
+    resolver.resolve(item)
+
+    assert route.call_count == 2, "default (no cache) should hit the network every time"

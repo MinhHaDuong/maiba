@@ -6,6 +6,8 @@ http:
   max_retries: 3
   backoff_s: 1.5
   rate_limit_per_s: 5
+  cache_dir: ~/.cache/maiba/http
+  cache_ttl_s: 2592000
 
 resolvers:
   order: [openalex, crossref]
