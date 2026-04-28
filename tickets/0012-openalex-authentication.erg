@@ -7,6 +7,7 @@ Author: claude
 --- log ---
 2026-04-28T11:45Z claude created
 2026-04-28T12:00Z claude note reimagine — drop Action 6 (YAGNI: pre-commit/.gitignore is the right layer for secret scanning, not a pytest test); confirm bearer-contract = read env var at __init__ time (matches existing client shape); ResolverRateLimited lives in openalex.py (no shared exceptions module — KISS); README + ARCHITECTURE entries kept (light docs, same PR)
+2026-04-28T12:15Z claude note feasibility PASS — make_http_client helper already exists in resolvers/__init__.py and is used by both resolvers; mutate the headers dict between line 123 (build) and line 124 (call); !=200:return None confirmed at lines 134 and 151; conftest.py absent (safe to create); respx>=0.21 already in dev deps.
 
 --- body ---
 ## Context

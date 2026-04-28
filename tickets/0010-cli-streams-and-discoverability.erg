@@ -8,6 +8,7 @@ Author: claude
 2026-04-28T09:30Z claude created
 2026-04-28T10:00Z claude note dropped deprecation shim — project still pre-1.0, breaking is fine
 2026-04-28T12:00Z claude note reimagine — `read_ris(path: Path)` doesn't accept stdin; widen to `Path | str` and stream stdin through a temp file in cli.py (rispy needs a real path or file handle). README overlap with 0012 is additive (Configuration vs Recipes sections) — low risk.
+2026-04-28T12:15Z claude note feasibility PASS — verified pipeline.run() signature (use_cache kwarg present, must NOT be dropped); 4 integration test call sites confirmed at lines 56,73,88,99; cli.py summary print is currently to stdout (this is the bug 0010 fixes); _emit_progress correctly uses sys.stderr.isatty().
 
 --- body ---
 ## Context
@@ -184,8 +185,12 @@ These supersede the original Actions/Test where they conflict.
 
 ### Concrete changes
 
-1. **`src/maiba/pipeline.py`** — drop `apply: bool` param from `run()`.
-   Change `if apply and output is not None:` → `if output is not None:`.
+1. **`src/maiba/pipeline.py`** — drop **only** `apply: bool` param
+   from `run()`. The current full signature is
+   `run(input, output, cfg, apply, quiet=False, use_cache=False)`;
+   `use_cache` stays (it's wired to the CLI `--cache` flag from
+   ticket 0009). Change `if apply and output is not None:` →
+   `if output is not None:`.
 2. **`src/maiba/cli.py`** —
    - `parser.add_subparsers(...)` with `required=False`. Set defaults
      so no-args invocation prints help and exits 0.
