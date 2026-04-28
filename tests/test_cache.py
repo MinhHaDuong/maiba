@@ -16,7 +16,6 @@ def test_resolver_uses_cache_on_second_call(tmp_path):
     route = respx.get(url__regex=r".*api\.openalex\.org/works/doi:.*").mock(
         return_value=Response(
             200,
-            headers={"cache-control": "max-age=86400"},
             json={
                 "title": "X",
                 "publication_year": 2020,
