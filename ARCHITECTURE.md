@@ -243,7 +243,93 @@ the SQLite backend; it is trivial for RIS roundtrips. May influence §2.
 - Fine-tuning a custom model
 - Mobile / web SaaS
 
-## 6. Stack (proposed, not decided)
+## 6. Item data model — frozen contract for tickets 0001–0005
+
+The `Item` pydantic model is the single in-memory currency that flows from
+RIS → detect → resolve → apply → RIS. It must accommodate (a) every RIS tag
+seen in `ArchiveCCS.ris` and (b) every field MAIBA writes back from
+OpenAlex / Crossref. This contract is frozen here so tickets 0001 (data model)
+and 0003/0004 (resolvers) cannot drift.
+
+### 6.1 RIS tags actually present in `ArchiveCCS.ris` (counts)
+
+```
+TY 223  TI 223  KW 223  ER 223  AU 465 (multi)  L1 226 (multi)
+PY 213  LA  41  JO  40  PB  39  DO  24  T2  22
+VL  20  SP  20  EP  20  DA  18  N1   4  UR   3  IS   1  CY   1
+```
+
+### 6.2 `Item` field map
+
+| `Item` field | Type | RIS tag | OpenAlex path | Crossref path |
+|---|---|---|---|---|
+| `id` | `str` | derived from `L1` basename (e.g. `Ashworth.ea-2009-EngagingThePublic…`) | n/a — internal | n/a — internal |
+| `TY` | `str` (enum) | `TY` | `type` (mapped) | `type` (mapped) |
+| `TI` | `str` | `TI` | `title` | `title[0]` |
+| `AU` | `list[str]` | `AU` (repeated) | `authorships[*].author.display_name` | `author[*]` → `"{family}, {given}"` or `name` for corporate |
+| `PY` | `int \| None` | `PY` | `publication_year` | `published-print.date-parts[0][0]` ?? `published-online.date-parts[0][0]` ?? `issued.date-parts[0][0]` |
+| `DA` | `str \| None` | `DA` | `publication_date` (`YYYY-MM-DD`) | reconstructed from same date fields if all 3 parts present |
+| `JO` | `str \| None` | `JO` | `primary_location.source.display_name` (was `host_venue.display_name`; both must be tried) | `container-title[0]` |
+| `T2` | `str \| None` | `T2` | n/a (use `JO` for now) | `container-title[0]` (book/proceedings) |
+| `VL` | `str \| None` | `VL` | `biblio.volume` | `volume` |
+| `IS` | `str \| None` | `IS` | `biblio.issue` | `issue` |
+| `SP` | `str \| None` | `SP` | `biblio.first_page` | `page` split on `-` first part |
+| `EP` | `str \| None` | `EP` | `biblio.last_page` | `page` split on `-` second part |
+| `DO` | `str \| None` | `DO` | `doi` (strip `https://doi.org/` prefix) | `DOI` |
+| `UR` | `str \| None` | `UR` | `id` or `primary_location.landing_page_url` | `URL` |
+| `LA` | `str \| None` | `LA` | `language` (ISO 639-1, e.g. `"en"`) | `language` (ISO 639-1) |
+| `KW` | `list[str]` | `KW` (repeated) | `keywords[*].display_name` | `subject[]` |
+| `AB` | `str \| None` | absent in ArchiveCCS but allowed | reconstructed from `abstract_inverted_index` | `abstract` (rare) |
+| `PB` | `str \| None` | `PB` | `primary_location.source.publisher` | `publisher` |
+| `CY` | `str \| None` | `CY` | n/a | n/a |
+| `L1` | `list[str]` | `L1` (repeated) | n/a — internal | n/a — internal |
+| `N1` | `list[str]` | `N1` (repeated) | n/a — provenance lines live here | n/a — provenance lines live here |
+
+### 6.3 Notes on shape variation
+
+- **Crossref dates.** Use this priority order: `published-print.date-parts` →
+  `published-online.date-parts` → `issued.date-parts` → `created.date-parts`.
+  Each is a list-of-list-of-int that may be 1, 2, or 3 elements deep.
+- **OpenAlex venue moved.** `host_venue` exists on older endpoints; newer
+  responses put the same data under `primary_location.source`. Try both.
+- **Crossref title is an array.** Always take `[0]`; sometimes there's a
+  `subtitle` array — concatenate as `"title: subtitle"` only if both nonempty.
+- **OpenAlex DOI prefix.** The `doi` field is a full URL
+  (`https://doi.org/10.1016/...`). Strip the prefix when populating `Item.DO`.
+- **Authors can be corporate.** Crossref returns `{"name": "ADEME"}` (no
+  `family`/`given`) for corporate authors. OpenAlex returns the same as a
+  single `display_name`. Map to a single-element `AU`.
+- **OpenAlex abstract is inverted.** `abstract_inverted_index` is a dict
+  `{word: [positions]}`. Reconstruct only if the user asks for `AB`.
+
+### 6.4 `Item.id` — keying convention
+
+`id` is derived from the `L1` basename without extension:
+
+```
+file:///home/haduong/CNRS/html/ArchiveCCS/Ashworth.ea-2009-EngagingThePublic….pdf
+                                          └────────────────────┬─────────────┘
+                                                                └─→ Item.id
+```
+
+Reasoning: every record in `ArchiveCCS.ris` already has a unique `L1`
+basename (the existing archive convention), so no additional ID generation
+is needed. If `L1` is missing, `id` falls back to the SHA-1 of `(TI, AU[0],
+PY)` — guaranteed-stable across runs but never exposed in the RIS.
+
+### 6.5 What lives in `Item.N1` (provenance)
+
+When MAIBA modifies a record, it appends to `N1`:
+
+```
+maiba:autofixed:2026-04-28 source=openalex confidence=0.93
+maiba:before AU=["Ashworth, P.", "et al."]
+maiba:before JO=
+```
+
+These lines are emitted as separate `N1  - …` entries in the output RIS.
+
+## 7. Stack (proposed, not decided)
 
 For MVP (RIS roundtrip, OpenAlex + Crossref, no LLM):
 
@@ -260,7 +346,7 @@ Deferred (do not import until the corresponding capability ticket lands):
 - `rich` / `textual` — only if §2.1 picks Option B
 - LLM SDKs — only when `--llm-fallback` is wired (OpenRouter for cloud, padme HTTP for local)
 
-## 7. Configuration (no hardcoded constants — see §0)
+## 8. Configuration (no hardcoded constants — see §0)
 
 The MVP reads `config/maiba.yaml`. Everything tunable lives there.
 Sketch (subject to change in the design conversation):
@@ -304,7 +390,7 @@ provenance:
   tag_prefix: "maiba"                # e.g. maiba:autofixed:2026-04-28
 ```
 
-## 8. Decisions log
+## 9. Decisions log
 
 - **2026-04-28 — UI shape (§2.1) → DECIDED: A.** Pure CLI for MVP. No TUI, no
   web UI. One verb per command, machine-readable output where useful.
@@ -322,7 +408,7 @@ provenance:
 - **2026-04-28 — LLM fallback → DECIDED:** opt-in only via `--llm-fallback`,
   off by default. OpenRouter for cloud, padme HTTP for local. Disabled in MVP.
 
-## 9. Glossary
+## 10. Glossary
 
 - **Gap** — a missing or empty bibliographic field in an item
 - **Resolver** — a service that maps `(title, authors, year)` → metadata (Crossref, …)

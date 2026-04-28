@@ -15,15 +15,17 @@ Foundation ticket for the MVP. Everything else depends on this. Three things lan
 together because they are too small to split and too coupled to merge separately:
 
 1. **`Item` pydantic model** — the in-memory representation of one bibliographic
-   record. Fields drawn from the RIS tags actually used in `ArchiveCCS.ris`
-   (TY, TI, AU, PY, JO, VL, IS, SP, EP, DO, UR, LA, KW, N1, L1, L2, ER).
+   record. **The field set, types, and `id` derivation are frozen in
+   `ARCHITECTURE.md §6` — do not invent fields, follow that contract exactly.**
 2. **RIS reader / writer** — parse a `.ris` file into `Iterator[Item]`, and
    emit `Iterable[Item]` back to a `.ris` file. Roundtrip-stable on the entries
-   that matter (no field shuffle, no quoting drift).
+   that matter (no field shuffle, no quoting drift). Tolerates both `XX  - `
+   (two-space) and `XX - ` (one-space) tag separators in input; emits the
+   canonical two-space form on output.
 3. **Config loader** — read `config/maiba.yaml` into a typed `Config` model
    (pydantic). Per ARCHITECTURE.md §0: no hardcoded constants in code.
 
-`config/maiba.yaml` ships with the ticket. Use the sketch in ARCHITECTURE.md §7.
+`config/maiba.yaml` ships with the ticket. Use the sketch in ARCHITECTURE.md §8.
 
 ## Actions
 
@@ -69,6 +71,17 @@ def test_good_roundtrip_is_stable(tmp_path):
     write_ris(items, out)
     assert list(read_ris(out)) == items
 
+def test_good_loose_whitespace_parses_and_normalizes(tmp_path):
+    """Single-space separator (`XX - `) is accepted on input.
+    Output is canonicalized to two-space form."""
+    items = list(read_ris(F / "good-loose-whitespace.ris"))
+    assert len(items) == 1
+    assert items[0].DO == "10.1016/j.egypro.2009.02.302"
+    out = tmp_path / "out.ris"
+    write_ris(items, out)
+    text = out.read_text(encoding="utf-8")
+    assert "TY  - JOUR" in text  # canonical two-space form on output
+
 def test_archiveccs_parses_to_223_items():
     items = list(read_ris(F / "ArchiveCCS.ris"))
     assert len(items) == 223
@@ -85,6 +98,7 @@ def test_archiveccs_known_doi_record_has_expected_fields():
     assert ash.TY == "JOUR"
     assert ash.JO == "Energy Procedia"
     assert "Ashworth" in " ".join(ash.AU)
+    assert ash.id.startswith("Ashworth.ea-2009-EngagingThePublic")  # see §6.4
 
 # --- empty file is valid (returns empty iterator) ---
 

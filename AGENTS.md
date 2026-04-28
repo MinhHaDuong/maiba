@@ -53,6 +53,16 @@ This project uses git-erg local tickets for work coordination. See
 
 GitHub Issues are reserved for cross-repo or human-facing coordination.
 
+#### Retrospective tickets
+
+A ticket whose log shows `created → claimed → status closed` all in one
+session is acceptable **only** for pre-flight scaffolding work the user
+explicitly asked to be done immediately (e.g. ticket 0006, capturing API
+fixtures). For production code — any change under `src/maiba/` — the
+orchestrator must execute the ticket in TDD: open the ticket first, write
+the failing test, make it pass, then close. Do not pre-write code and
+backfill a closed ticket.
+
 ## Imperial Dragon workflow (five claws)
 
 Every non-trivial task passes through five phases. Announce transitions inline:

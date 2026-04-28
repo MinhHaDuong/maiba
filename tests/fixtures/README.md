@@ -4,6 +4,7 @@
 |------|---------|
 | `ArchiveCCS.ris` | The real-world 223-entry corpus. Canonical fixture for unit, integration, and smoke tests. |
 | `good.ris` | Hand-written 3-record RIS (JOUR + RPRT + NEWS) covering the type spread. Parser must accept; roundtrip must be lossless. |
+| `good-loose-whitespace.ris` | Same first record as `good.ris` but with single-space separators (`XX - `). Real-world vendors disagree on the spec; parser must accept this form and emit the canonical two-space form on roundtrip. |
 | `empty.ris` | Zero bytes. Parser must return an empty iterator without raising. |
 | `bad-notaris.ris` | Plain prose, no RIS tags. Parser must raise a clear `RisParseError`, not silently return empty. |
 | `bad-no-er.ris` | Record without `ER  -` terminator. Parser must raise. |
