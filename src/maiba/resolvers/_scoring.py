@@ -2,12 +2,18 @@
 
 Both `OpenAlexResolver` and `CrossrefResolver` route their search-path
 candidates through `select_best_candidate`. The helper scores each
-candidate, logs the input + top 3 at DEBUG, and returns the best
+candidate, logs the input + top N at DEBUG, and returns the best
 `ResolutionResult` (or None).
 
-The scoring drops the author axis when the input lacks authors — we
-cannot penalise a candidate for failing to match what we never had to
-compare against. This is the bug fix from ticket 0013.
+Title similarity is `max(token_sort_ratio, partial_ratio)` (ticket
+0026): token_sort handles word reordering, partial_ratio handles
+the case where the input title is a prefix or substring of a
+longer candidate title (very common with Crossref-stored titles
+like 'Allaying public concern… through the development of…').
+
+Author axis is dropped when the input lacks usable authors — we
+cannot penalise a candidate for failing to match what we never had
+to compare against (ticket 0013).
 """
 
 from __future__ import annotations
@@ -26,6 +32,7 @@ if TYPE_CHECKING:
 log = logging.getLogger("maiba.scoring")
 
 _TOP_N = 3
+_TITLE_TRUNCATE = 80
 
 
 def _extract_lastname(name: str) -> str:
@@ -35,6 +42,30 @@ def _extract_lastname(name: str) -> str:
         return name.split(",")[0].strip().lower()
     parts = name.split()
     return parts[-1].lower() if parts else ""
+
+
+def _first_lastname_display(authors: list[str]) -> str:
+    """Return 'Lastname' or 'Lastname +N' for a compact author summary."""
+    if not authors:
+        return "—"
+    first = _extract_lastname(authors[0]).capitalize() or authors[0]
+    extra = len(authors) - 1
+    return f"{first} +{extra}" if extra else first
+
+
+def _truncate(s: str | None, n: int = _TITLE_TRUNCATE) -> str:
+    if not s:
+        return "''"
+    if len(s) <= n:
+        return repr(s)
+    return repr(s[: n - 1] + "…")
+
+
+def _title_sim(a: str, b: str) -> float:
+    """max(token_sort, partial) / 100. Best of both metrics."""
+    if not a or not b:
+        return 0.0
+    return max(fuzz.token_sort_ratio(a, b), fuzz.partial_ratio(a, b)) / 100.0
 
 
 def _author_overlap(
@@ -67,7 +98,7 @@ def score_candidate(input_item: Item, candidate: Item, cfg: Config) -> float | N
     if not input_item.TI:
         return None
 
-    title_sim = fuzz.token_sort_ratio(input_item.TI, candidate.TI or "") / 100.0
+    title_sim = _title_sim(input_item.TI, candidate.TI or "")
     title_min = cfg.matching.title_similarity_min
 
     forbidden = cfg.gaps.forbidden_authors
@@ -87,7 +118,7 @@ def _raw_confidence(input_item: Item, candidate: Item, cfg: Config) -> float:
     """Confidence formula without the accept/reject gates — for ranking."""
     if not input_item.TI:
         return 0.0
-    title_sim = fuzz.token_sort_ratio(input_item.TI, candidate.TI or "") / 100.0
+    title_sim = _title_sim(input_item.TI, candidate.TI or "")
     forbidden = cfg.gaps.forbidden_authors
     clean_au = [a for a in input_item.AU if a not in forbidden]
     if not clean_au:
@@ -97,24 +128,23 @@ def _raw_confidence(input_item: Item, candidate: Item, cfg: Config) -> float:
 
 
 def _log_top_candidates(input_item: Item, ranked: list[tuple[Item, float]]) -> None:
-    """DEBUG-log the input record + top N candidates by raw confidence."""
+    """DEBUG-log the input record + top N candidates, one short line each."""
     if not log.isEnabledFor(logging.DEBUG):
         return
     log.debug(
-        "input  id=%s TI=%r AU=%s PY=%s",
+        "INPUT  %s (PY=%s)  %s",
         input_item.id,
-        input_item.TI,
-        list(input_item.AU),
         input_item.PY,
+        _truncate(input_item.TI),
     )
     for i, (cand, raw) in enumerate(ranked[:_TOP_N], 1):
         log.debug(
-            "  top%d raw=%.2f TI=%r AU=%s PY=%s",
+            "  top%d raw=%.2f  (%s, %s)  %s",
             i,
             raw,
-            cand.TI,
-            list(cand.AU),
-            cand.PY,
+            cand.PY if cand.PY is not None else "—",
+            _first_lastname_display(list(cand.AU)),
+            _truncate(cand.TI),
         )
 
 

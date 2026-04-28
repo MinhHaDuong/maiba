@@ -62,6 +62,32 @@ def test_empty_title_returns_none() -> None:
     assert score_candidate(inp, cand, CFG) is None
 
 
+def test_substring_title_match_accepts() -> None:
+    """Candidate title that fully contains the input title scores high.
+
+    Crossref often stores a longer title than what's in our RIS export;
+    `partial_ratio` rescues these (ticket 0026).
+    """
+    inp = Item(
+        TY="JOUR",
+        TI="Allaying Public Concern Regarding CO2 Geological Sequestration",
+        AU=["Annunziatellis, A.", "Beaubien, S. E."],
+        PY=2005,
+    )
+    cand = Item(
+        TY="JOUR",
+        TI=(
+            "Allaying public concern regarding CO2 geological sequestration "
+            "through the development of automated stations for the continuous "
+            "geochemical monitoring of gases in the near surface environment"
+        ),
+        AU=["Annunziatellis, A.", "Beaubien, S. E."],
+        PY=2005,
+    )
+    score = score_candidate(inp, cand, CFG)
+    assert score is not None and score >= 0.85
+
+
 def test_low_overlap_is_rejected_when_authors_present() -> None:
     """When the input has authors, author overlap must clear the floor."""
     inp = Item(

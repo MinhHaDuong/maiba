@@ -1,0 +1,94 @@
+%erg v1
+Title: Relax title matcher (partial_ratio) and simplify the top-3 DEBUG line
+Status: closed
+Created: 2026-04-28
+Author: claude
+
+--- log ---
+2026-04-28T18:40Z claude created
+2026-04-28T18:40Z claude claimed
+2026-04-28T18:55Z claude note smoke run on ArchiveCCS — Fixed: 2→7 with new matcher; 5 Mode-2 records rescued
+2026-04-28T18:55Z claude status closed all-exit-criteria-met
+
+--- body ---
+## Context
+
+Diagnostic from `-vv` after ticket 0025:
+
+```
+input  id=Annunziatelli-200X-… TI='Allaying Public Concern Regarding CO2 Geological Sequestration' AU=[…] PY=None
+  top1 raw=0.62 TI='Allaying public concern regarding CO2 geological sequestration through the development of automated stations…' AU=[…] PY=2005
+```
+
+Two problems visible at once:
+
+1. **The right paper is being rejected** — same authors, input title is
+   literally a substring of the candidate title (the candidate title
+   is just the input title plus `… through the development of …`).
+   `token_sort_ratio` scores this 0.45–0.62 because it counts unmatched
+   tokens in the longer string as penalty. `partial_ratio` is
+   designed for exactly this case — it finds the best matching
+   substring.
+
+2. **The DEBUG line is unreadable** — author lists swallow the screen
+   (some have 50+ authors). The user only needs to eyeball: does this
+   look like the right paper?
+
+## Actions
+
+1. **`src/maiba/resolvers/_scoring.py`** — title_sim becomes
+   `max(token_sort_ratio, partial_ratio) / 100.0`. Either similarity
+   metric crossing the threshold accepts. Token-sort still helps
+   when the candidate title reorders words; partial-ratio helps
+   when the input title is a substring of a longer candidate.
+
+2. **`_log_top_candidates`** — single line per candidate, with author
+   list collapsed to first lastname + count, and title truncated to
+   ~80 chars:
+   ```
+   INPUT  Annunziatelli-200X-… (PY=None)  'Allaying Public Concern Regarding CO2 Geological Sequestra…'
+     top1 raw=0.91  (2005, Annunziatellis +3)  'Allaying public concern regarding CO2 geological sequestra…'
+     top2 raw=0.32  (2014, Gough +2)           'Public perceptions of CO2 transportation in pipelines'
+     top3 raw=0.30  (2019, Whitmarsh +2)       'Framing effects on public support for carbon capture and st…'
+   ```
+
+3. **No threshold change.** With `partial_ratio` doing the substring
+   work, the existing 0.85 threshold should now accept Mode-2
+   records. If after this lands the recall is still low, surface
+   in a separate ticket.
+
+## Test (TDD red step)
+
+```python
+# tests/test_scoring.py — addition
+def test_substring_title_match_accepts():
+    """Candidate title that fully contains the input title scores high."""
+    inp = Item(TY="JOUR",
+        TI="Allaying Public Concern Regarding CO2 Geological Sequestration",
+        AU=["Annunziatellis, A.", "Beaubien, S. E."], PY=2005)
+    cand = Item(TY="JOUR",
+        TI="Allaying public concern regarding CO2 geological sequestration "
+           "through the development of automated stations",
+        AU=["Annunziatellis, A.", "Beaubien, S. E."], PY=2005)
+    score = score_candidate(inp, cand, CFG)
+    assert score is not None and score >= 0.85
+```
+
+This test fails today (token_sort_ratio gives ~0.45).
+
+## Exit criteria
+
+- `make test` green; new substring-match test passes.
+- `make lint` green.
+- `uv run maiba scan -vv … 2>&1 | grep -E 'INPUT |  top'` shows one
+  short line per candidate; no multi-line author dumps.
+- After this lands, smoke run on `tests/fixtures/ArchiveCCS.ris`
+  produces strictly more fixes than the current 2 (manual eyeball).
+
+## Out of scope
+
+- Tuning the threshold per record-type. KISS — partial_ratio is the
+  one mechanical move; if it doesn't move the needle, surface in a
+  separate ticket.
+- Truncating authors elegantly (Unicode-aware ellipsis, etc.). The
+  current `+N` suffix is enough for human eyeballing.
