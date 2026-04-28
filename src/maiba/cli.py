@@ -8,12 +8,20 @@ import sys
 import tempfile
 from pathlib import Path
 
+from maiba._logging import configure as configure_logging
 from maiba.config import load_config
 from maiba.pipeline import run
 
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="maiba", description="MAIBA — bibliography janitor")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase log verbosity (-v INFO, -vv DEBUG; default WARNING)",
+    )
     sub = parser.add_subparsers(dest="cmd", required=False)
 
     scan = sub.add_parser("scan", help="Scan an RIS file and optionally fix gaps")
@@ -133,6 +141,7 @@ def _try_unlink(path: Path) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
+    configure_logging(args.verbose)
 
     if args.cmd is None:
         parser.print_help()

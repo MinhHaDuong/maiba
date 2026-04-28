@@ -1,11 +1,13 @@
 %erg v1
 Title: Structured logging with --verbose for the scan pipeline
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T10:30Z claude created
+2026-04-28T14:00Z claude claimed
+2026-04-28T14:20Z claude status closed all-exit-criteria-met
 
 --- body ---
 ## Context
