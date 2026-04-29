@@ -10,7 +10,7 @@ remaining 13 records are mostly French ministry meeting notes, NGO
 reports, and other grey lit that are not in OpenAlex or Crossref. The
 LLM resolver (0015) is unblocked and ready for the nightbeat.
 
-## Status: worktree branch pending merge; nightbeat targets 0015
+## Status: main clean, 114 tests green; nightbeat targets 0015
 
 CLI runs end-to-end and is Unix-pipeable:
 
@@ -20,9 +20,8 @@ cat FILE.ris | maiba scan > OUT.ris              # stream-friendly
 maiba clear-cache                                # cache wipe
 ```
 
-113 tests green on main. 114 on the pending worktree branch.
-Lint clean. Auth path verified end-to-end. Resolver chain is
-rate-limit-tolerant.
+114 tests green on main. Lint clean. Auth path verified end-to-end.
+Resolver chain is rate-limit-tolerant.
 
 PDF pipeline (0014, 0028, 0030): first-page text, embedded XMP/info-dict
 metadata, pre-resolver DOI scan. Pipeline merge fills all empty fields
@@ -35,7 +34,7 @@ LLM context only in 0015, never write to item fields directly.
 
 **Bug fixed (2026-04-29):** malformed XMP XML in real corpus PDFs caused an
 unhandled `PdfReadError` in `extract_pdf_metadata`. Fixed with regression
-test. On worktree branch `worktree-elegant-questing-squid`, pending merge.
+test (PR #54, merged).
 
 Real-world recall on canonical corpus (`tests/fixtures/ArchiveCCS.ris`):
 **7 of 20** records fixed. 24/215 PDFs have a DOI on the first page,
@@ -52,12 +51,9 @@ enabling a direct resolver lookup for those records.
 | 0021 | Pre-flight cost estimate and interactive confirm for `--llm-fallback` | 0015 |
 | 0022 | Per-run JSONL audit log of every LLM call | 0015 |
 
-*(Tickets 0032 and 0033 are closed on the worktree branch, pending merge to main.)*
-
 ## Next actions (in order)
 
-1. **Merge** `worktree-elegant-questing-squid` → main (0032 fix, XMP bug fix, 0033 closed).
-2. **0015** — LLM resolver. No blockers. `OPENROUTER_API_KEY` in `.env`.
+1. **0015** — LLM resolver. No blockers. `OPENROUTER_API_KEY` in `.env`.
    PDF first-page text (0014) and embedded metadata (0028, LLM-context only)
    are available as evidence. 24 records have DOI from first page.
 3. **0021 + 0022** — cost guardrails and audit log before any large run.
