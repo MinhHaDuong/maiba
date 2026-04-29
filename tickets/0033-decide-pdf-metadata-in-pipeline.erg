@@ -1,0 +1,63 @@
+%erg v1
+Title: Decide whether and how to use embedded PDF metadata in the pipeline
+Status: open
+Created: 2026-04-29
+Author: claude
+
+--- log ---
+2026-04-29T10:15Z claude created
+
+--- body ---
+## Context
+
+Ticket 0028 added `extract_pdf_metadata()` which reads `/Title`, `/Author`,
+and XMP fields from a PDF's embedded metadata. The function exists and is
+tested but is **not called from the pipeline** — it is dead production code.
+
+QA of all 215 PDFs in the ArchiveCCS corpus (2026-04-29) found the embedded
+metadata is almost universally garbage for this kind of grey literature:
+
+- Titles are Word filenames: `Microsoft Word - TKC Risk Paper final_worddoc.doc`
+- Authors are internal usernames: `spc`, `gb05`, `Klaas`, `ddesmicht`, `i07potti`
+- Some have conference slugs instead of paper titles: `GHGT-9_Chiavari`
+
+Only a handful of records (e.g. Elsevier journals like Ashworth et al.) had
+real, usable title and author values in their embedded metadata.
+
+**Current situation:** `extract_pdf_metadata` is never invoked from `pipeline.py`.
+No garbage is reaching item fields. The risk is zero until someone wires it in.
+
+## Decision needed
+
+Three options:
+
+**A. Delete it.** The function is dead code; the metadata it extracts is
+not trustworthy for grey literature. Keep only `extract_first_page` and
+`extract_doi_from_first_page`.
+
+**B. Keep it, wire it to LLM context only (0015).** Pass embedded metadata as
+additional evidence to the LLM resolver prompt — the LLM can judge whether
+the title looks like a Word filename or a real title. Never write it to
+item fields directly.
+
+**C. Keep it, wire it with a quality filter.** Heuristically reject garbage
+values (filename extensions, all-lowercase, very short, no spaces) before
+writing to item fields.
+
+Recommendation: **B**. The LLM is better placed to judge metadata quality
+than a heuristic filter. Option A loses potentially useful signal for the
+LLM. Option C adds complexity and will fail on edge cases.
+
+## Actions
+
+1. Decide between A, B, C with the user.
+2. If B: wire `extract_pdf_metadata` result into the LLM resolver context
+   dict in ticket 0015 — no extra ticket needed.
+3. If A: delete `extract_pdf_metadata`, `_extract_info_dict`, `_extract_xmp_meta`,
+   `_xmp_scalar`, `_XMP_ATTR_MAP`, `_INFO_KEY_MAP` from `pdf.py`, and remove
+   `test_pdf_metadata.py` entirely.
+
+## Exit criteria
+
+- Decision documented in this ticket's log.
+- Code consistent with the decision.
