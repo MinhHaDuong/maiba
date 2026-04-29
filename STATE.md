@@ -42,6 +42,9 @@ Crossref title+author search.
 | 0021 | Pre-flight cost estimate and interactive confirm for `--llm-fallback` | 0015 |
 | 0022 | Per-run JSONL audit log of every LLM call | 0015 |
 | 0028 | Extract PDF embedded metadata (XMP / info dict) — sibling to 0014 | — |
+| 0029 | Pipeline merge step drops derived fields outside the gap set | — |
+| 0030 | Extract DOI from PDF first-page text before resolver search | 0014 |
+| 0031 | Capture OpenAlex Work IDs (W…) on the Item model | — |
 
 ## Next actions (in order)
 
