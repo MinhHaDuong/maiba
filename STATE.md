@@ -1,6 +1,6 @@
 # State
 
-Last updated: 2026-04-29 (session wrap: tickets 0014 0028 0029 0030 0031 merged)
+Last updated: 2026-04-29 (session wrap: tickets 0032 0033 fixed/decided; XMP crash patched)
 
 ## Current goal
 
@@ -8,11 +8,9 @@ Last updated: 2026-04-29 (session wrap: tickets 0014 0028 0029 0030 0031 merged)
 resolver path is at its ceiling: 7/20 fixes on `ArchiveCCS.ris`. The
 remaining 13 records are mostly French ministry meeting notes, NGO
 reports, and other grey lit that are not in OpenAlex or Crossref. The
-LLM resolver (0015) is unblocked: PDF first-page text (0014) and
-embedded metadata (0028) landed. Cost-control wrappers (0021, 0022)
-and review queue (0016) follow.
+LLM resolver (0015) is unblocked and ready for the nightbeat.
 
-## Status: mechanical recall at ceiling; LLM path is next milestone
+## Status: worktree branch pending merge; nightbeat targets 0015
 
 CLI runs end-to-end and is Unix-pipeable:
 
@@ -22,24 +20,28 @@ cat FILE.ris | maiba scan > OUT.ris              # stream-friendly
 maiba clear-cache                                # cache wipe
 ```
 
-113 tests green. Lint clean. Auth path verified end-to-end (`Bearer`
-header reaches OpenAlex). Resolver chain is rate-limit-tolerant
-(OpenAlex 429 doesn't abort; Crossref takes over). DEBUG output at
-`-vv` shows top-3 candidates per record with the winning candidate
-marked `*`.
+113 tests green on main. 114 on the pending worktree branch.
+Lint clean. Auth path verified end-to-end. Resolver chain is
+rate-limit-tolerant.
 
-PDF pipeline landed (tickets 0014, 0028, 0030): first-page text
-extraction, embedded XMP/info-dict metadata, and pre-resolver DOI
-scan. Pipeline merge now fills all resolver-returned fields
-opportunistically (ticket 0029). OpenAlex Work IDs captured as
-`OAID` field and round-tripped via RIS `C1` tag (ticket 0031).
+PDF pipeline (0014, 0028, 0030): first-page text, embedded XMP/info-dict
+metadata, pre-resolver DOI scan. Pipeline merge fills all empty fields
+(0029). OpenAlex Work IDs captured as `OAID` via RIS `C1` tag (0031).
+
+**Design decision (0033, 2026-04-29):** embedded PDF metadata (`extract_pdf_metadata`)
+is dead code in the pipeline — QA of 215 corpus PDFs confirmed it is
+mostly garbage (Word filenames, internal usernames). Decision: pass it as
+LLM context only in 0015, never write to item fields directly.
+
+**Bug fixed (2026-04-29):** malformed XMP XML in real corpus PDFs caused an
+unhandled `PdfReadError` in `extract_pdf_metadata`. Fixed with regression
+test. On worktree branch `worktree-elegant-questing-squid`, pending merge.
 
 Real-world recall on canonical corpus (`tests/fixtures/ArchiveCCS.ris`):
-**7 of 20** records fixed. Mostly `PY` and `AU` fills via OpenAlex or
-Crossref title+author search.
+**7 of 20** records fixed. 24/215 PDFs have a DOI on the first page,
+enabling a direct resolver lookup for those records.
 
-`OPENROUTER_API_KEY` is now in `.env`. Ticket 0015 (LLM resolver)
-has no remaining blockers.
+`OPENROUTER_API_KEY` is in `.env`. Ticket 0015 has no remaining blockers.
 
 ## Open tickets
 
@@ -49,16 +51,16 @@ has no remaining blockers.
 | 0016 | Review queue: write low-confidence fixes to markdown | 0015 |
 | 0021 | Pre-flight cost estimate and interactive confirm for `--llm-fallback` | 0015 |
 | 0022 | Per-run JSONL audit log of every LLM call | 0015 |
-| 0032 | Fix test_pdf_metadata.py tests that reference non-committed corpus PDFs | — |
+
+*(Tickets 0032 and 0033 are closed on the worktree branch, pending merge to main.)*
 
 ## Next actions (in order)
 
-1. **0032** — small hygiene: 4 tests in `test_pdf_metadata.py` reference
-   non-committed corpus PDFs and fail in worktrees. Fix before 0015 adds more.
-2. **0015** — LLM resolver. No blockers. `OPENROUTER_API_KEY` is in `.env`.
-   PDF first-page text (0014) and metadata (0028) are available as context.
-3. **0021 + 0022** — cost guardrails before any large run with the
-   LLM resolver enabled.
+1. **Merge** `worktree-elegant-questing-squid` → main (0032 fix, XMP bug fix, 0033 closed).
+2. **0015** — LLM resolver. No blockers. `OPENROUTER_API_KEY` in `.env`.
+   PDF first-page text (0014) and embedded metadata (0028, LLM-context only)
+   are available as evidence. 24 records have DOI from first page.
+3. **0021 + 0022** — cost guardrails and audit log before any large run.
 4. **0016** — review queue for the residue.
 
 ## Blockers
