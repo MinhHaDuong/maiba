@@ -1,6 +1,6 @@
 # State
 
-Last updated: 2026-04-28
+Last updated: 2026-04-29 (housekeeping run 06:55Z)
 
 ## Current goal
 
