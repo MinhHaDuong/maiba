@@ -54,9 +54,9 @@ The point is that 1–3 already justify the tool.
 
 ## Status
 
-Pre-alpha. Project scaffold only. **No code yet.** See `ARCHITECTURE.md` §2 for
-the four open decisions that gate code generation, and `STATE.md` for the
-current goal and next actions.
+Pre-alpha, actively developed. CLI ships end-to-end; 87 tests green; mechanical
+recall at **7/20** records on the canonical corpus. LLM fallback path is the
+current milestone. See `STATE.md` for the current goal and next actions.
 
 ## Repository layout
 
