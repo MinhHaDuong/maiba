@@ -1,6 +1,6 @@
 %erg v1
 Title: Capture OpenAlex Work IDs (W…) on the Item model
-Status: doing
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0029
@@ -10,6 +10,7 @@ Blocked-by: 0029
 2026-04-29T07:10Z claude note reimagined — hard dep on 0029 confirmed (merge loop drops OAID without _MERGEABLE_FIELDS fix); add Blocked-by:0029; flag M1 vs C1 choice
 2026-04-29T08:12Z claude claimed
 2026-04-29T08:12Z claude status doing
+2026-04-29T08:30Z claude status closed — implemented: Item.OAID field, openalex extractor, ris.py C1 roundtrip, pipeline merge; 98 tests green
 
 --- body ---
 ## Context
