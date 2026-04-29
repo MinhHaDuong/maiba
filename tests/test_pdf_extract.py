@@ -7,7 +7,7 @@ from maiba.model import Item
 from maiba.pdf import PdfExtractionError, extract_first_page
 
 CFG = load_config("config/maiba.yaml")
-F = Path("tests/fixtures")
+F = Path(__file__).parent / "fixtures"
 
 
 def test_extract_text_layer():

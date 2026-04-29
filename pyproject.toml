@@ -16,7 +16,7 @@ dependencies = [
     "rapidfuzz>=3",
     "hishel>=1.2",
     "python-dotenv>=1.0",
-    "pypdf>=6.10.2",
+    "pypdf>=5",
 ]
 
 [project.optional-dependencies]
@@ -54,9 +54,4 @@ select = ["E", "F", "I", "N", "W", "UP", "B", "RET", "C901", "PLR0912", "PLR0915
 testpaths = ["tests"]
 markers = [
     "adherence: project rule enforcement (hygiene/discipline/contracts)",
-]
-
-[dependency-groups]
-dev = [
-    "fpdf2>=2.8.7",
 ]
