@@ -1,12 +1,14 @@
 %erg v1
 Title: Pipeline merge step drops derived fields outside the gap set
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T15:30Z claude created
 2026-04-29T07:10Z claude note reimagined — drop mergeable_fields() from Item; use _MERGEABLE_FIELDS tuple in pipeline.py (model stays pure data)
+2026-04-29T09:30Z claude claimed
+2026-04-29T09:30Z claude status closed — implemented; 4 tests green
 
 --- body ---
 ## Context

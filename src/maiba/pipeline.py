@@ -24,6 +24,30 @@ _RESOLVER_BUILDERS = {
     "crossref": CrossrefResolver,
 }
 
+# Fields eligible for opportunistic merge from a resolver candidate.
+# Excludes: TY (record type stays from input), L1/L2 (file attachments),
+# N1 (notes — managed separately for provenance), id (internal).
+# Ticket 0031 will add OAID once that field lands on Item.
+_MERGEABLE_FIELDS = (
+    "TI",
+    "AU",
+    "PY",
+    "DA",
+    "JO",
+    "T2",
+    "VL",
+    "IS",
+    "SP",
+    "EP",
+    "DO",
+    "UR",
+    "LA",
+    "KW",
+    "AB",
+    "PB",
+    "CY",
+)
+
 GLYPH_SKIP = "."
 GLYPH_NOT_FIXED = "0"
 GLYPH_FULL_FIX = "*"
@@ -224,12 +248,22 @@ def _merge_fix(
     new_data = item.model_dump()
     fields_changed: dict[str, tuple[Any, Any]] = {}
 
-    for tag in gaps:
+    gaps_set = set(gaps)
+    for tag in _MERGEABLE_FIELDS:
         new_value = getattr(candidate, tag, None)
         old_value = getattr(item, tag, None)
-        if _is_filled(new_value) and new_value != old_value:
-            new_data[tag] = new_value
-            fields_changed[tag] = (old_value, new_value)
+        if not _is_filled(new_value):
+            continue
+        if tag in gaps_set:
+            # Asked-for field: overwrite even if not empty (e.g. "et al." → real authors).
+            if new_value != old_value:
+                new_data[tag] = new_value
+                fields_changed[tag] = (old_value, new_value)
+        else:
+            # Opportunistic: fill empty slots only, never overwrite user data.
+            if not _is_filled(old_value):
+                new_data[tag] = new_value
+                fields_changed[tag] = (old_value, new_value)
 
     if not fields_changed:
         return item, FixApplied(
