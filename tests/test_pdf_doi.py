@@ -66,3 +66,36 @@ def test_corrupt_pdf_raises_extraction_error():
     )
     with pytest.raises(PdfExtractionError):
         extract_doi_from_first_page(item, CFG)
+
+
+def test_prehook_populates_do_and_provenance():
+    """_pdf_doi_prehook sets DO from PDF and appends source=pdf-firstpage provenance."""
+    from maiba.pipeline import _pdf_doi_prehook
+
+    item = Item(
+        TY="JOUR",
+        TI="x",
+        AU=["a"],
+        PY=2009,
+        L1=[f"file://{(F / 'sample-with-doi.pdf').absolute()}"],
+    )
+    new = _pdf_doi_prehook(item, CFG, "2026-04-29")
+    assert new.DO == "10.1016/j.egypro.2009.02.302"
+    assert any("source=pdf-firstpage" in n and "confidence=1.00" in n for n in new.N1)
+
+
+def test_prehook_swallows_corrupt_pdf():
+    """_pdf_doi_prehook on a corrupt PDF: item.DO stays None, no crash."""
+    from maiba.pipeline import _pdf_doi_prehook
+
+    item = Item(
+        TY="JOUR",
+        TI="x",
+        AU=["a"],
+        PY=2020,
+        L1=[f"file://{(F / 'sample-broken.pdf').absolute()}"],
+        DO=None,
+    )
+    new = _pdf_doi_prehook(item, CFG, "2026-04-29")
+    assert new.DO is None
+    assert new is item or new.N1 == item.N1
