@@ -1,6 +1,6 @@
 %erg v1
 Title: Capture OpenAlex Work IDs (W…) on the Item model
-Status: open
+Status: doing
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0029
@@ -8,6 +8,8 @@ Blocked-by: 0029
 --- log ---
 2026-04-28T15:34Z claude created
 2026-04-29T07:10Z claude note reimagined — hard dep on 0029 confirmed (merge loop drops OAID without _MERGEABLE_FIELDS fix); add Blocked-by:0029; flag M1 vs C1 choice
+2026-04-29T08:12Z claude claimed
+2026-04-29T08:12Z claude status doing
 
 --- body ---
 ## Context
