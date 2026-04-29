@@ -1,6 +1,6 @@
 %erg v1
 Title: Extract PDF embedded metadata (XMP / info dict) as a sibling to first-page text
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0014
@@ -8,6 +8,8 @@ Blocked-by: 0014
 --- log ---
 2026-04-28T14:45Z claude created
 2026-04-29T07:10Z claude note reimagined — add Blocked-by:0014; cut pipeline TI-fill wiring (extraction only); prefer pypdf over pikepdf
+2026-04-29T08:00Z claude claimed feat/0028-extract-pdf-metadata
+2026-04-29T08:00Z claude status closed — implemented extract_pdf_metadata + PdfMetadataError; 8 tests green; smoke: 66% title, 53% author coverage on 215 corpus PDFs
 
 --- body ---
 ## Context
