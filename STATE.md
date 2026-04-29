@@ -1,6 +1,6 @@
 # State
 
-Last updated: 2026-04-29 (housekeeping run 06:55Z)
+Last updated: 2026-04-29 (session wrap: tickets 0014 0028 0029 0030 0031 merged)
 
 ## Current goal
 
@@ -12,7 +12,7 @@ LLM resolver (0015) needs PDF first-page text (0014) as input and
 audit/cost-control wrappers (0021, 0022) before it lands. Review
 queue (0016) closes the loop.
 
-## Status: mechanical recall path at ceiling
+## Status: mechanical recall at ceiling; LLM path is next milestone
 
 CLI runs end-to-end and is Unix-pipeable:
 
@@ -22,47 +22,48 @@ cat FILE.ris | maiba scan > OUT.ris              # stream-friendly
 maiba clear-cache                                # cache wipe
 ```
 
-87 tests green. Lint clean. Auth path verified end-to-end (`Bearer`
+113 tests green. Lint clean. Auth path verified end-to-end (`Bearer`
 header reaches OpenAlex). Resolver chain is rate-limit-tolerant
 (OpenAlex 429 doesn't abort; Crossref takes over). DEBUG output at
 `-vv` shows top-3 candidates per record with the winning candidate
 marked `*`.
 
+PDF pipeline landed (tickets 0014, 0028, 0030): first-page text
+extraction, embedded XMP/info-dict metadata, and pre-resolver DOI
+scan. Pipeline merge now fills all resolver-returned fields
+opportunistically (ticket 0029). OpenAlex Work IDs captured as
+`OAID` field and round-tripped via RIS `C1` tag (ticket 0031).
+
 Real-world recall on canonical corpus (`tests/fixtures/ArchiveCCS.ris`):
 **7 of 20** records fixed. Mostly `PY` and `AU` fills via OpenAlex or
 Crossref title+author search.
+
+`OPENROUTER_API_KEY` is now in `.env`. Ticket 0015 (LLM resolver)
+has no remaining blockers.
 
 ## Open tickets
 
 | ID | Title | Blocked by |
 |----|-------|------------|
-| 0014 | Extract PDF first-page text from L1 link | — |
-| 0015 | LLM-based metadata resolver for grey literature | 0014 |
+| 0015 | LLM-based metadata resolver for grey literature | — |
 | 0016 | Review queue: write low-confidence fixes to markdown | 0015 |
 | 0021 | Pre-flight cost estimate and interactive confirm for `--llm-fallback` | 0015 |
 | 0022 | Per-run JSONL audit log of every LLM call | 0015 |
-| 0028 | Extract PDF embedded metadata (XMP / info dict) — sibling to 0014 | — |
-| 0029 | Pipeline merge step drops derived fields outside the gap set | — |
-| 0030 | Extract DOI from PDF first-page text before resolver search | 0014 |
-| 0031 | Capture OpenAlex Work IDs (W…) on the Item model | — |
+| 0032 | Fix test_pdf_metadata.py tests that reference non-committed corpus PDFs | — |
 
 ## Next actions (in order)
 
-1. **0014** — read first-page text from L1 PDFs into a sidecar cache.
-   Independent of every other open ticket.
-2. **0028** — XMP/info dict metadata. Same input domain as 0014;
-   could be combined or kept separate. Decide at execution time.
-3. **0015** — LLM resolver consuming 0014's text. `OPENROUTER_API_KEY`
-   needs to land in `.env` before this is testable end-to-end.
-4. **0021 + 0022** — cost guardrails before any large run with the
+1. **0032** — small hygiene: 4 tests in `test_pdf_metadata.py` reference
+   non-committed corpus PDFs and fail in worktrees. Fix before 0015 adds more.
+2. **0015** — LLM resolver. No blockers. `OPENROUTER_API_KEY` is in `.env`.
+   PDF first-page text (0014) and metadata (0028) are available as context.
+3. **0021 + 0022** — cost guardrails before any large run with the
    LLM resolver enabled.
-5. **0016** — review queue for the residue.
+4. **0016** — review queue for the residue.
 
 ## Blockers
 
-None. PDFs are on disk at `/home/haduong/CNRS/html/ArchiveCCS/`.
-`OPENROUTER_API_KEY` is the only thing the user needs to add to
-`.env` before 0015 becomes testable, and that's a one-line change.
+None.
 
 ## Background
 
