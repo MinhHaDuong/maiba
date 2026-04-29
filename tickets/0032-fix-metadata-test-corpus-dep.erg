@@ -1,6 +1,6 @@
 %erg v1
 Title: Fix test_pdf_metadata.py tests that require non-committed corpus PDFs
-Status: doing
+Status: closed
 Created: 2026-04-29
 Author: claude
 
@@ -8,6 +8,7 @@ Author: claude
 2026-04-29T10:00Z claude created
 2026-04-29T09:43Z claude claimed
 2026-04-29T09:43Z claude status doing
+2026-04-29T09:52Z claude status closed — session-scoped fixtures generate synthetic PDFs; 113 tests green
 
 --- body ---
 ## Context
