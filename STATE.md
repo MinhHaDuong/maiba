@@ -8,9 +8,9 @@ Last updated: 2026-04-29 (session wrap: tickets 0014 0028 0029 0030 0031 merged)
 resolver path is at its ceiling: 7/20 fixes on `ArchiveCCS.ris`. The
 remaining 13 records are mostly French ministry meeting notes, NGO
 reports, and other grey lit that are not in OpenAlex or Crossref. The
-LLM resolver (0015) needs PDF first-page text (0014) as input and
-audit/cost-control wrappers (0021, 0022) before it lands. Review
-queue (0016) closes the loop.
+LLM resolver (0015) is unblocked: PDF first-page text (0014) and
+embedded metadata (0028) landed. Cost-control wrappers (0021, 0022)
+and review queue (0016) follow.
 
 ## Status: mechanical recall at ceiling; LLM path is next milestone
 
