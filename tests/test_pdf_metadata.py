@@ -52,6 +52,12 @@ def test_corrupted_pdf_raises() -> None:
         extract_pdf_metadata(item, CFG)
 
 
+def test_malformed_xmp_does_not_crash(pdf_bad_xmp_path: Path) -> None:
+    """Malformed XMP XML in a PDF must be silently ignored, not raised."""
+    meta = extract_pdf_metadata(make_item(pdf_bad_xmp_path), CFG)
+    assert isinstance(meta, dict)
+
+
 def test_info_dict_title_extracted(pdf_info_dict_path: Path) -> None:
     """PDF with /Title in info dict returns it under key 'title'."""
     meta = extract_pdf_metadata(make_item(pdf_info_dict_path), CFG)

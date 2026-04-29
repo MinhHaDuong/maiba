@@ -77,6 +77,14 @@ def pdf_xmp_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
     return p
 
 
+@pytest.fixture(scope="session")
+def pdf_bad_xmp_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """PDF whose XMP stream contains malformed XML (real-world occurrence)."""
+    p = tmp_path_factory.mktemp("pdfs") / "bad-xmp.pdf"
+    p.write_bytes(_build_pdf_with_xmp("<not-valid-xml"))
+    return p
+
+
 @pytest.fixture(autouse=True)
 def _no_openalex_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
     """Strip OPENALEX_API_KEY from the test environment.

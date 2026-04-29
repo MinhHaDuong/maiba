@@ -105,8 +105,11 @@ def extract_pdf_metadata(item: Item, cfg: Config) -> dict[str, str] | None:
         raise PdfMetadataError(f"Cannot read PDF: {path}") from exc
 
     result = _extract_info_dict(reader.metadata) if reader.metadata else {}
-    if reader.xmp_metadata:
-        result.update(_extract_xmp_meta(reader.xmp_metadata))
+    try:
+        if reader.xmp_metadata:
+            result.update(_extract_xmp_meta(reader.xmp_metadata))
+    except pypdf.errors.PdfReadError:
+        pass
     return result
 
 
