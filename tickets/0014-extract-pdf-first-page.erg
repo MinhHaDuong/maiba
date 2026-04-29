@@ -1,12 +1,15 @@
 %erg v1
 Title: Extract PDF first-page text from the L1 link
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 
 --- log ---
 2026-04-28T12:30Z claude created
 2026-04-29T07:10Z claude note reimagined — use pypdf>=5 (pure-Python) over subprocess; cut OCR fallback (no corpus evidence); drop pdf: config section
+2026-04-29T07:30Z claude claimed
+2026-04-29T07:30Z claude status doing
+2026-04-29T09:30Z claude status closed — implemented; 5 tests green
 
 --- body ---
 ## Context
