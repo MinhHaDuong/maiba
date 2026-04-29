@@ -1,6 +1,6 @@
 %erg v1
 Title: Extract DOI from PDF first-page text before resolver search
-Status: open
+Status: closed
 Created: 2026-04-28
 Author: claude
 Blocked-by: 0014
@@ -8,6 +8,8 @@ Blocked-by: 0014
 --- log ---
 2026-04-28T15:32Z claude created
 2026-04-29T07:10Z claude note reimagined — fix rstrip to include ')'; provenance for pre-hook DOI must be written at pre-hook site
+2026-04-29T12:00Z claude claimed
+2026-04-29T12:30Z claude status closed TDD complete: 5 tests green, lint clean, PR opened
 
 --- body ---
 ## Context
