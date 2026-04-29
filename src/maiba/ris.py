@@ -107,6 +107,7 @@ def _entry_to_item(entry: dict) -> Item:
         CY=entry.get("place_published"),
         L1=entry.get("file_attachments1", []),
         N1=entry.get("notes", []),
+        OAID=entry.get("custom1"),
     )
 
 
@@ -123,6 +124,7 @@ _SCALAR_FIELDS: list[tuple[str, str]] = [
     ("AB", "abstract"),
     ("PB", "publisher"),
     ("CY", "place_published"),
+    ("OAID", "custom1"),
 ]
 
 _DEFAULT_KEY_ORDER: list[str] = [
@@ -146,6 +148,7 @@ _DEFAULT_KEY_ORDER: list[str] = [
     "keywords",
     "file_attachments1",
     "notes",
+    "custom1",
 ]
 
 _ORDER_CACHE: dict[str, list[str]] = {}

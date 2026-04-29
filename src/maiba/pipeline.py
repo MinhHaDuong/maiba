@@ -27,7 +27,6 @@ _RESOLVER_BUILDERS = {
 # Fields eligible for opportunistic merge from a resolver candidate.
 # Excludes: TY (record type stays from input), L1/L2 (file attachments),
 # N1 (notes — managed separately for provenance), id (internal).
-# Ticket 0031 will add OAID once that field lands on Item.
 _MERGEABLE_FIELDS = (
     "TI",
     "AU",
@@ -46,6 +45,7 @@ _MERGEABLE_FIELDS = (
     "AB",
     "PB",
     "CY",
+    "OAID",
 )
 
 GLYPH_SKIP = "."

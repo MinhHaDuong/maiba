@@ -38,6 +38,7 @@ def test_resolve_by_doi_hit():
     assert "Ashworth" in " ".join(result.candidate.AU)
     assert result.candidate.DO == "10.1016/j.egypro.2009.02.302"
     assert 0.0 <= result.confidence <= 1.0
+    assert result.candidate.OAID == "W2018647518"
 
 
 @respx.mock

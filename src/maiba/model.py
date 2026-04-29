@@ -6,7 +6,7 @@ import hashlib
 from pathlib import PurePosixPath
 from urllib.parse import unquote
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class Item(BaseModel, frozen=True):
@@ -33,6 +33,7 @@ class Item(BaseModel, frozen=True):
     CY: str | None = None
     L1: list[str] = []
     N1: list[str] = []
+    OAID: str | None = Field(default=None, description="OpenAlex Work ID, e.g. W2117548367")
 
     @field_validator("PY", mode="before")
     @classmethod
