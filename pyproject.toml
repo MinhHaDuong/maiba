@@ -16,6 +16,7 @@ dependencies = [
     "rapidfuzz>=3",
     "hishel>=1.2",
     "python-dotenv>=1.0",
+    "pypdf>=5",
 ]
 
 [project.optional-dependencies]

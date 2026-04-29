@@ -3,9 +3,11 @@ Title: Extract PDF embedded metadata (XMP / info dict) as a sibling to first-pag
 Status: open
 Created: 2026-04-28
 Author: claude
+Blocked-by: 0014
 
 --- log ---
 2026-04-28T14:45Z claude created
+2026-04-29T07:10Z claude note reimagined — add Blocked-by:0014; cut pipeline TI-fill wiring (extraction only); prefer pypdf over pikepdf
 
 --- body ---
 ## Context
@@ -35,9 +37,11 @@ not gospel — same trust posture as filename.
 
 ## Actions
 
-1. **Add dep** to `pyproject.toml`: `pikepdf` (more reliable XMP
-   access than shelling out to `pdfinfo`; pure-Python; reads info
-   dict and XMP packet uniformly).
+1. **Add dep** to `pyproject.toml`: `pypdf>=5` (shared with ticket 0014;
+   pure-Python, no C dependency; exposes `.metadata` info dict and
+   `.xmp_metadata` XMP packet). Verify XMP access before execution —
+   `pypdf` is lighter than `pikepdf` (no qpdf C dep) and sufficient
+   for our read-only, structured-field use case.
 
 2. **`src/maiba/pdf.py`** (extending the module from ticket 0014):
    ```python
@@ -53,27 +57,18 @@ not gospel — same trust posture as filename.
        """
    ```
 
-3. **Pipeline integration — pre-API gap-filling for missing TI:**
-   ```python
-   # in detect.py or a small new pre-resolver step
-   if item.TI is None:
-       meta = extract_pdf_metadata(item, cfg)
-       if meta and meta.get("title"):
-           item = item.copy(update={"TI": meta["title"]})
-           # provenance: maiba:autofixed:DATE source=pdf-metadata
-   ```
-   This recovers TI from XMP before any resolver call. Free hits.
+3. **Key normalization**: map XMP Dublin Core keys (`dc:title`,
+   `dc:creator`) and info dict keys (`/Title`, `/Author`) to a small
+   normalized set. XMP takes precedence; info dict is fallback.
+   Raw unmapped keys are returned as-is.
 
-4. **Ticket 0015 (LLM resolver) integration:** when 0015 lands and
-   resumes, feed `metadata` alongside `first_page_text` and partial
-   item into the LLM prompt. Strictly more context, lower
-   hallucination risk.
+4. **Pipeline wiring deferred**: pre-resolver TI/AU gap-filling from
+   PDF metadata belongs in a follow-on ticket (same pattern as 0030's
+   DOI pre-hook). This ticket is extraction only.
 
-5. **Cross-check (later, optional):** add an adherence-style sanity
-   check — when Crossref/OpenAlex returns a candidate, compare its
-   title against the PDF metadata title. Large divergence (rapidfuzz
-   < 0.5) flags the match for review-queue routing rather than
-   auto-apply. Out of scope for this ticket; noted for future.
+5. **Ticket 0015 (LLM resolver) integration:** when 0015 lands,
+   feed `metadata` alongside `first_page_text` into the LLM prompt.
+   More context, lower hallucination risk.
 
 ## Test (TDD red step)
 
@@ -124,10 +119,7 @@ def test_corrupted_pdf_raises():
 - Smoke run on a sample of `tests/fixtures/ArchiveCCS-cleaned/files/`:
   count records where PDF metadata title/author exists. Eyeball the
   values for plausibility. Report the percentage.
-- Pre-resolver TI recovery wired: items missing TI on input get
-  filled from XMP when XMP has a non-empty title. Provenance line
-  records `source=pdf-metadata`.
-- No hardcoded paths or binary names in `src/maiba/pdf.py`.
+- No hardcoded paths in `src/maiba/pdf.py`.
 
 ## Out of scope
 

@@ -6,6 +6,7 @@ Author: claude
 
 --- log ---
 2026-04-28T15:30Z claude created
+2026-04-29T07:10Z claude note reimagined — drop mergeable_fields() from Item; use _MERGEABLE_FIELDS tuple in pipeline.py (model stays pure data)
 
 --- body ---
 ## Context
@@ -60,17 +61,17 @@ free metadata.
    populated fields.** This is the safety boundary — we trust the
    user's existing data more than the resolver's.
 
-2. **`MERGEABLE_FIELDS` lives in the model**, not the pipeline:
+2. **`_MERGEABLE_FIELDS` is a module-level tuple in `pipeline.py`**,
+   not a classmethod on `Item`. `Item` is pure data (Pydantic model,
+   no existing methods). Merge policy belongs in the pipeline.
    ```python
-   # src/maiba/model.py
-   class Item(BaseModel):
-       ...
-       @classmethod
-       def mergeable_fields(cls) -> tuple[str, ...]:
-           """Field names safe to fill from a resolver candidate.
-           Excludes id, L1/L2, N1, TY (type stays from input)."""
+   # src/maiba/pipeline.py
+   _MERGEABLE_FIELDS = ("TI", "AU", "PY", "DA", "JO", "T2", "VL",
+                        "IS", "SP", "EP", "DO", "UR", "LA", "KW",
+                        "AB", "PB", "CY")
+   # Excludes: TY (type stays from input), L1/L2/N1, id
    ```
-   Pipeline calls `Item.mergeable_fields()`. Single source of truth.
+   Ticket 0031 adds OAID to this tuple when it lands.
 
 3. **Provenance unchanged:** the `maiba:before <field>=<old>` line
    is still appended for every changed field. The user can audit
