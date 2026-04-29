@@ -12,6 +12,7 @@ from typing import Any
 from maiba.config import Config
 from maiba.detect import detect_gaps
 from maiba.model import Item
+from maiba.pdf import PdfExtractionError, extract_doi_from_first_page
 from maiba.resolvers import MetadataResolver, ResolutionResult
 from maiba.resolvers.crossref import CrossrefResolver
 from maiba.resolvers.openalex import OpenAlexResolver, ResolverRateLimitedError
@@ -140,6 +141,26 @@ class Report:
     fixes: list[FixApplied] = field(default_factory=list)
 
 
+def _pdf_doi_prehook(item: Item, cfg: Config, today: str) -> Item:
+    """Populate item.DO from PDF first-page text if not already set.
+
+    Calls extract_doi_from_first_page; silently degrades on PdfExtractionError.
+    Returns item unchanged if no DOI found or PDF unreadable.
+    Writes a provenance N1 note when a DOI is found.
+    """
+    if item.DO is not None or not item.L1:
+        return item
+    try:
+        doi = extract_doi_from_first_page(item, cfg)
+    except PdfExtractionError as exc:
+        log.warning("pdf doi pre-hook: %s", exc)
+        return item
+    if not doi:
+        return item
+    prov = f"{cfg.provenance.tag_prefix}:autofixed:{today} source=pdf-firstpage confidence=1.00"
+    return item.model_copy(update={"DO": doi, "N1": [*item.N1, prov]})
+
+
 def run(  # noqa: PLR0915
     input: Path,
     output: Path | None,
@@ -167,6 +188,10 @@ def run(  # noqa: PLR0915
                 emitted = True
                 continue
             report.with_gaps += 1
+
+            # Pre-hook: populate DO from PDF first-page text before resolver runs.
+            # The resolver then takes the cheap DOI-lookup path instead of title search.
+            item = _pdf_doi_prehook(item, cfg, today)
 
             result = _try_resolvers(item, resolvers, dead_resolvers)
             if dead_resolvers:
