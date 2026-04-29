@@ -6,6 +6,7 @@ Author: claude
 
 --- log ---
 2026-04-28T12:30Z claude created
+2026-04-29T07:10Z claude note reimagined — use pypdf>=5 (pure-Python) over subprocess; cut OCR fallback (no corpus evidence); drop pdf: config section
 
 --- body ---
 ## Context
@@ -16,24 +17,23 @@ needs the PDF's content to fill in missing metadata for grey
 literature. Also potentially useful later for full-text attach,
 abstract reconstruction, etc.
 
+Dependency shared with ticket 0028 (PDF metadata): both use `pypdf>=5`.
+
 Design constraints:
 
 - Read-only; never modifies the PDF
-- Pure function: `(L1, config) -> str | None`. No state.
+- Pure function: `(item, config) -> str | None`. No state.
 - Handles the realistic failure modes seen during the ArchiveCCS
   indexing run:
-  - PDF has a normal text layer → `pdftotext -f 1 -l 1` (fast)
-  - PDF is image-only / OCR-required → `tesseract` on `pdftoppm`
-    rendered page-1 PNG (slower; opt-in via config)
+  - PDF has a normal text layer → `pypdf.PdfReader(path).pages[0].extract_text()`
   - PDF is corrupted (xref broken) → raise `PdfExtractionError`
   - File missing → raise `PdfExtractionError`
-  - L1 is `file://` URL → strip prefix; resolve to absolute path
+  - L1 is `file://` URL → strip prefix with `urllib.parse` + `unquote`
 
 ## Actions
 
-1. **Add deps** to `pyproject.toml` — none new at runtime; rely on
-   `pdftotext`, `pdftoppm`, `tesseract` as system binaries (the
-   ArchiveCCS workflow already proved these are available).
+1. **Add dep** to `pyproject.toml`: `pypdf>=5`. Coordinate with 0028
+   to share this single dep for both text extraction and metadata.
 2. **`src/maiba/pdf.py`** (new module):
    ```python
    def extract_first_page(item: Item, cfg: Config) -> str | None:
@@ -42,35 +42,20 @@ Design constraints:
        Raises PdfExtractionError on corruption / unrecognized format.
        """
    ```
-3. **Two-tier strategy**:
-   - Try `pdftotext -f 1 -l 1 <path>` first; if output ≥ N chars, return.
-   - If output < N chars (likely image-only), and `cfg.pdf.ocr_fallback`
-     is True (default False), render page 1 with `pdftoppm`, OCR with
-     `tesseract`, return that.
-   - Threshold N is configurable (default 50 chars).
-4. **Config additions** to `config/maiba.yaml`:
-   ```yaml
-   pdf:
-     min_text_chars: 50      # below this, treat as image-only
-     ocr_fallback: false     # opt-in; OCR is slow
-     ocr_language: "fra+eng" # tesseract -l value
-     timeout_s: 30           # per-extraction wall-clock cap
-   ```
-5. **Tests** — see Test below.
+   Use `pypdf.PdfReader(path).pages[0].extract_text()`.
+   Parse the first valid `file://` entry in `item.L1` using
+   `urllib.parse.urlparse` + `unquote` (same pattern as `model._id_from_l1`).
+3. **Tests** — see Test below.
 
 ## Test (TDD red step)
 
-Reuse `tests/fixtures/bad-binaryfile.ris` infrastructure: that file
-already contains the first 512 bytes of a real PDF. Add a tiny PDF
-fixture (or render one on the fly with `reportlab`-equivalent — but
-that's a new dep, prefer a committed fixture).
+Two committed PDF fixtures needed (create once, commit):
+- `tests/fixtures/sample-text.pdf` — 1-page PDF with text layer
+- `tests/fixtures/sample-broken.pdf` — truncated/corrupted PDF header
 
-Two committed PDF fixtures:
-- `tests/fixtures/sample-text.pdf` — a 1-page PDF with text layer
-  (~50 bytes of actual text content)
-- `tests/fixtures/sample-broken.pdf` — a deliberately-corrupted PDF
-  (e.g., the Damen-2003 file we found broken during indexing — it's
-  in `~/CNRS/html/ArchiveCCS/`)
+These fixtures are also reused by ticket 0028 (metadata) and 0030 (DOI).
+Create with a minimal Python script using `pypdf` or `reportlab`; commit
+the binary. Do not use `bad-binaryfile.ris` (it is a RIS file, not a PDF).
 
 ```python
 # tests/test_pdf_extract.py
@@ -80,7 +65,7 @@ from maiba.config import load_config
 from maiba.model import Item
 from maiba.pdf import extract_first_page, PdfExtractionError
 
-CFG = load_config(Path("config/maiba.yaml"))
+CFG = load_config("config/maiba.yaml")
 F = Path("tests/fixtures")
 
 
@@ -88,7 +73,7 @@ def test_extract_text_layer():
     item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
                 L1=[f"file://{F.absolute()}/sample-text.pdf"])
     text = extract_first_page(item, CFG)
-    assert text is not None and len(text) > 50
+    assert text is not None and len(text) > 10
 
 def test_no_l1_returns_none():
     item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020, L1=[])
@@ -105,13 +90,6 @@ def test_corrupted_pdf_raises():
                 L1=[f"file://{F.absolute()}/sample-broken.pdf"])
     with pytest.raises(PdfExtractionError):
         extract_first_page(item, CFG)
-
-def test_image_only_returns_none_when_ocr_disabled(monkeypatch):
-    # use bad-binaryfile.ris content (512 bytes of real PDF, no text layer)
-    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020,
-                L1=[f"file://{F.absolute()}/bad-binaryfile.ris"])
-    # default cfg has ocr_fallback=False
-    assert extract_first_page(item, CFG) is None
 ```
 
 ## Exit criteria
@@ -119,17 +97,13 @@ def test_image_only_returns_none_when_ocr_disabled(monkeypatch):
 - `make test` green.
 - `extract_first_page(item, cfg)` works on a sample of `ArchiveCCS.ris`
   records (manual eyeball, not asserted).
-- No hardcoded thresholds, paths, or binary names in `src/maiba/pdf.py`
-  — all from config.
-- `PdfExtractionError` defined in `maiba.pdf` (not bubble up
-  `subprocess.CalledProcessError` etc.).
+- `PdfExtractionError` defined in `maiba.pdf` (wraps `pypdf.errors.PdfReadError`).
+- No hardcoded paths in `src/maiba/pdf.py`.
 
 ## Out of scope
 
-- Multi-page extraction. First page only for now (MVP scope; LLM
-  resolver only needs the title-block).
-- Caching. The HTTP cache from ticket 0009 is for API responses;
-  PDF re-extraction is local and fast enough that caching is YAGNI.
-  Revisit if extraction shows up in a profile later.
-- Returning structured fields (title-region, author-region, etc.).
-  Just plaintext for now; let the LLM do the parsing in 0015.
+- Multi-page extraction. First page only (LLM resolver only needs the title-block).
+- OCR fallback (image-only PDFs): deferred until observed in corpus profiling.
+  No evidence the 13 residual records are image-only scans.
+- Caching. PDF re-extraction is local and fast; caching is YAGNI.
+- Returning structured fields. Just plaintext; let the LLM parse in 0015.

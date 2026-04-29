@@ -7,6 +7,7 @@ Blocked-by: 0014
 
 --- log ---
 2026-04-28T15:32Z claude created
+2026-04-29T07:10Z claude note reimagined — fix rstrip to include ')'; provenance for pre-hook DOI must be written at pre-hook site
 
 --- body ---
 ## Context
@@ -46,7 +47,9 @@ path, which is much more reliable than title search.
        if not text:
            return None
        m = DOI_RE.search(text)
-       return m.group(0).rstrip(".,;:") if m else None
+       return m.group(0).rstrip(".,;:)") if m else None
+       # trailing ')' stripped: DOIs in prose like "(doi:10.x/y)" would
+       # otherwise capture the closing paren
    ```
 
 2. **`src/maiba/pipeline.py`** — pre-resolver hook: for items missing
@@ -61,9 +64,11 @@ path, which is much more reliable than title search.
    Apply BEFORE the resolver chain runs. The resolver then sees an
    item with `DO` and takes the cheap direct path.
 
-3. **Provenance**: same N1 lines as resolver fixes, with
-   `source=pdf-firstpage` (and confidence=1.0, since regex match on
-   raw PDF text is high-confidence by construction).
+3. **Provenance**: write the N1 provenance line at the pre-hook site
+   (before the resolver runs), not inside `_merge_fix()`. Reason:
+   `_merge_fix()` will record `source=openalex` or `source=crossref`
+   for the resolver's result; the DOI discovery source is separate.
+   Use `source=pdf-firstpage` with `confidence=1.0`.
 
 4. **Configuration** — no new knobs. The DOI regex is structural,
    not tunable. (Per the §6.2 architecture rule: regexes that
