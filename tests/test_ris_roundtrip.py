@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 
+from maiba.model import Item
 from maiba.ris import RisParseError, read_ris, write_ris
 
 F = Path("tests/fixtures")
@@ -60,3 +61,22 @@ def test_empty_returns_no_items():
 def test_bad_inputs_raise(name):
     with pytest.raises(RisParseError):
         list(read_ris(F / name))
+
+
+def test_oaid_roundtrips_via_c1(tmp_path):
+    """Item with OAID writes to RIS as C1 and reads back identical."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020, OAID="W2117548367")
+    path = tmp_path / "out.ris"
+    write_ris([item], path)
+    text = path.read_text()
+    assert "C1  - W2117548367" in text
+    [item2] = list(read_ris(path))
+    assert item2.OAID == "W2117548367"
+
+
+def test_oaid_none_omits_c1_tag(tmp_path):
+    """Item without OAID must not write a C1 tag."""
+    item = Item(TY="JOUR", TI="x", AU=["a"], PY=2020)
+    path = tmp_path / "out.ris"
+    write_ris([item], path)
+    assert "C1" not in path.read_text()

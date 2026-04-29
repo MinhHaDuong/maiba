@@ -81,6 +81,9 @@ def _work_to_item(work: dict) -> Item:
     oa_type = work.get("type", "other")
     ris_type = _OPENALEX_TYPE_TO_RIS.get(oa_type, "GEN")
 
+    oa_url = work.get("id", "")
+    oaid = oa_url.rsplit("/", 1)[-1] if "openalex.org/" in oa_url else None
+
     return Item(
         TY=ris_type,
         TI=work.get("title") or "",
@@ -96,6 +99,7 @@ def _work_to_item(work: dict) -> Item:
         LA=work.get("language"),
         KW=keywords,
         AB=_reconstruct_abstract(work.get("abstract_inverted_index")),
+        OAID=oaid,
     )
 
 
