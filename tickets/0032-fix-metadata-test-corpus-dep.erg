@@ -1,0 +1,40 @@
+%erg v1
+Title: Fix test_pdf_metadata.py tests that require non-committed corpus PDFs
+Status: open
+Created: 2026-04-29
+Author: claude
+
+--- log ---
+2026-04-29T10:00Z claude created
+
+--- body ---
+## Context
+
+`tests/test_pdf_metadata.py` contains 4 tests that reference real PDFs
+from `tests/fixtures/ArchiveCCS-cleaned/files/`:
+
+- `test_info_dict_title_extracted`
+- `test_xmp_title_extracted`
+- `test_xmp_author_extracted`
+- `test_result_is_dict_of_strings`
+
+These PDFs are **not committed to git** — they only exist in the main
+working directory. The tests pass when run from the main working directory
+but **fail in git worktrees** (used by all execute agents).
+
+Discovered during orchestrator Wave 2 rebase: 4 tests failed in the 0030
+worktree due to missing `ArchiveCCS-cleaned/files/` PDFs.
+
+## Actions
+
+1. Commit a minimal synthetic `tests/fixtures/sample-with-metadata.pdf`
+   that has known `/Title` and XMP `dc:title` values (use `pikepdf` as a
+   dev dependency to inject XMP — same approach as was considered for 0028).
+2. Replace the 4 corpus-dependent tests with fixture-based equivalents
+   asserting exact known values.
+3. Remove the corpus path references from `test_pdf_metadata.py`.
+
+## Exit criteria
+
+- `make test` green when run from any directory (main repo or worktree).
+- No test references `ArchiveCCS-cleaned/files/`.
