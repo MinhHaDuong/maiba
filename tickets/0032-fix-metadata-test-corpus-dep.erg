@@ -1,11 +1,13 @@
 %erg v1
 Title: Fix test_pdf_metadata.py tests that require non-committed corpus PDFs
-Status: open
+Status: doing
 Created: 2026-04-29
 Author: claude
 
 --- log ---
 2026-04-29T10:00Z claude created
+2026-04-29T09:43Z claude claimed
+2026-04-29T09:43Z claude status doing
 
 --- body ---
 ## Context

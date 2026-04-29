@@ -11,20 +11,6 @@ from maiba.pdf import PdfMetadataError, extract_pdf_metadata
 CFG = load_config(Path("config/maiba.yaml"))
 F = Path(__file__).parent / "fixtures"
 
-# Real corpus PDF with XMP dc_title and dc_creator
-XMP_PDF = (
-    F
-    / "ArchiveCCS-cleaned/files/37295"
-    / "Bataille.ea-2006-RapportSurLesNouvellesTechnologiesDeLEnergieEtLaSéquestrationDuCO2.pdf"
-)
-
-# Real corpus PDF with info-dict title (no XMP or minimal XMP)
-INFO_PDF = (
-    F
-    / "ArchiveCCS-cleaned/files/37267"
-    / "Adler.ea-2005-PrimerOnPerceptionsOfRiskCommunicationAndBuildingTrust.pdf"
-)
-
 
 def make_item(path: Path) -> Item:
     return Item(
@@ -66,36 +52,30 @@ def test_corrupted_pdf_raises() -> None:
         extract_pdf_metadata(item, CFG)
 
 
-def test_info_dict_title_extracted() -> None:
+def test_info_dict_title_extracted(pdf_info_dict_path: Path) -> None:
     """PDF with /Title in info dict returns it under key 'title'."""
-    meta = extract_pdf_metadata(make_item(INFO_PDF), CFG)
+    meta = extract_pdf_metadata(make_item(pdf_info_dict_path), CFG)
     assert meta is not None
-    assert "title" in meta
-    # The known title from the info dict spike
-    assert "TKC Risk Paper" in meta["title"]
+    assert meta["title"] == "MAIBA Info-Dict Test Title"
 
 
-def test_xmp_title_extracted() -> None:
+def test_xmp_title_extracted(pdf_xmp_path: Path) -> None:
     """PDF with XMP dc:title returns it under key 'title'."""
-    meta = extract_pdf_metadata(make_item(XMP_PDF), CFG)
+    meta = extract_pdf_metadata(make_item(pdf_xmp_path), CFG)
     assert meta is not None
-    assert "title" in meta
-    # Known value from the dc_title spike: {'x-default': 'Microsoft Word - i2965.doc'}
-    assert "i2965" in meta["title"]
+    assert meta["title"] == "MAIBA XMP Test Title"
 
 
-def test_xmp_author_extracted() -> None:
+def test_xmp_author_extracted(pdf_xmp_path: Path) -> None:
     """PDF with XMP dc:creator returns it under key 'author'."""
-    meta = extract_pdf_metadata(make_item(XMP_PDF), CFG)
+    meta = extract_pdf_metadata(make_item(pdf_xmp_path), CFG)
     assert meta is not None
-    assert "author" in meta
-    # Known value from spike: ['ddesmicht']
-    assert "ddesmicht" in meta["author"]
+    assert meta["author"] == "xmp-test-author"
 
 
-def test_result_is_dict_of_strings() -> None:
+def test_result_is_dict_of_strings(pdf_info_dict_path: Path) -> None:
     """All values in the result dict are strings."""
-    meta = extract_pdf_metadata(make_item(INFO_PDF), CFG)
+    meta = extract_pdf_metadata(make_item(pdf_info_dict_path), CFG)
     assert meta is not None
     for k, v in meta.items():
         assert isinstance(k, str), f"Key {k!r} is not a string"
