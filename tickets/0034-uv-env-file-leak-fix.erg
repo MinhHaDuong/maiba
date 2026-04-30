@@ -1,0 +1,59 @@
+%erg v1
+Title: Refactor uv invocations to use --env-file (CLAUDE_ENV_FILE leak fix)
+Status: open
+Created: 2026-04-30
+Author: claude
+
+--- log ---
+2026-04-30T16:35Z claude created — see AEDIST commit 4000c21 for the model fix
+
+--- body ---
+## Context
+
+Discovery 2026-04-30: Claude Code's `~/.claude/scripts/on-start.sh` was
+appending all `~/.claude/.env` keys into `$CLAUDE_ENV_FILE`. Claude Code
+inlines that file's contents as `KEY=value` prefix in every spawned
+`bash -c` command line — making secrets visible to anyone running
+`ps -ef` on the host. An accidental `ps -ef` during AEDIST work leaked
+the entire key set into a chat transcript; keys had to be rotated.
+
+User-side fix (committed in `~/.claude/scripts/on-start.sh`): the hook
+no longer persists `.env` into `CLAUDE_ENV_FILE`. Tools that need keys
+must source `.env` explicitly.
+
+## Project-specific work
+
+The top-level Makefile has 1 `uv run` invocation. Minimal refactor:
+
+1. If/when the call needs an API key, change to
+   `uv run --env-file .env ...`.
+2. Drop any `export KEY := $(shell grep ...)` patterns referencing
+   secrets.
+3. Add a Makefile header comment naming project `.env` as the canonical
+   env source.
+
+If the single uv invocation does not require any secret today, this
+ticket is mostly preventive — the next uv-call to add will benefit
+from the convention being in place.
+
+## Reference
+
+AEDIST `experiments/Makefile` (commit `4000c21`) shows the model
+pattern: a single `UV_RUN := uv run --project .. --env-file ../.env`
+macro, with a header block documenting the env policy.
+
+## Test
+
+After refactor:
+```bash
+ps -ef | grep '<the uv child>' | grep -E '[A-Z_]+=[^[:space:]]+'
+```
+No `KEY=value` pairs should appear.
+
+## Exit criteria
+
+- The uv invocation routes through `--env-file` (or a `$(UV_RUN)` macro
+  if more invocations land later).
+- No `export KEY := $(shell ...)` patterns referencing secrets.
+- Project .env declared as canonical source in a Makefile header
+  comment.
