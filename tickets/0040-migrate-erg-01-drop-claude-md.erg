@@ -1,0 +1,32 @@
+%erg v1
+Title: Migrate tickets to %erg 0.1, then drop CLAUDE.md so AGENTS.md loads natively
+Status: open
+Created: 2026-09-23
+Author: HDMX-coding-agent
+
+--- log ---
+2026-09-23T20:00Z HDMX-coding-agent created
+
+--- body ---
+## Context
+
+Claude Code 2.1.277+ loads AGENTS.md, and parent-directory AGENTS.md files
+such as ~/CNRS/AGENTS.md, only when a project has no CLAUDE.md (root or
+.claude/). maiba has both: a root `@AGENTS.md` shim and the git-erg stub in
+`.claude/CLAUDE.md`. The same cleanup landed on 2026-09-23 in
+climate-finance-het, padme, aedist, cadens, archiveCIRED, chemin-de-voix,
+DOIfetch, livre-milliards-climat and fuzzy-corpus.
+
+maiba cannot follow yet: its store is still `%erg v1`. The stub and
+`.claude/rules/tickets.md` describe that format correctly, while the harness
+ticket rules (`~/.claude/tickets/AGENTS.md`) describe `%erg 0.1`. Deleting
+the stub first would leave agents with rules for the wrong format.
+fuzzy-corpus PR #60 is the model migration (vendored binary, archive closed,
+retire ticket-* skills).
+
+## Exit criteria
+- [ ] `erg migrate tickets/` run; every ticket header reads `%erg 0.1`
+- [ ] `tickets/erg` vendored and `tickets/AGENTS.md` present; `tickets/tools/go/` and `.claude/rules/tickets.md` removed
+- [ ] `erg check tickets/` passes
+- [ ] Root `CLAUDE.md` and `.claude/CLAUDE.md` deleted; the "keep CLAUDE.md = @AGENTS.md" line in AGENTS.md rewritten
+- [ ] A fresh session reports "AGENTS.md loaded" for maiba
