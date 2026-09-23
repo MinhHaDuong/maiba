@@ -13,7 +13,7 @@
 | Location | Purpose |
 |----------|---------|
 | `~/.claude/rules/` | Generic rules (git, workflow, coding, state-roadmap) |
-| `~/.claude/skills/` | Generic skills (celebrate, review-pr, memory, etc.) |
+| `~/.claude/skills/` | Generic skills (hunt, roar, review-pr, verify-gate, …) |
 | `~/.claude/hooks/` | Generic hooks |
 | `.claude/rules/` | Project-specific rules (currently: `tickets.md` only, from git-erg) |
 | `.claude/skills/` | Project-specific skills (ticket-* from git-erg) |
@@ -63,31 +63,25 @@ orchestrator must execute the ticket in TDD: open the ticket first, write
 the failing test, make it pass, then close. Do not pre-write code and
 backfill a closed ticket.
 
-## Imperial Dragon workflow (five claws)
+## Workflow
 
-Every non-trivial task passes through five phases. Announce transitions inline:
-`[Phase → Phase] reason`.
+The generic workflow (phases, worktrees, TDD, escalation, git discipline) lives
+in the harness rules under `~/.claude/rules/`, loaded into every session, and
+skills are listed in each session's skill catalog. Do not copy it back here: the
+copy drifts. This file once pointed at `/verify` and `/celebrate`, neither of
+which exists any more.
 
-### Imagine
-Interactive discussion on an `explore-{topic}` branch. Surface motivations and
-options, challenge assumptions. Deliverable: a shared vision plus tickets, a
-small fix, or nothing actionable (delete the branch).
+### Verify in proportion to what can break
 
-### Plan
-Write the ticket(s) with full context and the first failing test. Specify exit
-criteria. No production commits yet.
+Before merging, decide which checks the change needs and state them on the PR:
 
-### Execute
-Fresh context, ticket as sole input. TDD: red → green → refactor. Atomic commits.
-Tests must pass before merging.
+- **Tickets, docs, config**: `make lint` (or the ticket validator), and a read of the result.
+- **Code under `src/maiba/`**: tests for the changed behaviour, then `make check`.
 
-### Verify
-Run `/verify` (adherence + review + simplify). Anti-rubber-stamp: every exit
-criterion is checked against the actual diff. Returns APPROVED / REROLL / ESCALATE.
-
-### Reflect
-After merge, `/celebrate` updates `STATE.md`, archives stale tickets, runs the
-healthcheck. Lessons go to memory.
+Anything beyond tickets and docs gets at least one independent reviewer on a
+model other than the coder's (`/review-pr`, scoped to the risk). Then
+`/verify-gate` checks every exit criterion against concrete evidence (commit SHA
++ file:line, or a test id). Two review rounds at most, then escalate.
 
 ## Safety
 
