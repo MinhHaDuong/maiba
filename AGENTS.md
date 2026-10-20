@@ -13,7 +13,7 @@
 | Location | Purpose |
 |----------|---------|
 | `~/.claude/rules/` | Generic rules (git, workflow, coding, state-roadmap) |
-| `~/.claude/skills/` | Generic skills (hunt, roar, review-pr, verify-gate, …) |
+| `~/.claude/skills/` | Generic skills (hunt, roar, gaze, verify-gate, …) |
 | `~/.claude/hooks/` | Generic hooks |
 | `.claude/rules/` | Project-specific rules (currently: `tickets.md` only, from git-erg) |
 | `.claude/skills/` | Project-specific skills (ticket-* from git-erg) |
@@ -79,7 +79,7 @@ Before merging, decide which checks the change needs and state them on the PR:
 - **Code under `src/maiba/`**: tests for the changed behaviour, then `make check`.
 
 Anything beyond tickets and docs gets at least one independent reviewer on a
-model other than the coder's (`/review-pr`, scoped to the risk). Then
+model other than the coder's (`/gaze`, scoped to the risk). Then
 `/verify-gate` checks every exit criterion against concrete evidence (commit SHA
 + file:line, or a test id). Two review rounds at most, then escalate.
 
